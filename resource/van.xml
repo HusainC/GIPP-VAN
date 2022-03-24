@@ -1,0 +1,737 @@
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:soap1="http://guidewire.com/ws/soapheaders" xmlns:cvq="http://HastingsDirect.com/qcore/CVQuoteEngineAPI">
+   <soap:Header>
+      <soap1:locale>?</soap1:locale>
+      <soap1:authentication>
+         <soap1:username>?</soap1:username>
+         <soap1:password>?</soap1:password>
+      </soap1:authentication>
+   </soap:Header>
+   <soap:Body>
+      <cvq:getAggregatorVanQuote>
+         <!--Optional:-->
+         <cvq:req>
+            <VanQuoteRequest>
+               <quoteHeader>
+                  <aggsSource>?</aggsSource>
+                  <aggsId>?</aggsId>
+                  <timestamp>?</timestamp>
+                  <!--Optional:-->
+                  <quoteNumber>?</quoteNumber>
+                  <originOfBusiness>?</originOfBusiness>
+                  <!--Optional:-->
+                  <headerAdditionalData>
+                     <!--Zero or more repetitions:-->
+                     <data>
+                        <!--Optional:-->
+                        <name>?</name>
+                        <!--Optional:-->
+                        <value>?</value>
+                     </data>
+                  </headerAdditionalData>
+                  <!--Optional:-->
+                  <systemDetails>
+                     <!--Optional:-->
+                     <operatingSystem>?</operatingSystem>
+                     <!--Optional:-->
+                     <browser>?</browser>
+                     <!--Optional:-->
+                     <ipAddress>?</ipAddress>
+                     <!--Optional:-->
+                     <browserVersion>?</browserVersion>
+                     <!--Optional:-->
+                     <browserLanguage>?</browserLanguage>
+                     <!--Optional:-->
+                     <ispCustomer>?</ispCustomer>
+                     <!--Optional:-->
+                     <deviceType>?</deviceType>
+                     <!--Optional:-->
+                     <deviceManufacture>?</deviceManufacture>
+                     <!--Optional:-->
+                     <screenResolution>?</screenResolution>
+                     <!--Optional:-->
+                     <geographicalLocation>?</geographicalLocation>
+                     <!--Optional:-->
+                     <googleAnalyticsUserAge>?</googleAnalyticsUserAge>
+                     <!--Optional:-->
+                     <googleAnalyticsGooglePersona>?</googleAnalyticsGooglePersona>
+                     <!--Optional:-->
+                     <googleAnalyticsOriginalChannel>?</googleAnalyticsOriginalChannel>
+                     <!--Optional:-->
+                     <googleAnalyticsNumOfDiffDevices>?</googleAnalyticsNumOfDiffDevices>
+                     <!--Optional:-->
+                     <googleAnalyticsFrequencyOfVisits>?</googleAnalyticsFrequencyOfVisits>
+                  </systemDetails>
+               </quoteHeader>
+               <!--Optional:-->
+               <VanQuote>
+                  <autoRenewal>?</autoRenewal>
+                  <marketingPermissions>?</marketingPermissions>
+                  <noOfVehiclesHousehold>?</noOfVehiclesHousehold>
+                  <!--Optional:-->
+                  <noOfDriversinHouse typeListName="NoOfDrivers_Ext">
+                     <!--Optional:-->
+                     <noOfDriversinHouse>?</noOfDriversinHouse>
+                  </noOfDriversinHouse>
+                  <inceptionDate>?</inceptionDate>
+                  <van>
+                     <abiCode>?</abiCode>
+                     <!--Optional:-->
+                     <registration>?</registration>
+                     <make>?</make>
+                     <bodyType>?</bodyType>
+                     <yearOfRegistration>?</yearOfRegistration>
+                     <transmission typeListName="Transmission_Ext">
+                        <transmission>?</transmission>
+                     </transmission>
+                     <engineSize>?</engineSize>
+                     <model>?</model>
+                     <!--Optional:-->
+                     <noOfDoors>?</noOfDoors>
+                     <noOfSeats>?</noOfSeats>
+                     <!--Optional:-->
+                     <fuelType>?</fuelType>
+                     <value>?</value>
+                     <purchaseDate>?</purchaseDate>
+                     <importType typeListName="ImportType_Ext">
+                        <importType>?</importType>
+                     </importType>
+                     <importTypeDesc>?</importTypeDesc>
+                     <rightHandDrive>?</rightHandDrive>
+                     <immobiliser typeListName="AlarmImmobiliser_Ext">
+                        <immobiliser>?</immobiliser>
+                     </immobiliser>
+                     <immobiliserDesc>?</immobiliserDesc>
+                     <!--Optional:-->
+                     <alarmDesc>?</alarmDesc>
+                     <tracker>?</tracker>
+                     <trackerDesc>?</trackerDesc>
+                     <!--Zero or more repetitions:-->
+                     <modifications>
+                        <modificationAbiCode typeListName="VehicleModifications_Ext">
+                           <modificationAbiCode>?</modificationAbiCode>
+                        </modificationAbiCode>
+                        <modificationAbiDesc>?</modificationAbiDesc>
+                     </modifications>
+                     <isHazardousGoods>?</isHazardousGoods>
+                     <!--Optional:-->
+                     <isVisitHazardousSites>?</isVisitHazardousSites>
+                     <isInternalRacking>?</isInternalRacking>
+                     <isSignWritten>?</isSignWritten>
+                     <isRefrigerated>?</isRefrigerated>
+                     <!--Optional:-->
+                     <isTippingUnit>?</isTippingUnit>
+                     <!--Optional:-->
+                     <isBadHotLine>?</isBadHotLine>
+                     <grossVehicleWeight>?</grossVehicleWeight>
+                     <towTrailer>?</towTrailer>
+                     <overnightPostCode>?</overnightPostCode>
+                     <!--Optional:-->
+                     <parkedDaytimeData>
+                        <!--Optional:-->
+                        <code>?</code>
+                        <!--Optional:-->
+                        <description>?</description>
+                     </parkedDaytimeData>
+                     <parkedOvernight typeListName="KeptOvernight_Ext">
+                        <parkedOvernight>?</parkedOvernight>
+                     </parkedOvernight>
+                     <parkedOvernightDesc>?</parkedOvernightDesc>
+                     <nonStandardVan>false</nonStandardVan>
+                     <vehicleUsedMotorTrade>?</vehicleUsedMotorTrade>
+                     <owner typeListName="OwnerKeeper_Ext">
+                        <owner>?</owner>
+                     </owner>
+                     <ownerDesc>?</ownerDesc>
+                     <registeredKeeper typeListName="OwnerKeeper_Ext">
+                        <registeredKeeper>?</registeredKeeper>
+                     </registeredKeeper>
+                     <registeredKeeperDesc>?</registeredKeeperDesc>
+                     <cover>
+                        <coverType typeListName="CoverageCategory_Ext">
+                           <coverType>?</coverType>
+                        </coverType>
+                        <coverLevelDesc>?</coverLevelDesc>
+                        <classOfUse typeListName="ClassOfUse_Ext">
+                           <classOfUse>?</classOfUse>
+                        </classOfUse>
+                        <classOfUseDesc>?</classOfUseDesc>
+                        <voluntaryExcess typeListName="VolExcess_Ext">
+                           <voluntaryExcess>?</voluntaryExcess>
+                        </voluntaryExcess>
+                        <!--Optional:-->
+                        <voluntaryExcessDesc>?</voluntaryExcessDesc>
+                        <mainUser>?</mainUser>
+                        <!--Optional:-->
+                        <businessMileage>?</businessMileage>
+                        <!--Optional:-->
+                        <personalMileage>?</personalMileage>
+                        <!--Optional:-->
+                        <workRadiusMileage>?</workRadiusMileage>
+                        <totalMileage>?</totalMileage>
+                        <ncdGrantedYears typeListName="NCDGrantedYears_Ext">
+                           <ncdGrantedYears>?</ncdGrantedYears>
+                        </ncdGrantedYears>
+                        <!--Optional:-->
+                        <ncdGreaterZero>
+                           <howNcdEarn typeListName="NCDEarnedFrom_Ext">
+                              <howNcdEarn>?</howNcdEarn>
+                           </howNcdEarn>
+                           <!--Optional:-->
+                           <howNcdEarnDesc>?</howNcdEarnDesc>
+                           <ncdProtect>?</ncdProtect>
+                           <!--Optional:-->
+                           <ncdCurrentlyProtected>?</ncdCurrentlyProtected>
+                           <ncdEarnedUk>?</ncdEarnedUk>
+                        </ncdGreaterZero>
+                        <!--Optional:-->
+                        <ncdZero>
+                           <nameDriverExpFlag>?</nameDriverExpFlag>
+                           <!--Optional:-->
+                           <nameDriverExp typeListName="DrivingExperience_Ext">
+                              <nameDriverExp>?</nameDriverExp>
+                           </nameDriverExp>
+                           <!--Optional:-->
+                           <yearsNamedDriverExp typeListName="NCD_Ext">
+                              <yearsNamedDriverExp>?</yearsNamedDriverExp>
+                           </yearsNamedDriverExp>
+                           <!--Optional:-->
+                           <nameDriverExpDesc>?</nameDriverExpDesc>
+                        </ncdZero>
+                        <insurancePaymentType typeListName="InsurancePaymentType_Ext">
+                           <insurancePaymentType>?</insurancePaymentType>
+                        </insurancePaymentType>
+                        <!--Optional:-->
+                        <previousPolicyExpire>?</previousPolicyExpire>
+                        <!--Optional:-->
+                        <previousInsuranceProvider typeListName="Insurers_Ext">
+                           <!--Optional:-->
+                           <previousInsuranceProvider>?</previousInsuranceProvider>
+                        </previousInsuranceProvider>
+                     </cover>
+                  </van>
+                  <drivers>
+                     <policyholder>
+                        <name>
+                           <fullName>
+                              <title typeListName="NamePrefix">
+                                 <title>?</title>
+                              </title>
+                              <titleDesc>?</titleDesc>
+                              <firstName>?</firstName>
+                              <lastName>?</lastName>
+                           </fullName>
+                        </name>
+                        <driverId>?</driverId>
+                        <dateOfBirth>?</dateOfBirth>
+                        <maritalStatus typeListName="MaritalStatus">
+                           <maritalStatus>?</maritalStatus>
+                        </maritalStatus>
+                        <maritalStatusDesc>?</maritalStatusDesc>
+                        <address>
+                           <addressLine1>?</addressLine1>
+                           <addressLine2>?</addressLine2>
+                           <addressLine3>?</addressLine3>
+                           <town>?</town>
+                           <county>?</county>
+                           <postCode>?</postCode>
+                        </address>
+                        <ukResident>?</ukResident>
+                        <marketingPreference>
+                           <homeOwner>?</homeOwner>
+                           <!--Optional:-->
+                           <homeInsuranceRenewal typeListName="InsuranceRenewalMonth_Ext">
+                              <!--Optional:-->
+                              <homeInsuranceRenewal>?</homeInsuranceRenewal>
+                           </homeInsuranceRenewal>
+                           <!--Optional:-->
+                           <timeAtCurrentAddress typeListName="NCDGrantedYears_Ext">
+                              <!--Optional:-->
+                              <timeAtCurrentAddress>?</timeAtCurrentAddress>
+                           </timeAtCurrentAddress>
+                           <!--Optional:-->
+                           <anyChildrenUnder16>?</anyChildrenUnder16>
+                           <!--Zero or more repetitions:-->
+                           <fieldsData>
+                              <!--Optional:-->
+                              <code>?</code>
+                              <!--Optional:-->
+                              <value>?</value>
+                           </fieldsData>
+                        </marketingPreference>
+                        <!--1 to 2 repetitions:-->
+                        <employment>
+                           <isPrimary>?</isPrimary>
+                           <employmentStatusCode typeListName="FullTimeEmpStatus_Ext">
+                              <employmentStatusCode>?</employmentStatusCode>
+                           </employmentStatusCode>
+                           <employmentStatusDesc>?</employmentStatusDesc>
+                           <employmentOccupationCode typeListName="OccupationType_Ext">
+                              <employmentOccupationCode>?</employmentOccupationCode>
+                           </employmentOccupationCode>
+                           <employmentOccupationDesc>?</employmentOccupationDesc>
+                           <!--Optional:-->
+                           <whatWereYouStudying>?</whatWereYouStudying>
+                           <employmentBusinessCode typeListName="BusinessType_Ext">
+                              <employmentBusinessCode>?</employmentBusinessCode>
+                           </employmentBusinessCode>
+                           <employmentBusinessDesc>?</employmentBusinessDesc>
+                        </employment>
+                        <!--Optional:-->
+                        <companyEstablished>?</companyEstablished>
+                        <!--Optional:-->
+                        <companyType>?</companyType>
+                        <!--Optional:-->
+                        <companyName>?</companyName>
+                        <publicLiability>?</publicLiability>
+                        <!--Optional:-->
+                        <liabilityInsRenewal typeListName="InsuranceRenewalMonth_Ext">
+                           <!--Optional:-->
+                           <liabilityInsRenewal>?</liabilityInsRenewal>
+                        </liabilityInsRenewal>
+                        <!--Optional:-->
+                        <memberTradeOrganisation>?</memberTradeOrganisation>
+                        <!--Optional:-->
+                        <memberTradeOrganisationDesc>?</memberTradeOrganisationDesc>
+                        <licence>
+                           <!--Optional:-->
+                           <number>?</number>
+                           <type typeListName="LicenceType_Ext">
+                              <type>?</type>
+                           </type>
+                           <typeDesc>?</typeDesc>
+                           <lengthHeld>?</lengthHeld>
+                           <!--Optional:-->
+                           <fullUkLicenceIamCert>?</fullUkLicenceIamCert>
+                           <!--Optional:-->
+                           <yearPassPlusCert>?</yearPassPlusCert>
+                           <!--Optional:-->
+                           <aaProficiency>?</aaProficiency>
+                           <!--Optional:-->
+                           <fullUkLicenceIamCertDate>?</fullUkLicenceIamCertDate>
+                           <!--Optional:-->
+                           <yearPassPlusCertDate>?</yearPassPlusCertDate>
+                           <!--Optional:-->
+                           <aaProficiencyDate>?</aaProficiencyDate>
+                        </licence>
+                        <myLicenceIndicator>?</myLicenceIndicator>
+                        <!--Optional:-->
+                        <myLicence>
+                           <dvlaServiceVersion>?</dvlaServiceVersion>
+                           <hubServiceVersion>?</hubServiceVersion>
+                           <!--Optional:-->
+                           <dvlaProcessingDate>?</dvlaProcessingDate>
+                           <!--Optional:-->
+                           <hubProcessingDate>?</hubProcessingDate>
+                           <licenceStatus>?</licenceStatus>
+                           <!--Optional:-->
+                           <licenceValidFrom>?</licenceValidFrom>
+                           <licenceValidTo>?</licenceValidTo>
+                           <!--Optional:-->
+                           <licenceDirectiveIndicator>?</licenceDirectiveIndicator>
+                           <!--Zero or more repetitions:-->
+                           <entitlements>
+                              <!--Zero or more repetitions:-->
+                              <entitlement>
+                                 <entitlementCode>?</entitlementCode>
+                                 <!--Optional:-->
+                                 <entitlementValidFrom>?</entitlementValidFrom>
+                                 <!--Optional:-->
+                                 <entitlementValidTo>?</entitlementValidTo>
+                                 <entitlementPriorTo>?</entitlementPriorTo>
+                                 <entitlementType>?</entitlementType>
+                                 <!--Zero or more repetitions:-->
+                                 <restrictions>
+                                    <!--Zero or more repetitions:-->
+                                    <restriction>
+                                       <!--Optional:-->
+                                       <restrictionsType>?</restrictionsType>
+                                       <!--Optional:-->
+                                       <restrictionsInfo>?</restrictionsInfo>
+                                    </restriction>
+                                 </restrictions>
+                              </entitlement>
+                           </entitlements>
+                           <!--Zero or more repetitions:-->
+                           <endorsements>
+                              <!--Optional:-->
+                              <endorsementsCode>?</endorsementsCode>
+                              <!--Optional:-->
+                              <endorsementsOffenceDate>?</endorsementsOffenceDate>
+                              <!--Optional:-->
+                              <endorsementsConvictionDate>?</endorsementsConvictionDate>
+                              <!--Optional:-->
+                              <endorsementsFine>?</endorsementsFine>
+                              <!--Optional:-->
+                              <endorsementsNoOfPoints>?</endorsementsNoOfPoints>
+                              <endorsementsIsDisqual>?</endorsementsIsDisqual>
+                              <endorsementsDisqualPeriod>?</endorsementsDisqualPeriod>
+                              <!--Optional:-->
+                              <endorsementsDisqualStartDate>?</endorsementsDisqualStartDate>
+                              <!--Optional:-->
+                              <endorsementsDisqualEndDate>?</endorsementsDisqualEndDate>
+                              <!--Optional:-->
+                              <endorsementsCustodialPeriod>?</endorsementsCustodialPeriod>
+                              <!--Optional:-->
+                              <endorsementsRehabSpentDate>?</endorsementsRehabSpentDate>
+                           </endorsements>
+                           <driverMessage>?</driverMessage>
+                        </myLicence>
+                        <useOtherVehicle typeListName="AccessOtherVeh_Ext">
+                           <useOtherVehicle>?</useOtherVehicle>
+                        </useOtherVehicle>
+                        <useOtherVehicleDesc>?</useOtherVehicleDesc>
+                        <!--Optional:-->
+                        <levelOfNcdOtherVeh typeListName="NCDGrantedYears_Ext">
+                           <!--Optional:-->
+                           <levelOfNcdOtherVeh>?</levelOfNcdOtherVeh>
+                        </levelOfNcdOtherVeh>
+                        <!--Optional:-->
+                        <primaryEmail>?</primaryEmail>
+                        <!--Optional:-->
+                        <secondaryEmail>?</secondaryEmail>
+                        <!--Optional:-->
+                        <homePhoneNumber>?</homePhoneNumber>
+                        <!--Optional:-->
+                        <workPhoneNumber>?</workPhoneNumber>
+                        <!--Optional:-->
+                        <mobilePhoneNumber>?</mobilePhoneNumber>
+                        <!--Optional:-->
+                        <faxPhoneNumber>?</faxPhoneNumber>
+                        <!--Optional:-->
+                        <primaryPhone>?</primaryPhone>
+                        <medicalConditions typeListName="DVLAMedicalCondition_Ext">
+                           <medicalConditions>?</medicalConditions>
+                        </medicalConditions>
+                        <medicalConditionsDesc>?</medicalConditionsDesc>
+                        <anyDriverPolicy typeListName="HDAnyDriver_Ext">
+                           <anyDriverPolicy>?</anyDriverPolicy>
+                        </anyDriverPolicy>
+                        <nonMotoringConvictions>?</nonMotoringConvictions>
+                        <!--Optional:-->
+                        <claims>
+                           <!--Zero or more repetitions:-->
+                           <claim>
+                              <date>?</date>
+                              <type typeListName="DriverClaimType_Ext">
+                                 <type>?</type>
+                              </type>
+                              <source typeListName="DriverClaimSource_Ext">
+                                 <source>?</source>
+                              </source>
+                              <typeDesc>?</typeDesc>
+                              <!--Optional:-->
+                              <claimOnRecentPolicy>?</claimOnRecentPolicy>
+                              <ncdAffected>?</ncdAffected>
+                              <fault>?</fault>
+                              <!--Optional:-->
+                              <cost>?</cost>
+                              <!--Optional:-->
+                              <costOfTParty>?</costOfTParty>
+                              <!--Optional:-->
+                              <anyInjuries>?</anyInjuries>
+                              <!--Optional:-->
+                              <whoWasDriving>?</whoWasDriving>
+                              <!--Optional:-->
+                              <whoWasOnFault>?</whoWasOnFault>
+                              <claimSettled>?</claimSettled>
+                           </claim>
+                        </claims>
+                        <!--Optional:-->
+                        <convictions>
+                           <!--Zero or more repetitions:-->
+                           <conviction>
+                              <date>?</date>
+                              <convictionCode typeListName="ConvictionCodes_Ext">
+                                 <convictionCode>?</convictionCode>
+                              </convictionCode>
+                              <convictionCodeDesc>?</convictionCodeDesc>
+                              <licencePoints typeListName="ConvictionPoints_Ext">
+                                 <licencePoints>?</licencePoints>
+                              </licencePoints>
+                              <!--Optional:-->
+                              <fine>?</fine>
+                              <banLength>?</banLength>
+                              <!--Optional:-->
+                              <isBreathalysed>?</isBreathalysed>
+                              <!--Optional:-->
+                              <typeAlcoholReading>?</typeAlcoholReading>
+                              <!--Optional:-->
+                              <breathalyserReading>?</breathalyserReading>
+                              <!--Optional:-->
+                              <convictionAccident>?</convictionAccident>
+                           </conviction>
+                        </convictions>
+                        <isPolicyDeclinedForDrivers>?</isPolicyDeclinedForDrivers>
+                        <!--Zero or more repetitions:-->
+                        <specialTermsImposed typeListName="SpecialTerms_Ext">
+                           <!--Optional:-->
+                           <specialTermsImposed>?</specialTermsImposed>
+                        </specialTermsImposed>
+                        <!--Optional:-->
+                        <specialTermsImposedDesc>?</specialTermsImposedDesc>
+                     </policyholder>
+                     <!--Zero or more repetitions:-->
+                     <additionalDriver>
+                        <name>
+                           <fullName>
+                              <title typeListName="NamePrefix">
+                                 <title>?</title>
+                              </title>
+                              <titleDesc>?</titleDesc>
+                              <firstName>?</firstName>
+                              <lastName>?</lastName>
+                           </fullName>
+                        </name>
+                        <driverId>?</driverId>
+                        <dateOfBirth>?</dateOfBirth>
+                        <maritalStatus typeListName="MaritalStatus">
+                           <maritalStatus>?</maritalStatus>
+                        </maritalStatus>
+                        <maritalStatusDesc>?</maritalStatusDesc>
+                        <relationship typeListName="RelationToProposer_Ext">
+                           <relationship>?</relationship>
+                        </relationship>
+                        <relationshipDesc>?</relationshipDesc>
+                        <ukResident>?</ukResident>
+                        <!--1 to 2 repetitions:-->
+                        <employment>
+                           <isPrimary>?</isPrimary>
+                           <employmentStatusCode typeListName="FullTimeEmpStatus_Ext">
+                              <employmentStatusCode>?</employmentStatusCode>
+                           </employmentStatusCode>
+                           <employmentStatusDesc>?</employmentStatusDesc>
+                           <employmentOccupationCode typeListName="OccupationType_Ext">
+                              <employmentOccupationCode>?</employmentOccupationCode>
+                           </employmentOccupationCode>
+                           <employmentOccupationDesc>?</employmentOccupationDesc>
+                           <!--Optional:-->
+                           <whatWereYouStudying>?</whatWereYouStudying>
+                           <employmentBusinessCode typeListName="BusinessType_Ext">
+                              <employmentBusinessCode>?</employmentBusinessCode>
+                           </employmentBusinessCode>
+                           <employmentBusinessDesc>?</employmentBusinessDesc>
+                        </employment>
+                        <licence>
+                           <!--Optional:-->
+                           <number>?</number>
+                           <type typeListName="LicenceType_Ext">
+                              <type>?</type>
+                           </type>
+                           <typeDesc>?</typeDesc>
+                           <lengthHeld>?</lengthHeld>
+                           <!--Optional:-->
+                           <fullUkLicenceIamCert>?</fullUkLicenceIamCert>
+                           <!--Optional:-->
+                           <yearPassPlusCert>?</yearPassPlusCert>
+                           <!--Optional:-->
+                           <aaProficiency>?</aaProficiency>
+                           <!--Optional:-->
+                           <fullUkLicenceIamCertDate>?</fullUkLicenceIamCertDate>
+                           <!--Optional:-->
+                           <yearPassPlusCertDate>?</yearPassPlusCertDate>
+                           <!--Optional:-->
+                           <aaProficiencyDate>?</aaProficiencyDate>
+                        </licence>
+                        <myLicenceIndicator>?</myLicenceIndicator>
+                        <!--Optional:-->
+                        <myLicence>
+                           <dvlaServiceVersion>?</dvlaServiceVersion>
+                           <hubServiceVersion>?</hubServiceVersion>
+                           <!--Optional:-->
+                           <dvlaProcessingDate>?</dvlaProcessingDate>
+                           <!--Optional:-->
+                           <hubProcessingDate>?</hubProcessingDate>
+                           <licenceStatus>?</licenceStatus>
+                           <!--Optional:-->
+                           <licenceValidFrom>?</licenceValidFrom>
+                           <licenceValidTo>?</licenceValidTo>
+                           <!--Optional:-->
+                           <licenceDirectiveIndicator>?</licenceDirectiveIndicator>
+                           <!--Zero or more repetitions:-->
+                           <entitlements>
+                              <!--Zero or more repetitions:-->
+                              <entitlement>
+                                 <entitlementCode>?</entitlementCode>
+                                 <!--Optional:-->
+                                 <entitlementValidFrom>?</entitlementValidFrom>
+                                 <!--Optional:-->
+                                 <entitlementValidTo>?</entitlementValidTo>
+                                 <entitlementPriorTo>?</entitlementPriorTo>
+                                 <entitlementType>?</entitlementType>
+                                 <!--Zero or more repetitions:-->
+                                 <restrictions>
+                                    <!--Zero or more repetitions:-->
+                                    <restriction>
+                                       <!--Optional:-->
+                                       <restrictionsType>?</restrictionsType>
+                                       <!--Optional:-->
+                                       <restrictionsInfo>?</restrictionsInfo>
+                                    </restriction>
+                                 </restrictions>
+                              </entitlement>
+                           </entitlements>
+                           <!--Zero or more repetitions:-->
+                           <endorsements>
+                              <!--Optional:-->
+                              <endorsementsCode>?</endorsementsCode>
+                              <!--Optional:-->
+                              <endorsementsOffenceDate>?</endorsementsOffenceDate>
+                              <!--Optional:-->
+                              <endorsementsConvictionDate>?</endorsementsConvictionDate>
+                              <!--Optional:-->
+                              <endorsementsFine>?</endorsementsFine>
+                              <!--Optional:-->
+                              <endorsementsNoOfPoints>?</endorsementsNoOfPoints>
+                              <endorsementsIsDisqual>?</endorsementsIsDisqual>
+                              <endorsementsDisqualPeriod>?</endorsementsDisqualPeriod>
+                              <!--Optional:-->
+                              <endorsementsDisqualStartDate>?</endorsementsDisqualStartDate>
+                              <!--Optional:-->
+                              <endorsementsDisqualEndDate>?</endorsementsDisqualEndDate>
+                              <!--Optional:-->
+                              <endorsementsCustodialPeriod>?</endorsementsCustodialPeriod>
+                              <!--Optional:-->
+                              <endorsementsRehabSpentDate>?</endorsementsRehabSpentDate>
+                           </endorsements>
+                           <driverMessage>?</driverMessage>
+                        </myLicence>
+                        <!--Optional:-->
+                        <useOtherVehicle typeListName="AccessOtherVeh_Ext">
+                           <!--Optional:-->
+                           <useOtherVehicle>?</useOtherVehicle>
+                        </useOtherVehicle>
+                        <!--Optional:-->
+                        <useOtherVehicleDesc>?</useOtherVehicleDesc>
+                        <!--Optional:-->
+                        <levelOfNcdOtherVeh typeListName="NCDGrantedYears_Ext">
+                           <!--Optional:-->
+                           <levelOfNcdOtherVeh>?</levelOfNcdOtherVeh>
+                        </levelOfNcdOtherVeh>
+                        <medicalConditions typeListName="DVLAMedicalCondition_Ext">
+                           <medicalConditions>?</medicalConditions>
+                        </medicalConditions>
+                        <medicalConditionsDesc>?</medicalConditionsDesc>
+                        <nonMotoringConvictions>?</nonMotoringConvictions>
+                        <!--Optional:-->
+                        <claims>
+                           <!--Zero or more repetitions:-->
+                           <claim>
+                              <date>?</date>
+                              <type typeListName="DriverClaimType_Ext">
+                                 <type>?</type>
+                              </type>
+                              <source typeListName="DriverClaimSource_Ext">
+                                 <source>?</source>
+                              </source>
+                              <typeDesc>?</typeDesc>
+                              <!--Optional:-->
+                              <claimOnRecentPolicy>?</claimOnRecentPolicy>
+                              <ncdAffected>?</ncdAffected>
+                              <fault>?</fault>
+                              <!--Optional:-->
+                              <cost>?</cost>
+                              <!--Optional:-->
+                              <costOfTParty>?</costOfTParty>
+                              <!--Optional:-->
+                              <anyInjuries>?</anyInjuries>
+                              <!--Optional:-->
+                              <whoWasDriving>?</whoWasDriving>
+                              <!--Optional:-->
+                              <whoWasOnFault>?</whoWasOnFault>
+                              <claimSettled>?</claimSettled>
+                           </claim>
+                        </claims>
+                        <!--Optional:-->
+                        <convictions>
+                           <!--Zero or more repetitions:-->
+                           <conviction>
+                              <date>?</date>
+                              <convictionCode typeListName="ConvictionCodes_Ext">
+                                 <convictionCode>?</convictionCode>
+                              </convictionCode>
+                              <convictionCodeDesc>?</convictionCodeDesc>
+                              <licencePoints typeListName="ConvictionPoints_Ext">
+                                 <licencePoints>?</licencePoints>
+                              </licencePoints>
+                              <!--Optional:-->
+                              <fine>?</fine>
+                              <banLength>?</banLength>
+                              <!--Optional:-->
+                              <isBreathalysed>?</isBreathalysed>
+                              <!--Optional:-->
+                              <typeAlcoholReading>?</typeAlcoholReading>
+                              <!--Optional:-->
+                              <breathalyserReading>?</breathalyserReading>
+                              <!--Optional:-->
+                              <convictionAccident>?</convictionAccident>
+                           </conviction>
+                        </convictions>
+                        <insPolicyDeclinedForDrivers>?</insPolicyDeclinedForDrivers>
+                     </additionalDriver>
+                  </drivers>
+                  <extraQuestions>
+                     <carInsured>?</carInsured>
+                     <!--Optional:-->
+                     <renewalCarDue>?</renewalCarDue>
+                     <bikeInsured>?</bikeInsured>
+                     <!--Optional:-->
+                     <renewalBikeDue>?</renewalBikeDue>
+                     <homeInsured>?</homeInsured>
+                     <!--Optional:-->
+                     <renewalPrice>?</renewalPrice>
+                     <!--Optional:-->
+                     <bestPrice>?</bestPrice>
+                  </extraQuestions>
+                  <!--Optional:-->
+                  <additionalVariablesString>
+                     <!--Zero or more repetitions:-->
+                     <question>
+                        <!--Optional:-->
+                        <id>?</id>
+                        <!--Optional:-->
+                        <value>?</value>
+                     </question>
+                  </additionalVariablesString>
+                  <!--Optional:-->
+                  <additionalVariablesDate>
+                     <!--Zero or more repetitions:-->
+                     <question>
+                        <!--Optional:-->
+                        <id>?</id>
+                        <!--Optional:-->
+                        <value>?</value>
+                     </question>
+                  </additionalVariablesDate>
+                  <!--Optional:-->
+                  <additionalVariablesInteger>
+                     <!--Zero or more repetitions:-->
+                     <question>
+                        <!--Optional:-->
+                        <id>?</id>
+                        <!--Optional:-->
+                        <value>?</value>
+                     </question>
+                  </additionalVariablesInteger>
+                  <!--Optional:-->
+                  <additionalVariablesBoolean>
+                     <!--Zero or more repetitions:-->
+                     <question>
+                        <!--Optional:-->
+                        <id>?</id>
+                        <!--Optional:-->
+                        <value>?</value>
+                     </question>
+                  </additionalVariablesBoolean>
+                  <!--Optional:-->
+                  <ancillaries>
+                     <!--Optional:-->
+                     <ancillary>?</ancillary>
+                     <!--Optional:-->
+                     <ancillaryCode>?</ancillaryCode>
+                  </ancillaries>
+               </VanQuote>
+            </VanQuoteRequest>
+         </cvq:req>
+      </cvq:getAggregatorVanQuote>
+   </soap:Body>
+</soap:Envelope>

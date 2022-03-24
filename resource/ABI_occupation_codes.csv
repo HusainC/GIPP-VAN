@@ -1,0 +1,2110 @@
+code,description
+001,Abattoir Worker
+002,Accounts Assistant
+003,Accounts Clerk
+004,Actor
+005,Actress
+006,Acupuncturist
+007,Administration Assistant
+008,Administration Clerk
+009,Administrator
+010,Advertising Assistant
+011,Advertising Clerk
+012,Advertising Manager
+013,Aerial Erector
+014,Aerobic Instructor
+015,Agricultural Engineer
+016,Aircraft Designer
+017,Airline Check-in Staff
+018,Airman
+019,Almoner
+020,Anaesthetist
+021,Animal Breeder
+022,Arbitrator
+023,Architects Technician
+024,Art Critic
+025,Articled Clerk
+026,Asphalter
+027,Astrologer
+028,Astronomer
+029,Auto Electrician
+030,Auxiliary Nurse
+031,Bacon Curer
+032,Bank Clerk
+033,Bank Manager
+034,Bar Manager
+035,Bar Steward
+036,Barber
+037,Barmaid
+038,Barman
+039,Bill Poster
+040,Biochemist
+041,Biologist
+042,Blinds Installer
+043,Boiler Maker
+044,Book Binder
+045,Book Seller
+046,Botanist
+047,Brewer
+048,Broadcaster
+049,Builders Labourer
+050,Building Foreman
+051,Bus Driver
+052,Butler
+053,Cabinet Maker
+054,Cameraman
+055,Car Builder
+056,Car Salesman
+057,Careers Officer
+059,Caulker
+060,Certified Accountant
+061,Chandler
+062,Charity Worker
+063,Chartered Accountant
+064,Chartered Surveyor
+065,Chemist
+066,Chicken Sexer
+068,Chiropractor
+069,Choreographer
+070,Church Officer
+071,Church Warden
+072,Claims Adjustor
+073,Claims Assessor
+074,Clergyman
+075,Cleric
+076,Clock Maker
+077,Coach Builder
+078,Coach Driver
+079,Coal Merchant
+080,Commercial Artist
+081,Commercial Traveller
+082,Commissioned Officer
+083,Community Worker
+084,Company Director
+085,Composer
+086,Computer Analyst
+087,Computer Engineer
+088,Consultant
+089,Conveyancer
+090,Cook
+091,Cooper
+092,Council Worker
+093,Counsellor
+094,Crane Driver
+095,Credit Manager
+096,Crofter
+097,Customs & Excise Officer
+098,Cutler
+099,Cutter
+100,Dancer
+101,Decorator
+102,Delivery Courier
+103,Demonstrator
+104,Dental Assistant
+105,Dental Hygienist
+106,Dental Nurse
+107,Dental Technician
+108,Dentist
+109,Dermatologist
+110,Despatch Worker
+111,Dietician
+112,Dinner Lady
+113,Diplomat
+114,Dockyard Worker
+115,Doctor
+116,Dog Breeder
+117,Double Glazing Salesman
+118,Drayman
+119,Dustman
+120,Dyer
+121,Electronic Engineer
+122,Embalmer
+123,Embassy Staff
+124,Environmental Health Officer
+125,Exhaust Fitter
+126,Exhibition Organiser
+127,Exotic Dancer
+128,Fabricator
+129,Fast Food Delivery Driver
+130,Fence Erector
+131,Fibre Glass Moulder
+132,Film Director
+133,Film Producer
+134,Film Technician
+135,Firefighter
+136,Fish Fryer
+137,Fitness Instructor
+138,Flight Deck Crew
+139,Foundry Worker
+140,French Polisher
+141,Fuel Merchant
+142,Funeral Director
+143,Funeral Furnisher
+144,Gas Fitter
+145,Gas Technician
+146,General Manager
+147,Glazier
+148,Green Keeper
+149,Guard
+150,Guest House Proprietor
+151,Gun Smith
+152,Gynaecologist
+153,Heating & Ventilation Engineer
+154,Heating Engineer
+155,Herbalist
+156,Hod Carrier
+157,Homeopath
+158,Horse Breeder
+161,Horse Trader
+162,Hotelier
+163,Househusband
+164,Housing Officer
+165,Insurance Assessor
+166,Insurance Inspector
+167,Insurance Representative
+168,Interior Decorator
+169,Interviewer
+170,Janitor
+171,Justice Of The Peace
+172,Keep Fit Instructor
+173,Kennel Maid
+174,Kissagram Person
+175,Kitchen Worker
+176,Landlord
+177,Laundry Worker
+178,Lavatory Attendant
+179,Leather Worker
+180,Leisure Centre Attendant
+181,Lens Grinder & Polisher
+182,Licensee
+183,Lift Attendant
+184,Lift Engineer
+185,Lighting Technician
+186,Line Worker
+187,Linguist
+188,Literary Agent
+189,Lorry Driver
+190,Loss Adjustor
+191,Loss Assessor
+192,Lumberjack
+193,Magistrates Clerk
+194,Managing Director
+195,Manicurist
+196,Marine Pilot
+197,Marketing Assistant
+198,Marketing Executive
+199,Marketing Manager
+200,Masseur
+201,Masseuse
+202,Merchant Seaman
+203,Metal Dealer
+204,Microbiologist
+205,Milkman
+206,Mill Worker
+207,Miller
+208,Mineralologist
+209,Minicab Driver
+210,Mobile Hairdresser
+211,Mobile Service Engineer
+212,Mortgage Broker
+213,Mortician
+214,Motor Engineer
+215,Motor Mechanic
+216,Navigator
+217,Neurologist
+218,Night Watchman
+219,Non Commissioned Officer
+220,Not In Employment
+221,Notary Public
+222,Nuclear Scientist
+223,Occupational Therapist
+224,Oculist
+225,Office Manager
+226,Operations Manager
+227,Organist
+228,Ostler
+229,Paint Sprayer
+230,Panel Beater
+231,Paramedic
+232,Park Attendant
+233,Park Keeper
+234,Personnel Manager
+235,Personnel Officer
+236,Pest Controller
+237,Photo Engraver
+238,Physicist
+239,Picker
+240,Picture Framer
+241,Pilot
+242,Pool Attendant
+244,Post Office Counter Clerk
+245,Postman
+246,Postwoman
+247,Priest
+248,Print Finisher
+250,Procurator Fiscal
+251,Professor
+252,Progress Clerk
+253,Project Engineer
+254,Project Manager
+255,Property Buyer
+256,Property Dealer
+257,Property Manager
+258,Property Valuer
+259,Proprietor
+260,Psychiatrist
+261,Psychologist
+262,Psychotherapist
+263,Purser
+264,Quarry Worker
+265,Queens Counsel
+266,Rabbi
+267,Radio Director
+268,Radio Presenter
+269,Radio Producer
+270,Rector
+271,Restaurant Manager
+272,Restaurateur
+273,Restorer
+275,Rigger
+276,Riveter
+277,Road Worker
+278,Royal Marine
+279,Saddler
+280,Sail Maker
+281,Sales Executive
+282,Sales Manager
+283,Sales Representative
+284,Salesman
+285,Sand Blaster
+286,Saw Miller
+287,Scrap Dealer
+288,Screen Printer
+289,Screen Writer
+290,Seaman
+291,Seamstress
+292,Second Hand Dealer
+293,Seedsman
+294,Servant
+295,Sheet Metal Worker
+296,Shelf Filler
+297,Shepherd
+298,Sheriff
+299,Sheriff Clerk
+300,Sheriff Principal
+301,Sheriffs Officer
+302,Ship Builder
+303,Shipwright
+304,Shoe Repairer
+305,Shop Keeper
+306,Shop Manager
+307,Shot Blaster
+308,Shunter
+309,Signalman
+310,Slater
+311,Slaughterman
+312,Smallholder
+313,Soldier
+314,Song Writer
+315,Sound Engineer
+316,Speech Therapist
+317,Sports Coach
+318,Sportsman
+319,Sportswoman
+320,Stage Director
+322,Stage Manager
+323,Stage Mover
+324,Steel Erector
+325,Steward
+326,Stewardess
+327,Stockman
+328,Storeman
+329,Storewoman
+330,Stud Hand
+332,Systems Analyst
+333,Tanner
+334,Tax Consultant
+335,Tea Blender
+336,Tea Taster
+337,Technical Author
+338,Telecommunications Engineer
+339,Telephone Engineer
+340,Television Director
+341,Television Engineer
+342,Television Presenter
+343,Television Producer
+344,Thatcher
+345,Theatre Manager
+346,Theatrical Agent
+347,Tour Guide
+348,Trading Standards Officer
+349,Transport Officer
+350,Travel Consultant
+351,Travel Courier
+352,Tree Feller
+353,Tunneller
+354,Turner
+355,Tutor
+356,Typesetter
+357,Tyre Fitter
+358,Vehicle Assessor
+359,Vicar
+360,Waiter
+361,Waitress
+362,Warehouseman
+363,Warehousewoman
+364,Waste Dealer
+365,Weaver
+366,Welfare Officer
+367,Wheel Clamper
+368,Window Dresser
+369,Wine Merchant
+370,Wood Carver
+371,Wood Cutter
+372,Wood Worker
+373,Youth Worker
+374,Zoologist
+375,Coppersmith
+376,Health And Safety Officer
+378,Illustrator
+379,Laminator
+380,Optical Assistant
+381,Pallet Maker
+382,Tool Setter
+383,Local Government Officer
+384,Copywriter
+385,Dark Room Technician
+386,Farrier
+387,Flying Instructor
+388,Physiologist
+389,Road Sweeper
+390,Customer Liaison Officer
+391,Accommodation Officer
+392,Aircraft Buyer
+393,Applications Engineer
+394,Applications Programmer
+395,Assistant Manager
+396,Audiologist
+397,Audit Clerk
+398,Bank Note Checker
+399,Book-Keeper
+400,Booking Office Clerk
+401,Building Inspector
+402,Building Surveyor
+403,Calibration Manager
+404,Care Manager
+405,Charge Hand
+406,Classroom Aide
+407,Complementary Therapist
+408,Court Officer
+409,Customer Advisor
+410,Dance Teacher
+411,Design Engineer
+412,Development Manager
+413,Dog Groomer
+414,Drug Addiction Counsellor
+415,Electrical Contractor
+416,Evangelist
+417,Excursion Manager
+418,Finance Director
+419,Financial Analyst
+420,Floor Layer
+421,Floor Manager
+422,Food Processor
+423,Garage Foreman
+424,Geophysicist
+425,Hearing Therapist
+426,Hospital Technician
+427,House Parent
+428,Immigration Officer
+429,Instrument Engineer
+430,Laboratory Assistant
+431,Lathe Operator
+432,Legal Executive
+433,Maintenance Man
+434,Matron
+435,Medical Secretary
+436,Museum Technician
+437,Nursery Assistant
+438,Operations Supervisor
+439,Outfitter
+440,Pathologist
+441,Petroleum Engineer
+442,Plant Manager
+443,Plater
+444,Playgroup Leader
+445,Practice Manager
+446,Precision Engineer
+447,Produce Supervisor
+448,Product Manager
+449,Production Engineer
+450,Publicity Manager
+451,Radiologist
+452,Research Director
+453,Research Technician
+454,Revenue Officer
+455,Sales Administrator
+456,Sales Director
+457,Sales Support
+458,School Crossing Warden
+459,Secretary And PA
+460,Share Dealer
+461,Site Engineer
+462,Software Consultant
+463,Software Engineer
+464,Systems Manager
+465,Teachers Assistant
+466,Therapist
+467,Town Planner
+468,Training Manager
+469,Transport Controller
+470,Transport Engineer
+471,Vehicle Technician
+472,Verger
+473,Warehouse Manager
+474,Welfare Rights Officer
+475,Youth Hostel Warden
+476,Bodyshop Manager
+477,Contract Cleaner
+478,Financial Consultant
+479,Health Therapist
+480,Jewellery Consultant
+481,Machine Setter
+482,Maintenance Fitter
+483,Parts Manager
+484,Plastics Consultant
+485,Process Engineer
+486,Public House Manager
+487,Research Scientist
+488,Shipping Officer
+489,Staff Nurse
+490,Tax Analyst
+491,Thermal Engineer
+492,Violin Maker
+493,Loader
+494,Refit Merchandiser
+495,Cinema Assistant
+496,Clerical Officer
+497,Contract Manager
+498,County Councillor
+499,Dental Surgeon
+500,Energy Analyst
+501,Fish Filleter
+502,Foreman
+503,Ground Worker
+504,Legal Assistant
+505,Make Up Artist
+506,Metal Polisher
+507,Microfilm Operator
+508,Music Teacher
+509,Pipe Fitter
+510,Press Operator
+511,Proof Reader
+512,Safety Officer
+513,Stenographer
+514,Supply Teacher
+515,Audit Manager
+516,Blind Fitter
+517,Cable Contractor
+518,Careers Advisor
+519,Centre Lathe Operator
+520,Commercial Manager
+521,Confectioner
+522,Creche Worker
+523,Day Care Officer
+524,Diecaster
+525,Dryliner
+526,Flagger
+527,Foam Convertor
+528,Goods Handler
+529,Handyman
+530,Head Accurist
+531,Instrument Supervisor
+532,Landscape Architect
+533,Nursing Assistant
+534,Oil Rig Crew
+535,Optical Technician
+536,Parts Supervisor
+537,Pasteuriser
+538,Patent Attorney
+539,Planning Officer
+540,Plastics Engineer
+541,Playgroup Assistant
+542,Production Planner
+543,Quality Engineer
+544,Quality Manager
+545,Quality Technician
+546,Security Controller
+547,Service Manager
+548,Site Agent
+549,Skipper
+550,Sound Technician
+551,Stock Manager
+552,Stone Cutter
+553,Studio Manager
+554,Tacker
+555,Trainee Manager
+556,Yard Manager
+557,Building Society Staff
+559,Aircraft Engineer
+560,Bakery Assistant
+561,Ceiling Fixer
+562,Cleaning Contractor
+563,Data Processor
+564,Dog Beautician
+565,Farm Manager
+566,Fishery Manager
+567,Health Advisor
+568,Hygienist
+569,Litigation Manager
+570,Marine Surveyor
+571,Metal Engineer
+572,Nursing Manager
+573,Opthalmic Technician
+574,Payroll Assistant
+575,Planning Engineer
+576,Press Officer
+577,Project Leader
+578,Purchasing Assistant
+579,Radio Operator
+580,Roof Tiler
+581,Shift Controller
+582,Spring Maker
+583,Sub-Postmistress
+584,Systems Engineer
+585,Welfare Assistant
+586,Works Manager
+587,Store Detective
+588,Airport Controller
+589,Assistant Accounts Manager
+590,Assistant Caretaker
+591,Assistant Cook
+592,Assistant Nurse
+593,Assistant Teacher
+594,Bakery Operator
+595,Baptist Minister
+596,Beauty Therapist
+597,Blind Assembler
+598,Body Fitter
+599,Booking Agent
+600,Building Advisor
+601,Building Contractor
+602,Building Manager
+603,Bus Valeter
+604,Cafe Owner
+605,Cafe Staff
+606,Car Body Repairer
+607,Car Dealer
+608,Car Wash Attendant
+609,Carpenters Assistant
+610,Carpet Retailer
+611,Catering Manager
+612,Ceiling Contractor
+613,Cellarman
+614,Chartered Engineer
+615,Chief Cashier
+616,Chief Chemist
+617,Claims Manager
+618,Cleaning Supervisor
+619,Clerical Assistant
+620,Clinical Psychologist
+621,College Lecturer
+622,Commissioning Engineer
+623,Community Craft Instructor
+624,Conservator
+625,Contract Furnisher
+626,Contracts Supervisor
+627,Craft Dealer
+628,Craftswoman
+629,Crime Examiner
+630,Cycle Repairer
+632,Cobbler
+633,Dairy Engineer
+634,Data Administrator
+635,Data Co-Ordinator
+636,Debt Counsellor
+637,Delivery Driver
+638,Deputy Head Teacher
+639,Deputy Manager
+640,Deputy Principal
+641,Design Director
+642,Design Manager
+643,Despatch Driver
+644,Despatch Rider
+645,Distribution Manager
+646,Document Controller
+647,Dog Trainer
+648,Domestic Staff
+649,Door Fitter
+650,Draughtswoman
+651,Dry Cleaner
+652,Dye Polisher
+653,Ecologist
+654,Education Advisor
+655,Electrical Fitter
+656,Electronics Supervisor
+657,Electronics Technician
+658,Estate Manager
+659,Events Organiser
+660,Extrusion Operator
+661,Factory Canteen Manager
+662,Factory Manager
+663,Fashion Photographer
+664,Figure Painter
+665,Finance Manager
+666,Finance Officer
+667,Fireplace Fitter
+668,Firewood Merchant
+669,First Aid Worker
+670,Fish Buyer
+671,Fish Merchant
+672,Fish Worker
+673,Fisheries Inspector
+674,Flour Miller
+676,Fruiterer
+677,Furniture Dealer
+678,Hospital Doctor
+680,Advertising Contractor
+681,Bakery Manager
+682,Betting Shop Clerk
+683,Building Society Clerk
+684,Butchery Manager
+686,Cafe Worker
+687,Communications Supervisor
+688,Computer Manager
+689,Construction Engineer
+690,Curtain Maker
+691,Aromatherapist
+692,Auction Worker
+693,Balloonist
+694,Bingo Hall Staff
+695,Box Maker
+696,Builders Merchant
+697,Building Site Inspector
+698,Cable TV Installer
+699,Cargo Operator
+700,Carpet Cleaner
+701,Carphone Fitter
+702,China Restorer
+703,Clay Pigeon Instructor
+704,Coin Dealer
+705,College Dean
+706,Conference Organiser
+707,Conservationist
+708,Countryside Ranger
+709,Currency Trader
+710,Diamond Dealer
+711,Distillery Worker
+712,Drilling Technician
+713,Editorial Staff
+714,Exporter
+715,Fast Food Proprietor
+716,Fire Prevention Officer
+717,Gallery Owner
+718,Gambler
+719,Gaming Club Manager
+720,Gaming Club Proprietor
+721,Garage Attendant
+722,Garage Manager
+723,Garden Designer
+724,Gas Mechanic
+725,Golfer
+726,Granite Technician
+727,Gravel Merchant
+728,Grocer
+729,Guide
+730,Hardware Dealer
+731,Haulage Contractor
+732,Head Greenkeeper
+733,Health And Safety Consultant
+734,Health Care Assistant
+735,Health Planner
+736,HGV Mechanic
+737,Historian
+738,Homecare Manager
+739,Hop Merchant
+740,Horse Trainer
+741,Hosiery Mechanic
+742,Hosiery Worker
+743,Hospital Consultant
+744,Hospital Manager
+745,Hospital Orderly
+746,Hospital Worker
+747,Hot Foil Printer
+748,Hotel Worker
+749,Housing Assistant
+750,Housing Supervisor
+751,Hydro Geologist
+752,Hypnotherapist
+753,Importer
+754,Money Broker
+755,Nutritionist
+756,Orthoptist
+757,Patent Agent
+758,Pipe Inspector
+759,Potato Merchant
+760,Publishing Manager
+761,Racehorse Groom
+762,Radio Controller
+763,Refrigeration Engineer
+764,Reflexologist
+765,Rent Collector
+766,Scientific Officer
+767,Shelter Warden
+768,Shooting Instructor
+769,Special Constable
+770,Sports Commentator
+771,Stocktaker
+772,Tattooist
+773,Technical Illustrator
+774,Technical Instructor
+775,Telex Operator
+776,Tug Skipper
+777,Valve Technician
+778,Vending Machine Filler
+779,Vending Machine Technician
+780,Weighbridge Clerk
+781,Weighbridge Operator
+782,Instrument Technician
+783,Mechanical Technician
+784,Genealogist
+785,Induction Moulder
+786,Injection Moulder
+787,Insurance Consultant
+788,Investment Banker
+789,Jazz Composer
+790,Joinery Consultant
+791,Junk Shop Proprietor
+792,Laboratory Analyst
+793,Laboratory Manager
+794,Laboratory Supervisor
+795,Labelling Operator
+796,Laboratory Operative
+797,Laboratory Attendant
+798,Landlady
+799,Law Clerk
+800,Lawn Mower Repairer
+801,Leaflet Distributor
+802,Ledger Clerk
+803,Legal Advisor
+804,Leisure Centre Manager
+805,Letting Agent
+806,Money Dealer
+807,Mooring Contractor
+808,Mortgage Consultant
+809,Motor Dealer
+810,Motor Fitter
+811,Motor Racing Organiser
+812,Museum Assistant
+813,Museum Attendant
+814,Museum Consultant
+815,Music Therapist
+816,Music Wholesaler
+817,Library Manager
+818,Lighterman
+819,Lighting Designer
+820,Lime Kiln Attendant
+821,Literary Editor
+822,Loans Manager
+823,Locum Pharmacist
+824,Log Merchant
+825,Machine Fitters Mate
+826,Machine Minder
+827,Machine Technician
+828,Machine Tool Engineer
+829,Machine Tool Fitter
+830,Magician
+831,Maid
+832,Maintenance Engineer
+833,Maintenance Manager
+834,Make Up Supervisor
+835,Management Trainee
+836,Manufacturing Technician
+837,Map Mounter
+838,Marble Finisher
+839,Marble Mason
+840,Marine Electrician
+841,Marine Geologist
+843,Market Research Assistant
+844,Marketing Agent
+845,Marketing Co-ordinator
+846,Marketing Consultant
+847,Marketing Director
+848,Marquee Erector
+849,Massage Therapist
+850,Master Mariner
+851,Materials Controller
+852,Materials Manager
+853,Mathematician
+854,Mattress Maker
+855,Meat Inspector
+856,Meat Wholesaler
+857,Medal Dealer
+858,Medical Advisor
+859,Medical Assistant
+860,Medical Physicist
+861,Medical Researcher
+862,Medical Supplier
+863,Medical Technician
+864,Merchandiser
+865,Merchant Banker
+866,Mill Operator
+867,Mining Consultant
+868,Mobile Disco Owner
+869,Model Maker
+870,IT Consultant
+871,IT Manager
+872,IT Trainer
+873,Monumental Sculptor
+874,Landworker
+875,Line Manager
+876,Bingo Caller
+877,Check-Out Assistant
+878,Night Porter
+879,Nursery Worker
+880,Nursing Auxiliary
+881,Off Shore Surveyor
+882,Office Administrator
+883,Oil Broker
+884,Opera Singer
+885,Operations Director
+886,Optical Advisor
+887,Orchestral Violinist
+888,Order Clerk
+889,Ornamental Blacksmith
+890,Orthopaedic Technician
+891,Outdoor Pursuits Instructor
+892,Outreach Worker
+893,Overhead Line Instructor
+894,Overhead Lineman
+895,Overlocker
+896,Overseas Mailer
+897,Overwriter
+898,Packaging Consultant
+899,Paediatrician
+900,Paper Mill Worker
+901,Park Ranger
+902,Partition Erector
+903,Parts Man
+904,Pastry Chef
+905,Pattern Cutter
+906,Pattern Weaver
+907,Paviour
+908,Payment Officer
+910,Payroll Clerk
+911,Payroll Manager
+912,Payroll Supervisor
+913,Pearl Stringer
+914,Pensions Consultant
+915,Pensions Manager
+916,Pet Minder
+917,Petty Officer
+918,Pharmaceutical Assistant
+919,Pharmacy Manager
+920,Pharmacy Technician
+921,Photo Laboratory Processor
+922,Photo Technician
+923,Physician
+924,Piano Teacher
+925,Picture Editor
+926,Picture Researcher
+927,Pig Man
+928,Pig Manager
+929,Pipe Insulator
+930,Planning Manager
+931,Planning Technician
+932,Plant Attendant
+933,Plant Engineer
+934,Plant Fitter
+935,Plant Operator
+936,Plate Layer
+937,Polisher
+938,Portfolio Manager
+939,Post Card Seller
+940,Post Sorter
+941,Preacher
+942,Press Setter
+943,Presser
+944,Prison Chaplain
+945,Probation Worker
+946,Process Operator
+948,Product Installer
+949,Production Hand
+950,Progress Chaser
+951,Project Co-ordinator
+952,Project Worker
+953,Psychodynamic Counsellor
+954,Purchase Clerk
+955,Purchase Ledger Clerk
+956,Purchasing Manager
+957,Quality Inspector
+958,Radio Engineer
+959,Rally Driver
+960,Ramp Agent
+961,Records Supervisor
+962,Recovery Vehicle Co-ordinator
+963,Refractory Engineer
+964,Regulator
+965,Relocation Agent
+966,Remedial Therapist
+967,Repair Man
+968,Reprographic Assistant
+969,Research Analyst
+970,Revenue Clerk
+971,Rose Grower
+972,Toll Collector
+975,Investigator
+976,Tanker Driver
+977,Tarmacer
+978,Tax Advisor
+979,Tax Assistant
+980,Tax Manager
+981,Tax Officer
+982,Taxi Controller
+983,Technical Advisor
+984,Technical Analyst
+985,Technical Assistant
+986,Technical Clerk
+987,Technical Co-ordinator
+988,Technical Director
+989,Technical Editor
+990,Technical Engineer
+991,Technical Liaison Engineer
+992,Technical Manager
+993,Telecommunications Manager
+994,Telegraphist
+995,Telemarketeer
+996,Temperature Time Recorder
+997,Tennis Coach
+998,Textile Consultant
+999,Textile Engineer
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+01A,Abbot
+01B,Clothing Design Cutter
+01C,Opthalmic Surgeon
+01D,Videotape Engineer
+01E,Court Reporter
+01F,Crash Assessor
+01G,Credit Researcher
+01H,Paint Technologist
+01J,After Dinner Speaker
+02A,Abstractor
+02B,Flight Dispatcher
+02C,Orchestra Leader
+02D,Vision Control Manager
+03A,Accompanist
+03B,Goods Despatcher
+03C,Orderly
+03D,Vision Mixer
+04A,Acrobat
+04B,Traffic Despatcher
+04D,Vulcanologist
+05A,Administration Officer
+05B,Train Despatcher
+05C,Photographer - Press
+05D,Warden
+06A,Advocate
+06B,Medical Diagnostician
+06C,Photographer - Shop Owner
+06D,Wardrobe Mistress
+07A,Agriculturalist
+07B,Theatre Director
+07D,Waste Disposal Worker
+08A,Aircraft Fitter
+08B,Director of Environment
+08C,Pilot Helicopter
+08D,Wheelwright
+09A,Aircraft Hand
+09B,Director of Housing
+09C,Pilot Test
+09D,Whisky Blender
+10A,Airline Broker
+10B,Director of Planning
+10C,Plant Breeder
+10D,Will Writer
+11A,Animator
+11B,Dispenser (Pharmacy)
+11C,Playwright
+11D,Wood Machinist
+12A,Announcer
+12B,Distributor (Leaflets/Circ.)
+12C,Police - Civilian
+12D,Work Study Analyst
+13A,Apprentice
+13B,Dock Pilot
+13C,Post/Telegraph Officer
+13D,Yard Man
+14A,Archbishop
+14B,Dog Handler
+14C,Technician
+14D,Horse Dealer (Non Sport)
+15A,ArchDeacon
+15B,Draper
+15C,Poultry Worker
+15D,Horse Dealer (Sport)
+16A,Art Buyer
+16B,Dredger Master
+16C,Precious Metal Merchant
+16D,University Dean
+17A,Art Director
+17B,Dredgerman
+17C,Press Producer
+17D,Private Detective
+18A,Artificial Inseminator
+18B,Dresser Theatre/Films
+18C,Advertising Buyer
+18D,Post Graduate Student Living at Home
+19A,Artist - Portrait
+19B,Driller (Civil Engineering)
+19C,Principal
+19D,Post Graduate Student Living Away from Home
+20A,Artist - Technical
+20C,Printing Press Operator
+20D,Artist - Commercial
+21A,Athlete
+21B,Electrical Contracts Manager
+21C,Privy Councillor
+21D,Artist - Freelance
+22A,Bacteriologist
+22B,Electrical Process Worker
+22C,Product Designer
+22D,Scientist - Atomic Energy
+23A,Ballistics Expert
+23B,Electroplater
+23C,Cyclist
+23D,Demolition Contractor
+24A,Bargeman
+24B,Electrotyper
+24C,Professional Apprentice Footballer
+24D,Locum Doctor
+25A,Basket Worker
+25B,Embryologist
+25C,Professional Footballer
+25D,Tyre/Exhaust Fitter
+26A,BeeKeeper
+26B,Endocrinologist
+26C,Non Professional Footballer
+26D,Journalist - Freelance
+27A,Counter Staff
+27B,Engine Room Man
+27C,Rugby Player
+27D,Map Maker
+28A,Biometrician
+28B,Engineman
+28C,Snooker Player
+28D,Motor Racing Driver
+29A,Biophysicist
+29B,Entomologist
+29C,Racing Motorcyclist
+29D,Musician - Amateur
+30A,Bishop
+30B,Erector
+30C,Radar Mechanic
+30D,Freelance Photographer
+31A,Taster
+31B,Escort
+31C,Radio Helpline Coordinator
+31D,Port Officer
+32A,Boatswain
+32B,Examiner
+32C,Radio Mechanic
+32D,Professional Cricketer
+33A,Bookfinisher
+33B,Explosives Worker
+33C,Radiotherapist
+33D,Photographer - Press (Local)
+34A,Boom Operator
+34B,Fettler (Foundry)
+34C,Railman
+34D,Photographer - Street
+35A,Bottler
+35B,Extra
+35C,Lengthman
+35D,Press Photographer - Freelance
+36A,Bridgeman
+36B,Finisher
+36C,Pointsman
+36D,Press Photographer - National
+37A,Bridgemaster
+37B,Footman
+37C,Ticket Collector
+37D,Professional Cyclist
+38A,Brother (Church)
+38B,Fortune Teller
+38C,Reactor Attendant
+38D,Rugby Player - Amateur
+39A,Building Maintenance
+39B,Fund Manager
+39C,Reader Compositor
+39D,Rugby Player - Professional
+40A,Alarm Fitter
+40B,Funfair Employee
+40C,Reader
+40D,Promoter - Entertainments
+41B,Film Gaffer
+41C,Antique Renovator
+41D,Promoter - Sports
+42B,Geneticist
+42C,Picture Renovator
+42D,Registered Disabled
+43A,Calligrapher
+43B,Geographer
+43C,Research Assistant
+43D,Not Employed Due to Disability
+44A,Canon (Church)
+44B,Geriatrician
+44C,Rheumatologist
+44D,Reporter - Freelance
+45A,Canvasser
+45B,Golf Coach
+45C,Riverman
+45D,Surgeon - N.H.S.
+46A,Captain Merchant Ship
+46B,Haematologist
+46C,Rubber Worker
+46D,Surgeon - Non  N.H.S.
+47A,Cardinal
+47B,Head of Arts
+47C,Salvage Dealer
+47D,TV Broadcasting Technician
+48A,Cardiographer
+48B,Head of Trade
+48C,Salvage Hand
+48D,Undergraduate Student - Living At Home
+49A,Cardiologist
+49B,Head of Traffic
+49C,Sample Hand
+49D,Undergraduate Student - Living Away from Home
+50A,Cargo Handler
+50B,Hearing Aid Technician
+50C,Sand Merchant
+50D,Web Developer
+51A,Cataloguer
+51B,Hedger/Ditcher
+51C,Sawyer
+51D,Web Programmer
+52A,Ceiling Fitter
+52B,Helmsman
+52C,Scenehand
+52D,Associate Director
+53A,Appeal/Tribunal Chairman
+53B,Herdsman
+53C,Day Centre Officer
+53D,Account Director
+54A,Child Care Officer (Local Government)
+54B,Histologist
+54C,Nursing Officer
+54D,Life Assurance Salesman
+55A,Choirmaster
+55B,Hospital Photographer
+55C,Setter
+55D,Waste Paper Merchant
+56A,Chorister
+56B,Houseman
+56C,Sewage Worker
+56D,Footballer - Semi Professional
+57A,Church Army Worker
+57B,Immunologist
+58A,Executive Officer
+58B,Import/Export Dealer
+58C,Shorthand Writer
+59A,Clapper
+59B,Installation Worker
+59C,Silversmith
+60A,Filing Clerk
+60B,Instructor
+60C,Singer
+61A,Clerk of Court
+61B,Insurance Collector
+61C,Smelter
+62A,Non Professional Sports Coach
+62B,Invigilator
+63A,Professional Sports Coach
+63B,Ironer
+63C,Sociolagist
+64A,Coalman
+64B,Ironer Finisher
+64C,Sound Editor
+65A,College Scout
+65B,Ironer Presser
+65C,Sound Mixer
+66A,Colourist (Maps/Photographs)
+66B,Itinerant Labourer
+66C,Sports Administrator
+67A,Comedian
+67B,Itinerant Trader
+67C,Sports Equipment Repairer
+68A,Vehicle Bodybuilder
+68B,Jointer
+68C,Stamp Dealer
+69A,Commissioner of Police
+69B,Juggler
+69C,State Enrolled Nurse
+70A,Companion
+70B,Kiln Setter
+70C,State Registered Nurse
+71A,Companion Nurse
+71B,Kilnman (Glass/Ceramics)
+71C,Engineer Stoker
+72A,Compiler
+72B,Lexicographer
+72C,Store Keeper
+73A,Compliance Officer
+73B,Lighting Director
+73C,Stores Controller
+74A,Data Processing Manager
+74B,Linesman
+74C,School Student
+75A,Computer Editor
+75B,Linotype Operator
+75C,Hair Stylist
+76A,Conductor
+76B,Mail Order Worker
+76C,Superintendent
+77A,Advertising Controller
+77B,Maitre D Hotel
+77C,Support Worker
+78A,Copier
+78B,Managing Clerk
+78C,Tape Librarian
+79A,Design Copier
+79B,Manufacturing Engineer
+79C,Tape Operator
+80A,Copy Typist
+80B,Mechanical Designer
+80C,Technologist
+81A,Banking Correspondent
+81B,Advertising Director
+81C,Test Driver
+82A,Correspondent Press
+82B,Media Planner
+82C,Test Engineer
+83A,Press Correspondent
+83B,Microscopist
+83C,Theme Park Worker
+84A,School Counsellor
+84B,Minister Of The Crown
+85A,Student Counseller
+85B,Moderator
+85C,Time and Motion Analyst
+86A,Coxswain
+86B,Fleet Manager
+86C,Transmission Controller
+87B,Train Motorman
+87C,Transport Policeman
+88A,Creative Director
+88B,Foundry Moulder
+88C,Travelling Salesman/Woman
+89A,Cricketer
+89B,Moulding Process Technician
+89C,Trawler Hand
+90A,Criminologist
+90B,Rescue Worker
+90C,Truck Driver
+91A,Media Critic
+91B,Music Producer
+91C,TV Announcer
+92A,Curate
+92B,Musical Arranger
+92C,Television Set Builder
+93A,Curtain Hanger
+93C,Typographer
+94A,Customer Service Controller
+94B,Naturalist
+94C,University Reader
+95B,Computer Network Controller
+95C,Valet
+96B,Newsreader
+96C,Van Salesman
+97A,Stock Exchange Dealer
+97B,Nursemaid
+97C,Vehicle Delivery Agent
+98A,Church Dean
+98B,Obstetrician
+98C,Veterinary Nurse
+99A,Dental Mechanic
+99B,Operations Engineer
+99C,Video Supplier
+A01,Accountant
+A03,Turf Accountant
+A04,Accounts Staff
+A06,Actuary
+A07,Administration Staff
+A08,Advertising Staff
+A09,Air Traffic Controller
+A10,Aircraft Cabin Crew
+A12,Ambulance Crew
+A13,Antique Dealer
+A14,Archaeologist
+A15,Architect
+A16,Archivist
+A17,Art Dealer
+A18,Artist
+A20,Assembly Worker
+A21,Assessor
+A22,Auctioneer
+A23,Auditor
+A24,Author
+A25,Advertising Agent
+A26,Au Pair
+A34,Amusement Arcade Worker
+A35,Textile Technician
+A36,Theatre Technician
+A37,Thermal Insulator
+A38,Timber Inspector
+A39,Timber Worker
+A40,Tour Agent
+A41,Town Clerk
+A42,Track Worker
+A43,Tractor Driver
+A44,Tractor Mechanic
+A45,Trade Mark Agent
+A46,Traffic Clerk
+A47,Traffic Engineer
+A48,Traffic Officer
+A49,Traffic Planner
+A50,Traffic Supervisor
+A51,Training Advisor
+A52,Training Assistant
+A53,Training Consultant
+A54,Training Co-ordinator
+A55,Training Instructor
+A56,Transcriber
+A57,Transport Clerk
+A58,Transport Consultant
+A59,Transport Planner
+A60,Travel Clerk
+A61,Travel Guide
+A62,Travel Guide Writer
+A63,Travel Representative
+A64,Treasurer
+A65,Trout Farmer
+A66,Turkey Farmer
+A67,TV And Video Installer
+A68,TV And Video Repairer
+A69,TV Editor
+A70,Typewriter Engineer
+A71,Tyre Builder
+A72,Tyre Inspector
+A73,Tyre Technician
+A74,Art Historian
+A75,Dendrochronologist
+A76,Environmental Chemist
+A77,Golf Club Professional
+A78,Head Lad
+A79,Landowner
+A80,Mobile Motor Mechanic
+A81,Resin Caster
+A82,Sign Maker
+A83,Toy Trader
+A84,Dog Warden
+A85,Expedition Leader
+A86,Fraud Investigator
+A87,Hospital Warden
+A88,Minibus Driver
+A89,Optometrist
+A90,Psychoanalyst
+A91,Chaplain
+A92,Communications Officer
+A93,Costumier
+A94,Crematorium Attendant
+A95,Education Officer
+A96,Field Officer
+A97,Foster Parent
+A98,Hypnotist
+A99,Photocopy Machine Technician
+B01,Baggage Handler
+B02,Bailiff
+B03,Baker
+B04,Bank Staff
+B05,Bar Staff
+B06,Barrister
+B07,Beautician
+B08,Blacksmith
+B09,Boat Builder
+B10,Boiler Man
+B12,Brewery Worker
+B13,Bricklayer
+B15,Builder
+B16,Bursar
+B17,Bus Conductor
+B18,Business Consultant
+B21,Butcher
+B22,Buyer
+B27,Postmaster
+B28,Road Safety Officer
+B32,Special Needs Assistant
+B33,Sub-Postmaster
+B34,Medical Practitioner
+B35,Medical Officer
+B36,Agricultural Consultant
+B37,Agricultural Contractor
+B38,Agricultural Merchant
+B39,Aircraft Maintenance Engineer
+B40,Aircraft Surface Finisher
+B41,Ambulance Controller
+B42,Analytical Chemist
+B43,Architectural Surveyor
+B44,Armourer
+B45,Art Restorer
+B46,Artexer
+B47,Bank Messenger
+B48,Brewery Manager
+B49,Building Engineer
+B50,Building Estimator
+B51,Bus Mechanic
+B52,Cable Jointer
+B53,Camera Repairer
+B54,Canal Boat Broker
+B55,Cash Point Fitter
+B56,Circus Proprietor
+B57,Coach Sprayer
+B58,Coffee Merchant
+B59,Community Nurse
+B60,Conference Manager
+B61,Costume Designer
+B62,Credit Draper
+B63,Yacht Master
+B64,Zoo Manager
+B65,Premises Security Installers
+B66,Garda
+B67,Box Office Clerk
+B68,School Inspector
+B69,Shoe Maker
+B70,Agricultural Worker
+B71,Artificial Limb Fitter
+B72,Show Jumper
+B73,Fire Officer
+B74,Graphologist
+B75,Forest Ranger
+B76,Acoustic Engineer
+B77,Stone Sawyer
+B78,Falconer
+B79,Gilder
+B80,Millwright
+B81,Missionary
+B82,Crown Prosecutor
+B83,Ship Broker
+B84,Arborist
+B85,College Principal
+B86,Anthropologist
+B87,Philatelist
+B88,Tank Farm Operative
+B89,Palaeobotanist
+B90,Cartoonist
+B91,Catering Consultant
+B92,Credit Broker
+B93,Doll Maker
+B94,Embroiderer
+B95,Environmental Consultant
+B96,Exhibition Designer
+B97,Flower Arranger
+B98,Hotel Consultant
+B99,Industrial Consultant
+C02,Caretaker
+C03,Carpenter
+C04,Carpetfitter
+C05,Cartographer
+C06,Cashier
+C07,Casual Worker
+C08,Caterer
+C09,Mobile Caterer
+C10,Catering Staff
+C11,Chambermaid
+C12,Chauffeur
+C13,Chef
+C14,Child Minder
+C15,Chimney Sweep
+C16,Chiropodist
+C17,Circus Worker
+C18,Civil Servant
+C20,Cleaner
+C21,Clerk
+C22,Booking Clerk
+C23,Shipping Clerk
+C24,Wages Clerk
+C25,Clerk Of Works
+C27,Coastguard
+C28,Door To Door Collector
+C29,Commissionaire
+C30,Commodity Broker
+C31,Commodity Dealer
+C32,Company Secretary
+C33,Compositor
+C35,Construction Worker
+C36,Medical Consultant
+C37,Contractor
+C38,Coroner
+C39,Courier
+C43,Craftsman
+C44,Crane Operator
+C46,Croupier
+C47,Curator
+C49,Care Assistant
+C50,Childrens Entertainer
+C51,Car Park Attendant
+C52,Charterer
+C53,Credit Controller
+C54,Commission Agent
+C55,Computer Consultant
+C56,Computer Operator
+C57,Computer Programmer
+C58,Computer Technician
+C59,Consultant Engineer
+C60,Costume Jeweller
+C61,Lampshade Maker
+C62,Licensing Consultant
+C63,Marine Consultant
+C64,Occupational Health Consultant
+C65,Research Consultant
+C66,Rug Maker
+C67,Security Consultant
+C68,T-Shirt Printer
+C69,Word Processing Operator
+C70,Building Society Agent
+C71,Company Search Agent
+C72,Corrosion Consultant
+C73,Editorial Consultant
+C74,Electrologist
+C75,Equity Agent
+C76,Export Consultant
+C77,Forensic Scientist
+C78,Horticultural Consultant
+C79,Import Consultant
+C80,Journalistic Agent
+C81,Land Surveyor
+C82,Naturopath
+C83,Paint Consultant
+C84,Photographic Agent
+C85,Marine Broker
+C86,Tachograph Analyst
+C87,Trichologist
+C88,Ticket Agent
+C89,Zoology Consultant
+C90,Homeworker
+C91,Ornithologist
+C92,Patrol Person
+C93,Asbestos Remover
+C94,Kennel Hand
+C95,Podiatrist
+C96,Gaming Board Inspector
+C97,Milklady
+C98,Plumbing & Heating Engineer
+C99,Liaison Officer
+CA1,Call Centre Manager
+CA2,Call Centre Staff
+CA3,Consumer Scientist
+D01,Dairy Worker
+D03,Dealer - General
+D05,Delivery Roundsman
+D06,Demolition Worker
+D08,Designer
+D09,Fashion Designer
+D10,Graphic Designer
+D11,Industrial Designer
+D12,Interior Designer
+D17,Disc Jockey
+D18,Mobile Disc Jockey
+D19,District Valuer
+D20,Diver
+D21,Docker
+D22,General Practitioner
+D23, ?
+D24,Doorman
+D25,Draughtsman
+D26,Dressmaker
+D27,Car Delivery Driver
+D28,Fork Lift Truck Driver
+D29,HGV Driver
+D30,Hire Car Driver
+D33,Plant Driver
+D34,Taxi Driver
+D35,Train Driver
+D36,Wholesale Newspaper Delivery Driver
+D37,Driving Examiner
+D38,Driving Instructor
+D39,Double Glazing Fitter
+D41,Ambulance Driver
+D43,Driver
+D44,Debt Collector
+D46,Van Driver
+D47,Building Control Officer
+D48,Classical Musician
+D49,Lighthouse Keeper
+D50,Chicken Chaser
+D51,Clairvoyant
+D52,Gate Keeper
+D53,Highway Inspector
+D54,Occupational Health Nurse
+D55,Pager Operator
+D56,Palaeontologist
+D57,Governor
+D58,Lock Keeper
+D59,Parachute Packer
+D60,Fire Protection Consultant
+D61,Company Chairman
+D62,Chief Executive
+D63,Inventor
+D64,Investment Advisor
+D65,Telecommunication Consultant
+D66,Nursing Sister
+D67,Rent Officer
+D68,Golf Caddy
+D69,Bodyguard
+D70,Crane Erector
+D71,Street Entertainer
+D72,Ventriloquist
+D73,Sales Woman
+D74,Tarot Reader/Palmistry Expert
+D75,Carer - Non Professional
+D76,Home Economist
+D77,Account Executive
+D78,Account Manager
+D79,Agister
+D80,Agronomist
+D81,Aquarist
+D82,Harbour Master
+D83,House Sitter
+D84,Master of Ceremonies
+D85,Monk
+D86,Terrier
+D87,Water Diviner
+D88,Dog Walker
+D89,Carer - Professional
+D90,Chartered Valuer
+D91,Driving Instructor (HGV)
+D92,Dental Therapist
+D93,Business Analyst
+D94,Driving Instructor - Advanced
+D95,Insolvency Practitioner
+D96,Solar Panel Installer And Repairer
+D97,First Aid Instructor
+E01,Economist
+E02,Editor
+E04,Electrician
+E09,Engineer
+E10,Aeronautical Engineer
+E11,Broadcasting Engineer
+E12,Chemical Engineer
+E13,Civil Engineer
+E14,Heating/Ventilation Engineer
+E15,Marine Engineer
+E16,Mechanical Engineer
+E17,Mining Engineer
+E18,Sales Engineer
+E19,Service Engineer
+E20,Service Engineer (Non-Mobile)
+E21,Vehicle Engineer
+E22,Engraver
+E23,Enquiry Agent
+E24,Entertainer
+E25,Estate Agent
+E27,Advertising Executive
+E28,Electrical Engineer
+E29,Estimator
+E31,Earth Moving Contractor
+E32,Ergonomist
+F01,Factory Worker
+F02,Fairground Worker
+F03,Farm Worker
+F04,Farmer
+F05,Financial Advisor
+F06,Financier
+F08,Fisherman
+F09,Fishmonger
+F10,Fitter
+F11,Fitter - Tyre/Exhaust
+F12,Florist
+F16,Forester
+F17,Forwarding Agent
+F18,Fund Raiser
+F19,Furnace Man
+F20,Furniture Remover
+F21,Furniture Restorer
+F22,Windscreen Fitter
+F24,Furrier
+G01,Gardener
+G03,Glass Worker
+G04,Goldsmith
+G05,Grave Digger
+G06,Greengrocer
+G07,Groom
+G08,Groundsman
+G09,Geologist
+G10,Gamekeeper
+H01,Hairdresser
+H03,Hawker
+H05,Health Visitor
+H06,Home Help
+H07,Horticulturalist
+H08,Hostess
+H09,Housewife
+H10,Housekeeper
+H11,Headteacher
+H12,Horse Riding Instructor
+H15,Human Resources Manager
+H16,Human Resources Staff
+H17,Hirer
+H18,Hunt Master
+H19,Huntsman
+I01,Ice Cream Vendor
+I02,Independent Means
+I03,Industrial Chemist
+I04,Inland Revenue Officer
+I05,Inspector
+I07,Factory Inspector
+I08,Tax Inspector
+I09,Inspector - Insurance
+I10,Instrument Maker
+I13,Interpreter
+I14,Ironmonger
+J01,Jeweller
+J02,Jockey
+J03,Joiner
+J04,Journalist
+J05,Judge
+K01,Knitter
+L01,Laboratory Technician
+L02,Labourer
+L03,Landscape Gardener
+L05,Lawyer
+L06,Lecturer
+L07,Legal Secretary
+L08,Librarian
+L09,Lithographer
+L10,Locksmith
+L11,Lifeguard
+L12,Land Agent
+M01,Machine Operator
+M02,Machinist
+M03,Magistrate
+M04,Maintenance Staff
+M05,Management Consultant
+M06,Manager
+M07,Accounts Manager
+M08,Administration Manager
+M09,Airport Manager
+M10,Area Manager
+M11,Branch Manager
+M12,Cinema Manager
+M13,Investment Manager
+M19,Manager - Sports
+M20,Station Manager
+M21,Transport Manager
+M23,Manufacturing Agent
+M24,Market Gardener
+M25,Market Researcher
+M26,Market Trader
+M29,Mechanic
+M34,Messenger
+M35,Metallurgist
+M36,Meteorologist
+M37,Meter Reader
+M38,Midwife
+M39,Milliner
+M40,Miner
+M41,Minister Of Religion
+M42,Model
+M44,Motor Trader
+M45,Member Of Parliament
+M46,Musician
+M50,Metal Worker
+M51,Moneylender
+M52,Production Manager
+M53,Master Of Foxhounds
+N01,Negotiator
+N02,Nurse
+N03,District Nurse
+N05,Nurseryman
+N08,Nanny
+N09,Nun
+N10,Nursery Nurse
+N11,Newsagent
+O02,Optician
+O03,Osteopath
+P01,Packer
+P02,Painter
+P03,Painter And Decorator
+P05,Party Planner
+P06,Pattern Maker
+P07,Pawnbroker
+P08,Personal Assistant
+P09,Personnel Administrator
+P10,Pest Control
+P11,Petrol Station Attendant
+P12,Pharmacist
+P13,Photographer
+P15,Photographer - Studio
+P16,Physiotherapist
+P17,Piano Tuner
+P18,Plasterer
+P19,Plumber
+P20,Police Officer
+P21,Porter
+P24,Potter
+P25,Printer
+P26,Prison Officer
+P27,Probation Officer
+P28,Process Worker
+P29,Producer
+P30,Professional Boxer
+P34,Professional Wrestler
+P35,Projectionist
+P36,Promoter
+P37,Promoter - Racing
+P38,Promoter - Ring Sports
+P39,Public Relations Officer
+P40,Publisher
+P41,Patrolman
+P42,Publican
+P43,Pools Collector
+P44,Private Investigator
+P47,Photographer - Location
+P48,Pipe Layer
+P49,Property Developer
+P50,Phlebotomist
+P51,Prosthetist
+P52,Pedicurist
+P53,Police Community Support Officer
+Q01,Quality Controller
+Q02,Quantity Surveyor
+R01,Racing Organiser
+R02,Radiographer
+R04,Receptionist
+R05,Refuse Collector
+R06,Registrar
+R07,Reporter
+R08,Researcher
+R09,Retired
+R10,Rig Worker
+R12,Roofer
+R13,Recruitment Consultant
+R14,Re-Settlement Officer
+R15,Referee
+S02,Telesales Person
+S04,Sales Assistant
+S05,Scaffolder
+S06,Scientist
+S07,Script Writer
+S08,Sculptor
+S09,Secretary
+S10,Security Guard
+S11,Security Officer
+S13,Shipyard Worker
+S14,Shop Assistant
+S17,Shop Fitter
+S18,Signwriter
+S19,Social Worker
+S20,Solicitor
+S21,Sorter
+S24,Stable Hand
+S25,Statistician
+S26,Steeplejack
+S27,Stevedore
+S29,Stock Controller
+S30,Stockbroker
+S31,Stonemason
+S33,Street Trader
+S36,Surgeon
+S37,Surveyor
+S38,Surveyor - Chartered
+S39,Showman
+S40,Sports Centre Attendant
+S41,Steel Worker
+S42,Supervisor
+S43,Stationer
+S44,Student - Living at Home
+S45,Student - Living Away
+S46,Student Teacher - Living At Home
+S47,Student Teacher - Living Away
+S48,Medical Student - Living At Home
+S49,Medical Student - Living Away
+S50,Mature Student - Living At Home
+S51,Mature Student - Living Away
+S52,Student Nurse - Living At Home
+S53,Student Nurse - Living Away
+S54,Sports Agent
+S55,Sports Scout
+T01,Tailor
+T02,Taxidermist
+T03,Teacher
+T04,Technician - Performing Arts
+T05,Telephonist
+T06,Textile Worker
+T07,Ticket Inspector
+T08,Tobacconist
+T09,Tool Maker
+T10,Toy Maker
+T11,Traffic Warden
+T12,Trainer
+T16,Training Officer
+T17,Translator
+T18,Travel Agent
+T20,Tree Surgeon
+T21,Trinity House Pilot
+T22,Typist
+T23,Trade Union Official
+T24,Tiler
+U01,Undertaker
+U02,Underwriter
+U03,Unemployed
+U04,Upholsterer
+U05,Usher
+U06,Umpire
+V01,Valuer
+V02,VDU Operator
+V04,Veterinary Surgeon
+V05,Car Valet
+V06,Voluntary Worker
+V07,Veterinary Assistant
+W02,Watchmaker
+W04,Welder
+W05,Window Cleaner
+W06,Writer
+W09,Web Designer
+Y01,Yoga Teacher
+Z01,Zoo Keeper
