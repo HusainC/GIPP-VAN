@@ -17,9 +17,9 @@ def get_netezza_df_same_day(set_renewal_start_date, set_renewal_end_date):
         print("Started querying netezza.... please wait")
         run_sql = "drop table analysis_db.op.gipp_van_base if exists;"
         cus.execute(run_sql)
-        run_sql = "drop table analysis_db.op.gipp_address if exists;"
+        run_sql = "drop table analysis_db.op.gipp_address_van if exists;"
         cus.execute(run_sql)
-        run_sql = "drop table analysis_db.op.gipp_invites if exists;"
+        run_sql = "drop table analysis_db.op.gipp_invites_van if exists;"
         cus.execute(run_sql)
         run_sql = get_setup1_netezza(set_renewal_start_date, set_renewal_end_date)
         cus.execute(run_sql)
@@ -27,7 +27,7 @@ def get_netezza_df_same_day(set_renewal_start_date, set_renewal_end_date):
         cus.execute(run_sql)
         run_sql = get_setup3_netezza()
         cus.execute(run_sql)
-        run_sql = "select * from analysis_db.op.gipp_base;"
+        run_sql = "select * from analysis_db.op.gipp_van_base;"
         try:
             data = pd.read_sql(run_sql, conn)
             print(data)

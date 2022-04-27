@@ -27,6 +27,7 @@ def claims_and_convictions(driver_items, list_of_dict, item, con_clai):
     for i in range(0, len(list_of_dict)):
         desc = [tags.TYPEDESC.value, tags.CONVICTIONCODEDESC.value, tags.USEOTHERVEHICLEDESC.value]
         list_of_dict[i][tags.SOURCE.value] = "Priorloss"
+        list_of_dict[i]["claimSettled"] = "true"
         if tags.COST.value in list_of_dict[i]:
             if (list_of_dict[i][tags.COST.value] is None) or (math.isnan(list_of_dict[i][tags.COST.value])):
                 list_of_dict[i][tags.COST.value] = "0"

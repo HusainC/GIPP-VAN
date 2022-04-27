@@ -1,6 +1,6 @@
 def get_setup1_netezza(set_renewal_start_date, set_renewal_end_date):
     refs_sql = f"""
-create table analysis_db.op.gipp_invites as
+create table analysis_db.op.gipp_invites_van as
 with cte as (
 select dpo.skey__ as policy_key
       ,dpo.policy_number
@@ -28,7 +28,7 @@ inner join edw_dm.dbo.dimproduct dpr
 on fsq.product_key = dpr.skey__
 where
 -- Set renewal date range
-sdt.date >= '{set_renewal_start_date}' and sdt.date <= '{set_renewal_end_date}'
+sdt.date >= '{set_renewal_start_date}' and sdt.date <= '{set_renewal_start_date}'
 -- Set invite run window
 --and fsq.nk_quote_timestamp >= '{set_renewal_start_date}' and fsq.nk_quote_timestamp <= '{set_renewal_end_date}'
 -- Set LoB 'PC','CV','MC','HH'
@@ -47,7 +47,7 @@ select * from cte where invite_number = 1
 
 def get_setup2_netezza():
     refs_sql = f"""
-create table analysis_db.op.gipp_address as
+create table analysis_db.op.gipp_address_van as
 with cte as (
 select i.policy_key
       ,i.policy_number
@@ -68,7 +68,7 @@ select i.policy_key
 	  ,a.county
 	  ,a.postalcode
 	  ,row_number() over(partition by i.policy_number order by a.createtime asc) as dedup
-from analysis_db.op.gipp_invites i
+from analysis_db.op.gipp_invites_van i
 inner join adl.sor.vw_cdc_pc_policyperiod p
 on i.policy_number = p.policynumber
 inner join adl.sor.vw_cdc_pc_contact c
@@ -85,7 +85,7 @@ select * from cte where dedup = 1
 
 def get_setup3_netezza():
     refs_sql = f"""
-create table analysis_db.op.gipp_var_base as
+create table analysis_db.op.gipp_van_base as
 select i.policy_key
       ,i.policy_number
       ,i.lob
@@ -123,7 +123,7 @@ select i.policy_key
           + case when dct.costgroup = 'Fee' and dct.isincome = 1 then fsq.amount else 0 end
           + case when dct.coveragegroup = 'Ancillary' then fsq.amount else 0 end
           + case when dct.costgroup = 'DirectDebit' and dct.isincome = 1 then fsq.amount else 0 end) as streetprice_ancillary_dd
-from analysis_db.op.gipp_address i
+from analysis_db.op.gipp_address_van i
 inner join edw_dm.dbo.fctsorquote fsq
 on i.policy_key = fsq.policy_key
 and i.invite_datekey = fsq.quote_datekey
@@ -414,6 +414,8 @@ def get_driv2():
            d.driver_prn as "driverId",
            d.DRIVER_LICENCETYPE,
            d.DRIVER_LICENCENUMBER as "number",
+           case when d.DRIVER_MEDICALCONDITIONIND = 'N' then '99_NO' else '99_D0' end as "medicalConditions",
+           case when d.DRIVER_NOOFOTHERVEHICLESOWNED = 'N' then 'no' else 'own_another_car' end as "useOtherVehicle",
            date(to_date(d.driver_dateofbirth, 'DD/MM/YYYY'), 'YYYY-MM-DD') as "dateOfBirth",
            d.driver_maritalstatus as "maritalStatus",  
            date(to_date(d.driver_licencedate, 'DD/MM/YYYY'), 'YYYY-MM-DD') as "lengthHeld",
@@ -473,7 +475,7 @@ def get_driv4(cs):
     cs.execute(sql)
     sql = get_driv2()
     cs.execute(sql)
-    cs.execute(refs_sql)
+    cs.execute("Select * from UTIL_DB.PUBLIC.hc_driv_two ")
 
     try:
         df = cs.fetch_pandas_all()

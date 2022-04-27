@@ -11,6 +11,7 @@ def main_driver(tree, fin_dict, convics, claims, renew_date, quote_occupations):
     driver_prn = "1"
     if fin_dict['number'] is None:
         fin_dict['number'] = '?'
+
     # desc = ["maritalStatusDesc", "relationshipDesc"]
     desc = [tags.MARITALSTATUSDESC.value, tags.USEOTHERVEHICLEDESC.value, tags.MEDICALCONDITIONSDESC.value]
     add_desc_and_write(driver_items, desc, fin_dict)
@@ -33,8 +34,8 @@ def main_driver(tree, fin_dict, convics, claims, renew_date, quote_occupations):
 
     driver_items = get_tree_tags(policy_holder_items, tags.LICENCE.value)
     desc = [tags.TYPEDESC.value]
-    if fin_dict[tags.TYPE.value] is None:
-        fin_dict[tags.TYPE.value] = "F_FM"
+    #if fin_dict[tags.TYPE.value] is None:
+    fin_dict[tags.TYPE.value] = "F_FM"
     if len(fin_dict[tags.TYPE.value]) > 4 and fin_dict[tags.TYPE.value] in m.type_of_licence:
         fin_dict[tags.TYPE.value] = m.type_of_licence[fin_dict[tags.TYPE.value]]
     add_desc_and_write(driver_items, desc, fin_dict)
@@ -65,7 +66,7 @@ def main_additional(tree, dict_list, convic, claim, renew_date, quote_occupation
         desc = [tags.MARITALSTATUSDESC.value, tags.RELATIONSHIPDESC.value, tags.MEDICALCONDITIONSDESC.value]
         add_desc_and_write(additional_driver_sample_list[i], desc, fin_dict)
 
-        driver_items = get_tree_tags(policy_holder_items, tags.NAME.value)
+        driver_items = get_tree_tags(policy_holder_items, tags.FULLNAME.value)
         desc = [tags.TITLEDESC.value]
         add_desc_and_write(driver_items, desc, fin_dict)
 
@@ -82,8 +83,8 @@ def main_additional(tree, dict_list, convic, claim, renew_date, quote_occupation
 
         driver_items = get_tree_tags(policy_holder_items, tags.LICENCE.value)
         desc = [tags.TYPEDESC.value]
-        if fin_dict[tags.TYPE.value] is None:
-            fin_dict[tags.TYPE.value] = "F_FM"
+        #if fin_dict[tags.TYPE.value] is None:
+        fin_dict[tags.TYPE.value] = "F_FM"
         if len(fin_dict[tags.TYPE.value]) > 4 and fin_dict[tags.TYPE.value] in m.type_of_licence:
             fin_dict[tags.TYPE.value] = m.type_of_licence[fin_dict[tags.TYPE.value]]
         add_desc_and_write(driver_items, desc, fin_dict)
@@ -102,7 +103,7 @@ def main_additional(tree, dict_list, convic, claim, renew_date, quote_occupation
         item.remove(additional_driver_sample_list[r])
 
 
-def main_car(tree, fin_dict, modifications_list):
+def main_van(tree, fin_dict, modifications_list):
     """Populates the xml with the car risk details."""
     item = get_tree_tags(tree, tags.VAN.value)
     # Add the descriptions

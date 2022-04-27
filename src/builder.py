@@ -42,7 +42,7 @@ def changes_made(car_dict, policy_proposer_dict, additional_driver_list, last_tr
     inception_date_tree_item.text = str(pd.to_datetime(str(inception_date)).date())
 
     # Add car details
-    main_car(tree, car_dict, modifications_list)
+    main_van(tree, car_dict, modifications_list)
 
     # Add policy proposer details.
     main_driver(tree, policy_proposer_dict, convictions_list, claims_list, inception_date, quote_occupations)

@@ -298,7 +298,7 @@
                            <employmentBusinessDesc>?</employmentBusinessDesc>
                         </employment>
                         <!--Optional:-->
-                        <companyEstablished>?</companyEstablished>
+                        <companyEstablished>2000</companyEstablished>
                         <!--Optional:-->
                         <companyType>?</companyType>
                         <!--Optional:-->
@@ -363,7 +363,7 @@
                         </medicalConditions>
                         <medicalConditionsDesc>?</medicalConditionsDesc>
                         <anyDriverPolicy typeListName="HDAnyDriver_Ext">
-                           <anyDriverPolicy>false</anyDriverPolicy>
+                           <anyDriverPolicy>no</anyDriverPolicy>
                         </anyDriverPolicy>
                         <nonMotoringConvictions>?</nonMotoringConvictions>
                         <!--Optional:-->
@@ -646,7 +646,7 @@
                            <!--Optional:-->
                            <aaProficiencyDate>?</aaProficiencyDate>
                         </licence>
-                        <myLicenceIndicator>?</myLicenceIndicator>
+                        <myLicenceIndicator>false</myLicenceIndicator>
                         <!--Optional:-->
                         <useOtherVehicle typeListName="AccessOtherVeh_Ext">
                            <!--Optional:-->
@@ -877,7 +877,7 @@
                               <convictionAccident>?</convictionAccident>
                            </conviction>
                         </convictions>
-                        <insPolicyDeclinedForDrivers>?</insPolicyDeclinedForDrivers>
+                        <insPolicyDeclinedForDrivers>false</insPolicyDeclinedForDrivers>
                      </additionalDriver>
                       <additionalDriver>
                         <name>
