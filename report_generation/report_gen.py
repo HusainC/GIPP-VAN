@@ -118,7 +118,7 @@ def add_to_sf_SAME_DAY(dataframe, conn):
 def final_report_gen(con):
     cur = con.cursor()
     dataframe = pd.read_csv("../results/nets.csv")
-    add_to_sf_SAME_DAY(dataframe, con)
+    add_to_sf(dataframe, con)
     get_results_file(cur)
     get_insurer_file(cur)
     get_dataissue_file(cur)

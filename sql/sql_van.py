@@ -161,7 +161,7 @@ def get_setup3():
     refs_sql = f"""
             CREATE or replace TEMPORARY TABLE UTIL_DB.PUBLIC.hc_testing as 
             select  BRAND, renewal_date, policy_number, 
-            addressline1,addressline2,addressline3, city, county, INVITE_TIMESTAMP, INVITE_REFERENCE from DEMO_DB.PUBLIC.GIPP_VAN_SUBS
+            addressline1,addressline2,addressline3, city, county, INVITE_TIMESTAMP, INVITE_REFERENCE from WRK_RETAILPRICING.CAR.GIPP_VAN_SUBS
             LIMIT 1000;
             """
     return refs_sql
@@ -174,7 +174,7 @@ def get_setup3_list(submission_nums="../res/submission_numbers.txt"):
     refs_sql = f"""
             CREATE or replace TEMPORARY TABLE UTIL_DB.PUBLIC.hc_testing as 
             select  BRAND, renewal_date, policy_number, 
-            addressline1,addressline2,addressline3, city, county, INVITE_TIMESTAMP, INVITE_REFERENCE from DEMO_DB.PUBLIC.GIPP_MON_SUBS
+            addressline1,addressline2,addressline3, city, county, INVITE_TIMESTAMP, INVITE_REFERENCE from WRK_RETAILPRICING.CAR.GIPP_MON_SUBS
             WHERE policy_number IN ({submission_list});
             """
     return refs_sql
@@ -196,7 +196,7 @@ def get_aggids():
                           CASE WHEN r.TRANNAME = 'Renewal' THEN 0 WHEN r.TRANNAME = 'QuoteDetail' THEN 1 WHEN r.TRANNAME = 'MTA' THEN 2 END) as invite_number
         from UTIL_DB.PUBLIC.hc_testing wkd
 
-        inner join PRD_QUOTES.QUOTE_PAYLOAD.VW_POLARIS_VEH_REQ r on wkd.INVITE_REFERENCE = r.quote_reference and wkd.brand = r.INTERMEDIARY_BUSINESSSOURCETEXT
+        inner join PRD_RAW_DB.QUOTES_PUBLIC.VW_POLARIS_VEH_REQ r on wkd.INVITE_REFERENCE = r.quote_reference and wkd.brand = r.INTERMEDIARY_BUSINESSSOURCETEXT
         where r.tranname not in ('TempAddVehicleAdd','TempAddDriverAdd')
         order by wkd.invite_reference, invite_number)
         Select * from cte where invite_number =1;
@@ -267,8 +267,8 @@ def get_vehicle_info1():
          case when v.VEHICLE_USEWITHTRAILERIND = 'Y' then 'true' else 'false' end as "towTrailer",
         fin.*
          from UTIL_DB.PUBLIC.hc_final fin
-        inner join PRD_QUOTES.QUOTE_PAYLOAD.VW_POLARIS_VEH_REQ_VEHICLE v on fin.AGGHUB_ID = v.AGGHUB_ID
-        inner join PRD_QUOTES.QUOTE_PAYLOAD.VW_POLARIS_VEH_REQ r on fin.AGGHUB_ID = r.AGGHUB_ID;
+        inner join PRD_RAW_DB.QUOTES_PUBLIC.VW_POLARIS_VEH_REQ_VEHICLE v on fin.AGGHUB_ID = v.AGGHUB_ID
+        inner join PRD_RAW_DB.QUOTES_PUBLIC.VW_POLARIS_VEH_REQ r on fin.AGGHUB_ID = r.AGGHUB_ID;
         """
 
     return refs_sql
@@ -286,8 +286,8 @@ CREATE or replace TEMPORARY TABLE UTIL_DB.PUBLIC.hc_veh_two as
          u.USES_ABICODE as "classOfUse",
         oneg.*
          from UTIL_DB.PUBLIC.hc_veh_one oneg
-        inner join PRD_QUOTES.QUOTE_PAYLOAD.VW_POLARIS_VEH_REQ_NCD n on oneg.AGGHUB_ID = n.AGGHUB_ID 
-        inner join PRD_QUOTES.QUOTE_PAYLOAD.VW_POLARIS_VEH_REQ_USES u on oneg.AGGHUB_ID = u.AGGHUB_ID;
+        inner join PRD_RAW_DB.QUOTES_PUBLIC.VW_POLARIS_VEH_REQ_NCD n on oneg.AGGHUB_ID = n.AGGHUB_ID 
+        inner join PRD_RAW_DB.QUOTES_PUBLIC.VW_POLARIS_VEH_REQ_USES u on oneg.AGGHUB_ID = u.AGGHUB_ID;
         """
 
     return refs_sql
@@ -304,8 +304,8 @@ CREATE or replace TEMPORARY TABLE UTIL_DB.PUBLIC.hc_veh_three as
             when c.COVER_CODE = '03' then 'thirdParty'
         end as "coverType"
          from UTIL_DB.PUBLIC.hc_veh_two twog
-        inner join PRD_QUOTES.QUOTE_PAYLOAD.VW_POLARIS_VEH_REQ_SECURITY s on twog.AGGHUB_ID = s.AGGHUB_ID
-        inner join PRD_QUOTES.QUOTE_PAYLOAD.VW_POLARIS_VEH_REQ_COVER c on twog.AGGHUB_ID = c.AGGHUB_ID;
+        inner join PRD_RAW_DB.QUOTES_PUBLIC.VW_POLARIS_VEH_REQ_SECURITY s on twog.AGGHUB_ID = s.AGGHUB_ID
+        inner join PRD_RAW_DB.QUOTES_PUBLIC.VW_POLARIS_VEH_REQ_COVER c on twog.AGGHUB_ID = c.AGGHUB_ID;
         """
 
     return refs_sql
@@ -316,7 +316,7 @@ def get_vehicle_info4(cs):
         select s.DRIVENBY_DRIVERNUMBER as "mainUser",
         twog.*
          from UTIL_DB.PUBLIC.hc_veh_three twog
-        inner join PRD_QUOTES.QUOTE_PAYLOAD.VW_POLARIS_VEH_REQ_DRIVENBY s on twog.AGGHUB_ID = s.AGGHUB_ID
+        inner join PRD_RAW_DB.QUOTES_PUBLIC.VW_POLARIS_VEH_REQ_DRIVENBY s on twog.AGGHUB_ID = s.AGGHUB_ID
         where nvl(s.PROCESSINGINDICATORS_PROCESSTYPE, '00') != '04'
         and drivenby_drivingfrequency = 'M';
         """
@@ -350,8 +350,8 @@ def get_vehicle_info5():
         ,row_number() over(partition by fin.invite_reference order by 
                     case when DATEDIFF(SECOND, fin.INSERTTIMESTAMP, t.INSERTTIMESTAMP) <0 then 9999999 else DATEDIFF(SECOND, fin.INSERTTIMESTAMP, t.INSERTTIMESTAMP) end asc) as num
         from UTIL_DB.PUBLIC.hc_final fin
-        inner join PRD_QUOTES.QUOTE_PAYLOAD.VW_POLARIS_VEH_RES_TRANRESULT t on t.quote_reference = fin.invite_reference and t.TRANNAME = fin.TRANNAME
-        inner join PRD_QUOTES.QUOTE_PAYLOAD.VW_POLARIS_VEH_RES_POLDATA p on t.agghub_id = p.agghub_id and p.INTERMEDIARY_BUSINESSSOURCETEXT = fin.brand)
+        inner join PRD_RAW_DB.QUOTES_PUBLIC.VW_POLARIS_VEH_RES_TRANRESULT t on t.quote_reference = fin.invite_reference and t.TRANNAME = fin.TRANNAME
+        inner join PRD_RAW_DB.QUOTES_PUBLIC.VW_POLARIS_VEH_RES_POLDATA p on t.agghub_id = p.agghub_id and p.INTERMEDIARY_BUSINESSSOURCETEXT = fin.brand)
         Select *
         from cte 
         where num =1;
@@ -363,7 +363,7 @@ def get_vehicle_info5():
 def get_vehicle_info6(cs):
     refs_sql = f"""
                 select c.COVER_VOLXSALLOWED, b.AGGHUB_ID from UTIL_DB.PUBLIC.hc_veh_res_base b 
-        inner join PRD_QUOTES.QUOTE_PAYLOAD.VW_POLARIS_VEH_RES_COVER c on c.AGGHUB_ID = b.res_id and b.inserttimestamp = c.inserttimestamp
+        inner join PRD_RAW_DB.QUOTES_PUBLIC.VW_POLARIS_VEH_RES_COVER c on c.AGGHUB_ID = b.res_id and b.inserttimestamp = c.inserttimestamp
         where c.COVER_VEHPRN = 1;
         """
 
@@ -398,7 +398,7 @@ def get_driv1():
            case when fin.county is NULL then ' ' else  fin.county end  as "county",
            case when fin.city is NULL then ' ' else  fin.city end  as "town"
            from UTIL_DB.PUBLIC.hc_final fin
-           inner join PRD_QUOTES.QUOTE_PAYLOAD.VW_POLARIS_VEH_REQ r on fin.agghub_id = r.agghub_id;
+           inner join PRD_RAW_DB.QUOTES_PUBLIC.VW_POLARIS_VEH_REQ r on fin.agghub_id = r.agghub_id;
             """
 
     return refs_sql
@@ -432,8 +432,8 @@ def get_driv2():
            d.driver_prn,
            d.date_created
         from UTIL_DB.PUBLIC.hc_driv_one fin
-        inner join PRD_QUOTES.QUOTE_PAYLOAD.VW_POLARIS_VEH_REQ_DRIVER d on fin.agghub_id = d.agghub_id
-        inner join PRD_QUOTES.QUOTE_PAYLOAD.VW_POLARIS_VEH_REQ_OCCUPATION o on fin.agghub_id = o.agghub_id and d.driver_prn = o.driver_prn;
+        inner join PRD_RAW_DB.QUOTES_PUBLIC.VW_POLARIS_VEH_REQ_DRIVER d on fin.agghub_id = d.agghub_id
+        inner join PRD_RAW_DB.QUOTES_PUBLIC.VW_POLARIS_VEH_REQ_OCCUPATION o on fin.agghub_id = o.agghub_id and d.driver_prn = o.driver_prn;
             """
 
     return refs_sql
@@ -464,8 +464,8 @@ def get_driv4(cs):
             case when o.TRANNAME = 'Renewal' THEN 0 WHEN o.TRANNAME = 'QuoteDetail' THEN 1 WHEN o.TRANNAME = 'MTA' THEN 2 END) as invite_number,
         o.*
        from UTIL_DB.PUBLIC.hc_driv_two o
-       inner join PRD_QUOTES.QUOTE_PAYLOAD.VW_EARNIX_REQ_DRIVER e on o.quote_reference	= e.quote_reference and e.driverprn = o.driver_prn
-       -- left join PRD_QUOTES.QUOTE_PAYLOAD.VW_MYLIC_REQ l on CAST(l.quote_reference AS varchar(255)) = CAST(o.quote_reference AS varchar(255)) and driverno = e.driverprn
+       inner join PRD_RAW_DB.QUOTES_PUBLIC.VW_EARNIX_REQ_DRIVER e on o.quote_reference	= e.quote_reference and e.driverprn = o.driver_prn
+       -- left join PRD_RAW_DB.QUOTES_PUBLIC.VW_MYLIC_REQ l on CAST(l.quote_reference AS varchar(255)) = CAST(o.quote_reference AS varchar(255)) and driverno = e.driverprn
        )Select * from cte 
        where invite_number=1
        order by cte.agghub_id, cte.driver_prn; 
@@ -496,7 +496,7 @@ def get_convictions(cs):
     c.conviction_penaltypts as "licencePoints",
     c.conviction_suspensionperiod as "banLength"
     from UTIL_DB.PUBLIC.hc_driv_two fin
-    inner join PRD_QUOTES.QUOTE_PAYLOAD.vw_polaris_veh_req_conviction c on 
+    inner join PRD_RAW_DB.QUOTES_PUBLIC.vw_polaris_veh_req_conviction c on 
     fin.agghub_id = c.agghub_id and c.inserttimestamp = fin.inserttimestamp and c.driver_prn = fin.driver_prn
     where c.conviction_code is not NULL;
                 """
@@ -523,7 +523,7 @@ def get_claims(cs):
         case when c.claim_coststotal is NULL then 0 else c.claim_coststotal end as "cost",
         c.quote_reference
         from  UTIL_DB.PUBLIC.hc_final fin
-        inner join PRD_QUOTES.QUOTE_PAYLOAD.VW_POLARIS_VEH_REQ_CLAIM c on fin.agghub_id = c.agghub_id and c.inserttimestamp = fin.inserttimestamp;
+        inner join PRD_RAW_DB.QUOTES_PUBLIC.VW_POLARIS_VEH_REQ_CLAIM c on fin.agghub_id = c.agghub_id and c.inserttimestamp = fin.inserttimestamp;
                     """
 
     sql = refs_sql
@@ -543,7 +543,7 @@ def get_modifications(cs):
     m.quote_reference,
     m.agghub_id,
     m.MODIFICATIONS_CODE as "modificationAbiCode"
-    from  PRD_QUOTES.QUOTE_PAYLOAD.VW_POLARIS_VEH_REQ_MODIFICATIONS m
+    from  PRD_RAW_DB.QUOTES_PUBLIC.VW_POLARIS_VEH_REQ_MODIFICATIONS m
     inner join UTIL_DB.PUBLIC.hc_final f on m.agghub_id= f.agghub_id;
                     """
     sql = refs_sql
@@ -570,8 +570,8 @@ def get_occupations(cs):
         d.driver_prn,
         fin.policy_number
         from UTIL_DB.PUBLIC.hc_final fin
-        inner join PRD_QUOTES.QUOTE_PAYLOAD.VW_POLARIS_VEH_REQ_DRIVER d on fin.agghub_id = d.agghub_id
-        inner join PRD_QUOTES.QUOTE_PAYLOAD.VW_POLARIS_VEH_REQ_OCCUPATION o on fin.agghub_id = o.agghub_id and d.driver_prn = o.driver_prn;
+        inner join PRD_RAW_DB.QUOTES_PUBLIC.VW_POLARIS_VEH_REQ_DRIVER d on fin.agghub_id = d.agghub_id
+        inner join PRD_RAW_DB.QUOTES_PUBLIC.VW_POLARIS_VEH_REQ_OCCUPATION o on fin.agghub_id = o.agghub_id and d.driver_prn = o.driver_prn;
                     """
     sql = refs_sql
     cs.execute(sql)

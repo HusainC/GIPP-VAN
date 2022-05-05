@@ -42,17 +42,17 @@ def get_netezza_df_same_day(set_renewal_start_date, set_renewal_end_date):
 
 def add_to_sf_sd(dataframe, conn):
     if not dataframe.empty:
-        sql = "USE ROLE DRS_QUOTEPAYLOAD"
+        sql = "USE ROLE FG_RETAILPRICING"
         conn.cursor().execute(sql)
-        sql = "use warehouse PRD_QUOTES_MEDIUM;"
+        sql = "use warehouse WRK_RETAILPRICING_MEDIUM;"
         conn.cursor().execute(sql)
-        sql = "use database PRD_QUOTES;"
+        sql = "use database WRK_RETAILPRICING;"
         conn.cursor().execute(sql)
-        sql = "use schema QUOTE_PAYLOAD;"
+        sql = "use schema CAR;"
         conn.cursor().execute(sql)
-        table_name = 'GIPP_VAN_SUBS'
-        schema = 'PUBLIC'
-        database = 'DEMO_DB'
+        table_name = 'GIPP_MON_SUBS'
+        schema = 'CAR'
+        database = 'WRK_RETAILPRICING'
 
         # # Create the SQL statement to create or replace the table
         # dataframe['RN_SUBMISSION'] = dataframe['RN_SUBMISSION'].astype(str)
@@ -91,7 +91,7 @@ def add_to_sf_sd(dataframe, conn):
         # # Execute the SQL statement to create the table
         #
         conn.cursor().execute(create_tbl_statement)
-        f = conn.cursor().execute("select * from  demo_db.public.GIPP_VAN_SUBS")
+        # f = conn.cursor().execute("select * from  demo_db.public.GIPP_VAN_SUBS")
         success, nchunks, nrows, _ = write_pandas(conn, dataframe, database=database, schema=schema,
                                                   table_name=table_name)
         print(success)
