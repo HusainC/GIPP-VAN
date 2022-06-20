@@ -71,7 +71,8 @@ def find_additional_drivers(d):
 def xml_response(body):
     root = body.getroot()
     body = et.tostring(root, encoding="utf-8").decode("utf-8")
-    url = "http://ad1-agg-pcclus-qh.test.hastings.local:9080/pc/ws/com/hastings/integration/aggs/commercialvan/qcore/CVQuoteEngineAPI?wsdl "
+    #url = "http://ad1-agg-pcclus-qh.test.hastings.local:9080/pc/ws/com/hastings/integration/aggs/commercialvan/qcore/CVQuoteEngineAPI?wsdl "
+    url = "https://ad1-prd-pcclus-qh.network.uk.ad/pc/ws/com/hastings/integration/aggs/commercialvan/qcore/CVQuoteEngineAPI?wsdl"
     headers = {"content-type": "text/xml"}
     response = requests.post(url, data=body, headers=headers, verify=False)
     content = MD.parseString(response.text).toprettyxml()

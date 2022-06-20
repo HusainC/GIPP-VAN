@@ -161,8 +161,7 @@ def get_setup3():
     refs_sql = f"""
             CREATE or replace TEMPORARY TABLE UTIL_DB.PUBLIC.hc_testing as 
             select  BRAND, renewal_date, policy_number, 
-            addressline1,addressline2,addressline3, city, county, INVITE_TIMESTAMP, INVITE_REFERENCE from WRK_RETAILPRICING.CAR.GIPP_VAN_SUBS
-            LIMIT 1000;
+            addressline1,addressline2,addressline3, city, county, INVITE_TIMESTAMP, INVITE_REFERENCE from WRK_RETAILPRICING.CAR.GIPP_VAN_SUBS;
             """
     return refs_sql
 
@@ -263,7 +262,7 @@ def get_vehicle_info1():
          r.ProposerPolicyholder_NoOfVehiclesAvailableToFamily as "noOfVehiclesHousehold",
          v.VEHICLE_GROSSWEIGHT as "grossVehicleWeight",
          case when r.POLICY_HAZARDOUSGOODSCARRIEDIND = 'Y' then 'true' else 'false' end as "isHazardousGoods",
-         case when r.POLICY_SIGNEDPROPOSALIND = 'Y' then 'true' else 'false' end as "isSignWritten",
+         case when r.POLICY_SIGNEDPROPOSALIND = 'Y' then 'true' else 'false' end as "s",
          case when v.VEHICLE_USEWITHTRAILERIND = 'Y' then 'true' else 'false' end as "towTrailer",
         fin.*
          from UTIL_DB.PUBLIC.hc_final fin
@@ -311,11 +310,36 @@ CREATE or replace TEMPORARY TABLE UTIL_DB.PUBLIC.hc_veh_three as
     return refs_sql
 
 
+def get_vehicle_info_add():
+    refs_sql = f"""
+            CREATE or replace TEMPORARY TABLE UTIL_DB.PUBLIC.hc_veh_four as 
+    with cte as( 
+       select e.ORIGINALCHANNELCODE as "aggsSource",
+      v.keeper as "r",
+      v.ownership as "o",
+      case when v.INTERNALRACKINGSHELVING = 'Y' then 'true' else 'false' end  as "isInternalRacking",
+      case when v.REFRIGERATED = 'Y' then 'true' else 'false' end as "isRefrigerated",
+      case when v.SIGNWRITTEN = 'Y' then 'true' else 'false' end as "isSignWritten",
+      e.NOOFDRIVERSINFAMILY as "noOfDriversinHouse",
+        row_number() over(partition by e.quote_reference order by 
+            case when DATEDIFF(SECOND,  o.INSERTTIMESTAMP, e.inserttimestamp) <0 then 9999999 else DATEDIFF(SECOND,  o.INSERTTIMESTAMP, e.inserttimestamp) end asc,
+            case when o.TRANNAME = 'Renewal' THEN 0 WHEN o.TRANNAME = 'QuoteDetail' THEN 1 WHEN o.TRANNAME = 'MTA' THEN 2 END) as invite,
+        o.*
+       from UTIL_DB.PUBLIC.hc_veh_three o
+       inner join  PRD_RAW_DB.QUOTES_PUBLIC.VW_EARNIX_VAN_REQ_POLICY e on o.quote_reference	= e.quote_reference
+       inner join  PRD_RAW_DB.QUOTES_PUBLIC.VW_EARNIX_VAN_REQ_VEHICLECOVER v on o.quote_reference	= v.quote_reference
+       )Select * from cte 
+       where cte.invite=1
+       order by cte.agghub_id; 
+        """
+    return refs_sql
+
+
 def get_vehicle_info4(cs):
     refs_sql = f"""
         select s.DRIVENBY_DRIVERNUMBER as "mainUser",
         twog.*
-         from UTIL_DB.PUBLIC.hc_veh_three twog
+         from UTIL_DB.PUBLIC.hc_veh_four twog
         inner join PRD_RAW_DB.QUOTES_PUBLIC.VW_POLARIS_VEH_REQ_DRIVENBY s on twog.AGGHUB_ID = s.AGGHUB_ID
         where nvl(s.PROCESSINGINDICATORS_PROCESSTYPE, '00') != '04'
         and drivenby_drivingfrequency = 'M';
@@ -330,6 +354,8 @@ def get_vehicle_info4(cs):
     sql = get_vehicle_info2()
     cs.execute(sql)
     sql = get_vehicle_info3()
+    cs.execute(sql)
+    sql = get_vehicle_info_add()
     cs.execute(sql)
     cs.execute(refs_sql)
 
@@ -388,6 +414,7 @@ def get_driv1():
            r.proposerpolicyholder_postcodefull as "postCode",
            case when r.PROPOSERPOLICYHOLDER_NOOFCHILDREN = '1' then 'true' else 'false' end as "anyChildrenUnder16",
            case when r.PROPOSERPOLICYHOLDER_HOMEOWNERIND = 'Y' then 'true' else 'false' end as "homeOwner",
+           nvl(r.PROPOSERPOLICYHOLDER_YEARSATHOMEADDRESS, '0')  as "timeAtCurrentAddress",
            fin.agghub_id,
            r.PROCESSINGINDICATORS_PROCESSTYPE,
            r.tranname,
@@ -415,7 +442,7 @@ def get_driv2():
            d.DRIVER_LICENCETYPE,
            d.DRIVER_LICENCENUMBER as "number",
            case when d.DRIVER_MEDICALCONDITIONIND = 'N' then '99_NO' else '99_D0' end as "medicalConditions",
-           case when d.DRIVER_NOOFOTHERVEHICLESOWNED = 'N' then 'no' else 'own_another_car' end as "useOtherVehicle",
+           --case when d.DRIVER_NOOFOTHERVEHICLESOWNED = 'N' then 'no' else 'own_another_car' end as "useOtherVehicle",
            date(to_date(d.driver_dateofbirth, 'DD/MM/YYYY'), 'YYYY-MM-DD') as "dateOfBirth",
            d.driver_maritalstatus as "maritalStatus",  
            date(to_date(d.driver_licencedate, 'DD/MM/YYYY'), 'YYYY-MM-DD') as "lengthHeld",
@@ -454,18 +481,18 @@ def get_driv2():
 def get_driv4(cs):
     refs_sql = f"""
                        with cte as( 
-       select e.driverprn,
+       select e.driverprn as prn,
        case when e.LICENCETYPE is NULL then e.LICENCETYPE else e.LICENCETYPE end as "type",
        --case when l.DRIVINGLICENCENUMBER is NULL then '?' else  l.DRIVINGLICENCENUMBER end as "number",
-        e.MEDICALCONDITION as "medicalConditions", -- Y/N whereas a code is needed
+       -- e.MEDICALCONDITION as "medicalConditions", -- Y/N whereas a code is needed
         e.ACCESSOTHERVEHICLES as "useOtherVehicle",
         row_number() over(partition by e.quote_reference,e.driverprn order by 
             case when DATEDIFF(SECOND,  o.INSERTTIMESTAMP, e.inserttimestamp) <0 then 9999999 else DATEDIFF(SECOND,  o.INSERTTIMESTAMP, e.inserttimestamp) end desc,
             case when o.TRANNAME = 'Renewal' THEN 0 WHEN o.TRANNAME = 'QuoteDetail' THEN 1 WHEN o.TRANNAME = 'MTA' THEN 2 END) as invite_number,
         o.*
        from UTIL_DB.PUBLIC.hc_driv_two o
-       inner join PRD_RAW_DB.QUOTES_PUBLIC.VW_EARNIX_REQ_DRIVER e on o.quote_reference	= e.quote_reference and e.driverprn = o.driver_prn
-       -- left join PRD_RAW_DB.QUOTES_PUBLIC.VW_MYLIC_REQ l on CAST(l.quote_reference AS varchar(255)) = CAST(o.quote_reference AS varchar(255)) and driverno = e.driverprn
+       inner join PRD_RAW_DB.QUOTES_PUBLIC.VW_EARNIX_VAN_REQ_DRIVER e on o.quote_reference	= e.quote_reference and e.driverprn = o.driver_prn
+       -- left join PRD_RAW_DB.QUOTES_PUBLIC.  l on CAST(l.quote_reference AS varchar(255)) = CAST(o.quote_reference AS varchar(255)) and driverno = e.driverprn
        )Select * from cte 
        where invite_number=1
        order by cte.agghub_id, cte.driver_prn; 
@@ -475,7 +502,7 @@ def get_driv4(cs):
     cs.execute(sql)
     sql = get_driv2()
     cs.execute(sql)
-    cs.execute("Select * from UTIL_DB.PUBLIC.hc_driv_two ")
+    cs.execute(refs_sql)
 
     try:
         df = cs.fetch_pandas_all()

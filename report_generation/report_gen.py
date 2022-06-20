@@ -11,7 +11,7 @@ def add_to_sf(dataframe, conn):
         conn.cursor().execute(sql)
         sql = "use schema car;"
         conn.cursor().execute(sql)
-        table_name = 'GIPP_MON_SUBS'
+        table_name = 'GIPP_VAN_SUBS'
         schema = 'CAR'
         database = 'WRK_RETAILPRICING'
 
@@ -119,6 +119,6 @@ def final_report_gen(con):
     cur = con.cursor()
     dataframe = pd.read_csv("../results/nets.csv")
     add_to_sf(dataframe, con)
-    get_results_file(cur)
-    get_insurer_file(cur)
-    get_dataissue_file(cur)
+    # get_results_file(cur)
+    # get_insurer_file(cur)
+    # get_dataissue_file(cur)

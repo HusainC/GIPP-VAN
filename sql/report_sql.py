@@ -3,13 +3,13 @@ from snowflake.connector.pandas_tools import write_pandas
 
 
 def get_results_file(cs):
-    sql = "USE ROLE DRS_QUOTEPAYLOAD"
+    sql = "USE ROLE FG_RETAILPRICING"
     cs.execute(sql)
-    sql = "use warehouse prd_quotes_medium;"
+    sql = "use warehouse wrk_retailpricing_medium;"
     cs.execute(sql)
-    sql = "use database PRD_QUOTES;"
+    sql = "use database wrk_retailpricing;"
     cs.execute(sql)
-    sql = "use schema QUOTE_PAYLOAD;"
+    sql = "use schema car;"
     cs.execute(sql)
     sql = "ALTER SESSION SET USE_CACHED_RESULT = FALSE;"
     cs.execute(sql)
@@ -20,8 +20,8 @@ select g.rn_submission
       ,b.date_created as rn_date_created
       ,row_number() over(partition by g.rn_submission
                         order by b.date_created asc) as date_no
-from demo_db.public.gipp_mon_subs g
-left join prd_quotes.quote_payload.vw_earnix_req_base b
+from wrk_retailpricing.car.gipp_van_subs g
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_base b
 on g.rn_submission = b.quote_reference and b.date_created >= '2021-12-01'
 ),
 nb as (
@@ -29,21 +29,21 @@ select g.nb_submission
       ,b.date_created as nb_date_created
       ,row_number() over(partition by g.nb_submission
                         order by b.date_created asc) as date_no
-from demo_db.public.gipp_mon_subs g
-left join prd_quotes.quote_payload.vw_earnix_req_base b
+from wrk_retailpricing.car.gipp_van_subs g
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_base b
 on g.nb_submission = b.quote_reference and b.date_created >= '2021-12-01'
 )
 select g.rn_submission
       ,g.nb_submission
       ,rnl.rn_date_created
       ,nb.nb_date_created
-from demo_db.public.gipp_mon_subs g
+from wrk_retailpricing.car.gipp_van_subs g
 left join rnl on g.rn_submission = rnl.rn_submission and rnl.date_no = 1
 left join nb on g.nb_submission = nb.nb_submission and nb.date_no = 1
 ;
     """
     auto_one = """
-create or replace table demo_db.public.gipp_mon_subs as
+create or replace table wrk_retailpricing.car.gipp_van_subs as
 select * from gipp_dates
 where rn_submission is not null and nb_submission is not null
 and rn_date_created is not null and nb_date_created is not null;
@@ -57,11 +57,11 @@ select g.rn_submission
       ,cast(r.agghub_id as int) as response_id
       ,row_number() over(partition by g.rn_submission
                         order by cast(q.inserttimestamp as timestamp) asc, r.agghub_id asc) as earnix_no
-from demo_db.public.gipp_mon_subs g
-left join prd_quotes.quote_payload.vw_earnix_req_scheme q
+from wrk_retailpricing.car.gipp_van_subs g
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_scheme q
 on g.rn_submission = q.quote_reference
 and g.rn_date_created = q.date_created
-left join prd_quotes.quote_payload.vw_earnix_res_scheme r
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_res_scheme r
 on q.quote_reference = r.quote_reference
 and q.scheme = r.scheme
 and q.brand = r.brand
@@ -104,16 +104,16 @@ select distinct e.rn_submission
       ,q.lastannualpremiumnet
       ,mod(datediff(day, cast('1903-04-09' as date), p.dateofbirth), 311) as pricingrandomid_311
 from earnix_id e
-left join prd_quotes.quote_payload.vw_earnix_req_scheme q
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_scheme q
 on e.request_id = q.agghub_id
 and e.rn_date_created = q.date_created
-left join prd_quotes.quote_payload.vw_earnix_req_policyproposer p
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_policyproposer p
 on q.agghub_id = p.agghub_id
 and q.date_created = p.date_created
-left join prd_quotes.quote_payload.vw_earnix_req_vehiclecover v
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_vehiclecover v
 on q.agghub_id = v.agghub_id
 and q.date_created = v.date_created
-left join prd_quotes.quote_payload.vw_earnix_res_scheme r
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_res_scheme r
 on e.response_id = r.agghub_id
 and e.rn_date_created = r.date_created
 and q.scheme = r.scheme
@@ -133,11 +133,11 @@ select g.nb_submission
       ,r.agghub_id as response_id
       ,row_number() over(partition by g.nb_submission
                         order by cast(q.inserttimestamp as timestamp) asc, r.agghub_id asc) as earnix_no
-from demo_db.public.gipp_mon_subs g
-left join prd_quotes.quote_payload.vw_earnix_req_scheme q
+from wrk_retailpricing.car.gipp_van_subs g
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_scheme q
 on g.nb_submission = q.quote_reference
 and g.nb_date_created = q.date_created
-left join prd_quotes.quote_payload.vw_earnix_res_scheme r
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_res_scheme r
 on q.quote_reference = r.quote_reference
 and q.scheme = r.scheme
 and q.brand = r.brand
@@ -154,13 +154,13 @@ select e.nb_submission
       ,d.value as invitedpayment
       ,dti.value as daystoinception
 from earnix_id e
-left join prd_quotes.quote_payload.vw_earnix_req_dataenrichment d
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_dataenrichment d
 on e.request_id = d.agghub_id
 and e.nb_date_created = d.date_created
 and d.type = 'ECI'
 and d.key = 'InvitedPayment'
 --where e.earnix_no = 1
-left join prd_quotes.quote_payload.vw_earnix_req_dataenrichment dti
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_dataenrichment dti
 on e.request_id = dti.agghub_id
 and e.nb_date_created = dti.date_created
 and dti.type = 'ECI'
@@ -194,16 +194,16 @@ select distinct e.nb_submission
             when substring(q.scheme,1,2) in ('AD','AP','YD') and p.accounttype = 'Staff' then cast(q.netpremiumpncd as numeric(10,2)) * -0.25
             else 0 end as sirpncdamount
 from earnix_id e
-left join prd_quotes.quote_payload.vw_earnix_req_scheme q
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_scheme q
 on e.request_id = q.agghub_id
 and e.nb_date_created = q.date_created
-left join prd_quotes.quote_payload.vw_earnix_req_policyproposer p
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_policyproposer p
 on e.request_id = p.agghub_id
 and e.nb_date_created = p.date_created
-left join prd_quotes.quote_payload.vw_earnix_req_vehiclecover v
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_vehiclecover v
 on e.request_id = v.agghub_id
 and e.nb_date_created = v.date_created
-left join prd_quotes.quote_payload.vw_earnix_res_scheme r
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_res_scheme r
 on e.response_id = r.agghub_id
 and e.nb_date_created = r.date_created
 and q.scheme = r.scheme
@@ -229,7 +229,7 @@ select g.nb_submission
       ,e.pncd
       ,e.dd_duq
       ,e.rates
-from demo_db.public.gipp_mon_subs g
+from wrk_retailpricing.car.gipp_van_subs g
 left join earnix_rn e
 on g.rn_submission = e.rn_submission
 and (e.isincumbent = 'true' or e.ischeapest = 'true')
@@ -425,7 +425,7 @@ select g.*
       ,new.eci_dti
 //      ,enb.covea_net + enb.sirncdamount as rn_covea_net
 //      ,enb.covea_net_pncd + enb.sirpncdamount as rn_covea_net_pncd
-from demo_db.public.gipp_mon_subs g
+from wrk_retailpricing.car.gipp_van_subs g
 -- Incumbent renewal or IsCheapest where incumbent declined
 left join earnix_rn ren
 on g.rn_submission = ren.rn_submission
@@ -477,31 +477,31 @@ select distinct g.*
             else 0 end as app_nb_net
       --,d.value
       from gipp_mon g
-left join prd_quotes.quote_payload.vw_earnix_req_scheme rc
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_scheme rc
 on g.rn_submission = rc.quote_reference
 and g.rn_date_created = rc.date_created
 and g.enbp_brand = rc.brand
 and g.rn_agghub_quote_version = rc.agghub_quote_version
 and substring(rc.scheme,1,2) = 'CO'
-left join prd_quotes.quote_payload.vw_earnix_req_scheme nc
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_scheme nc
 on g.nb_submission = nc.quote_reference
 and g.nb_date_created = nc.date_created
 and g.enbp_brand = nc.brand
 and g.NB_agghub_quote_version = nc.agghub_quote_version
 and substring(nc.scheme,1,2) = 'CO'
-left join prd_quotes.quote_payload.vw_earnix_req_scheme ra
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_scheme ra
 on g.rn_submission = ra.quote_reference
 and g.rn_date_created = ra.date_created
 and g.enbp_brand = ra.brand
 and g.rn_agghub_quote_version = ra.agghub_quote_version
 and substring(ra.scheme,1,2) = 'AP'
-left join prd_quotes.quote_payload.vw_earnix_req_scheme na
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_scheme na
 on g.nb_submission = na.quote_reference
 and g.nb_date_created = na.date_created
 and g.enbp_brand = na.brand
 and g.nb_agghub_quote_version = na.agghub_quote_version
 and substring(na.scheme,1,2) = 'AP'
-left join prd_quotes.quote_payload.vw_earnix_req_dataenrichment d
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_dataenrichment d
 on g.nb_submission = d.quote_reference
 and g.nb_date_created = d.date_created
 and d.type = 'ECI'
@@ -510,7 +510,7 @@ and d.key = 'InvitedPayment'
         """
     auto_eight = """
          -- Create final table with flags to help investigating
-create or replace table demo_db.public.gipp_mon_results as
+create or replace table gipp_mon_results as
 
 with checks as (
 select *
@@ -599,14 +599,14 @@ from checks_detail
 ;
         """
     auto_nine = """
-    ALTER TABLE demo_db.public.gipp_mon_results DROP COLUMN result_more_detail_cte;
+    ALTER TABLE gipp_mon_results DROP COLUMN result_more_detail_cte;
         """
     auto_ten = """
-    ALTER TABLE demo_db.public.gipp_mon_results DROP COLUMN pol_dti;  
+    ALTER TABLE gipp_mon_results DROP COLUMN pol_dti;  
         """
 
     auto_eleven = """
-    ALTER TABLE demo_db.public.gipp_mon_results DROP COLUMN eci_dti;
+    ALTER TABLE gipp_mon_results DROP COLUMN eci_dti;
             """
     cs.execute(auto_zero)
     cs.execute(auto_one)
@@ -616,6 +616,8 @@ from checks_detail
     cs.execute(auto_five)
     cs.execute(auto_six)
     cs.execute(auto_seven)
+    # cs.execute("use database PRD_RAW_DB;")
+    # cs.execute("use schema QUOTES_PUBLIC;")
     cs.execute(auto_eight)
     cs.execute(auto_nine)
     cs.execute(auto_ten)
@@ -698,7 +700,7 @@ select distinct rn_submission
       ,result
       ,result_more_detail
       ,compliance_issue
-from demo_db.public.gipp_mon_results
+from gipp_mon_results
 order by rn_submission;
         """
     cs.execute(results_fin)
@@ -725,7 +727,7 @@ select g.*
       ,case when en.netpremium != nb.netpremium then 'N' else 'Y' end as match
       ,case when en.netpremiumpncd != nb.netpremiumpncd then 'N' else 'Y' end as match_pncd
       ,case when (en.referral = 'Y' and nb.referral is null) or (en.referral = 'N' and nb.referral = 'N') then 'Y' else 'N' end as match_referral
-from demo_db.public.gipp_mon_subs g
+from wrk_retailpricing.car.gipp_van_subs g
 -- Auto-rebroke
 left outer join earnix_rn en
 on g.rn_submission = en.rn_submission
@@ -755,8 +757,8 @@ select g.rn_submission
       ,b.agghub_id
       ,row_number() over(partition by g.rn_submission
                         order by cast(b.inserttimestamp as timestamp) asc) as earnix_no
-from demo_db.public.gipp_mon_subs g
-left join prd_quotes.quote_payload.vw_earnix_req_base b
+from wrk_retailpricing.car.gipp_van_subs g
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_base b
 on g.rn_submission = b.quote_reference
 and g.rn_date_created = b.date_created
 where g.rn_submission is not null
@@ -866,10 +868,10 @@ select e.rn_submission
 --,v.valuationdate
 --,v.valuationstring
 from earnix_id e
-left join prd_quotes.quote_payload.vw_earnix_req_policyproposer p
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_policyproposer p
 on e.agghub_id = p.agghub_id
 and e.rn_date_created = p.date_created
-left join prd_quotes.quote_payload.vw_earnix_req_vehiclecover v
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_vehiclecover v
 on e.agghub_id = v.agghub_id
 and e.rn_date_created = v.date_created
 and v.vehicleprn = '1'
@@ -912,20 +914,20 @@ select e.rn_submission
 ,dr.relationshiptoproposer
 ,dr.drivesvehicle
 from earnix_id e
-left join prd_quotes.quote_payload.vw_earnix_req_driver d
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_driver d
 on e.agghub_id = d.agghub_id
 and e.rn_date_created = d.date_created
-left join prd_quotes.quote_payload.vw_earnix_req_occupation o1
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_occupation o1
 on d.agghub_id = o1.agghub_id
 and d.driverprn = o1.driverprn
 and o1.fulltimeemploymentind = 'Y'
 and d.date_created = o1.date_created
-left join prd_quotes.quote_payload.vw_earnix_req_occupation o2
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_occupation o2
 on d.agghub_id = o2.agghub_id
 and d.driverprn = o2.driverprn
 and o2.fulltimeemploymentind = 'N'
 and d.date_created = o2.date_created
-left join prd_quotes.quote_payload.vw_earnix_req_drives dr
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_drives dr
 on d.agghub_id = dr.agghub_id
 and d.driverprn = dr.driverprn
 and d.date_created = dr.date_created
@@ -944,7 +946,7 @@ select e.rn_submission
 ,c.cost
 ,c.fault
 from earnix_id e
-inner join prd_quotes.quote_payload.vw_earnix_req_claim c
+inner join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_claim c
 on e.agghub_id = c.agghub_id
 and e.rn_date_created = c.date_created
 where e.earnix_no = 1
@@ -965,7 +967,7 @@ select e.rn_submission
                   ,nvl(c.code,'MYLI') asc
                   ,cast(nvl(c.date,'1970-01-01') as date) asc) as conv_no
 from earnix_id e
-inner join prd_quotes.quote_payload.vw_earnix_req_conviction c
+inner join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_conviction c
 on e.agghub_id = c.agghub_id
 and e.rn_date_created = c.date_created
 where e.earnix_no = 1
@@ -980,8 +982,8 @@ select g.nb_submission
       ,b.agghub_id
       ,row_number() over(partition by g.nb_submission
                         order by cast(b.inserttimestamp as timestamp) asc) as earnix_no
-from demo_db.public.gipp_mon_subs g
-left join prd_quotes.quote_payload.vw_earnix_req_base b
+from wrk_retailpricing.car.gipp_van_subs g
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_base b
 on g.nb_submission = b.quote_reference
 and g.nb_date_created = b.date_created
 where g.nb_submission is not null
@@ -1090,10 +1092,10 @@ select e.nb_submission
 --,v.valuationdate
 --,v.valuationstring
 from earnix_id e
-left join prd_quotes.quote_payload.vw_earnix_req_policyproposer p
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_policyproposer p
 on e.agghub_id = p.agghub_id
 and e.nb_date_created = p.date_created
-left join prd_quotes.quote_payload.vw_earnix_req_vehiclecover v
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_vehiclecover v
 on e.agghub_id = v.agghub_id
 and e.nb_date_created = v.date_created
 and v.vehicleprn = '1'
@@ -1135,20 +1137,20 @@ select e.nb_submission
 ,dr.relationshiptoproposer
 ,dr.drivesvehicle
 from earnix_id e
-left join prd_quotes.quote_payload.vw_earnix_req_driver d
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_driver d
 on e.agghub_id = d.agghub_id
 and e.nb_date_created = d.date_created
-left join prd_quotes.quote_payload.vw_earnix_req_occupation o1
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_occupation o1
 on d.agghub_id = o1.agghub_id
 and d.driverprn = o1.driverprn
 and o1.fulltimeemploymentind = 'Y'
 and d.date_created = o1.date_created
-left join prd_quotes.quote_payload.vw_earnix_req_occupation o2
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_occupation o2
 on d.agghub_id = o2.agghub_id
 and d.driverprn = o2.driverprn
 and o2.fulltimeemploymentind = 'N'
 and d.date_created = o2.date_created
-left join prd_quotes.quote_payload.vw_earnix_req_drives dr
+left join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_drives dr
 on d.agghub_id = dr.agghub_id
 and d.driverprn = dr.driverprn
 and d.date_created = dr.date_created
@@ -1168,7 +1170,7 @@ select e.nb_submission
 ,c.cost
 ,c.fault
 from earnix_id e
-inner join prd_quotes.quote_payload.vw_earnix_req_claim c
+inner join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_claim c
 on e.agghub_id = c.agghub_id
 and e.nb_date_created = c.date_created
 where e.earnix_no = 1
@@ -1188,7 +1190,7 @@ select e.nb_submission
                   ,nvl(c.code,'MYLI') asc
                   ,cast(nvl(c.date,'1970-01-01') as date) asc) as conv_no
 from earnix_id e
-inner join prd_quotes.quote_payload.vw_earnix_req_conviction c
+inner join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_conviction c
 on e.agghub_id = c.agghub_id
 and e.nb_date_created = c.date_created
 where e.earnix_no = 1
@@ -1202,7 +1204,7 @@ select e.nb_submission
 ,d.key
 ,d.value
 from earnix_id e
-inner join prd_quotes.quote_payload.vw_earnix_req_dataenrichment d
+inner join PRD_RAW_DB.QUOTES_PUBLIC.vw_earnix_req_dataenrichment d
 on e.agghub_id = d.agghub_id
 and e.nb_date_created = d.date_created
 where e.earnix_no = 1
@@ -1308,7 +1310,7 @@ select g.rn_submission
 ,case when r.propertystringrisk = n.propertystringrisk then 0 else 1 end as propertystringrisk
 --,case when r.valuationdate = n.valuationdate then 0 else 1 end as valuationdate
 --,case when r.valuationstring = n.valuationstring then 0 else 1 end as valuationstring
-from demo_db.public.gipp_mon_subs g
+from wrk_retailpricing.car.gipp_van_subs g
 inner join earnix_rn_base r
 on g.rn_submission = r.rn_submission
 inner join earnix_nb_base n
@@ -1316,7 +1318,7 @@ on g.nb_submission = n.nb_submission
 ;
             """
     auto_thirteen = """
-    select * from demo_db.public.gipp_mon_subs g
+    select * from wrk_retailpricing.car.gipp_van_subs g
 inner join earnix_rn_base r
 on g.rn_submission = r.rn_submission
 inner join earnix_nb_base n
@@ -1354,7 +1356,7 @@ select g.*
 ,case when r.employmenttype_part = n.employmenttype_part then 0 else 1 end as employmenttype_part
 ,case when r.relationshiptoproposer = n.relationshiptoproposer then 0 else 1 end as relationshiptoproposer
 ,case when r.drivesvehicle = n.drivesvehicle then 0 else 1 end as drivesvehicle
-from demo_db.public.gipp_mon_subs g
+from wrk_retailpricing.car.gipp_van_subs g
 inner join earnix_rn_driver r
 on g.rn_submission = r.rn_submission
 left join earnix_nb_driver n
@@ -1374,7 +1376,7 @@ select g.*
 ,n.cost as cost_nb
 ,case when n.type is not null then 0 else 1 end as claim_match
 ,case when n.type is not null and floor(cast(nvl(r.cost,'0') as numeric(10,2))) = floor(cast(nvl(n.cost,'0') as numeric(10,2))) then 0 else 1 end as cost_match
-from demo_db.public.gipp_mon_subs g
+from wrk_retailpricing.car.gipp_van_subs g
 inner join earnix_rn_claim r
 on g.rn_submission = r.rn_submission
 left join earnix_nb_claim n
@@ -1392,7 +1394,7 @@ select g.*
 ,r.driverprn
 ,case when r.code = n.code then 0 else 1 end as code
 ,case when r.date = n.date then 0 else 1 end as date
-from demo_db.public.gipp_mon_subs g
+from wrk_retailpricing.car.gipp_van_subs g
 inner join earnix_rn_conviction r
 on g.rn_submission = r.rn_submission
 left join earnix_nb_conviction n
@@ -1411,7 +1413,7 @@ select g.*
 ,case when (cast(r.apr as numeric (4,2)) > 0 and pt.value = 'true')
            or (cast(r.apr as numeric (4,2)) = 0 and pt.value = 'false') then 0 else 1 end as paymenttype
 ,case when r.instalmentsrequestedind = dd.value then 0 else 1 end as instalmentsrequestedind
-from demo_db.public.gipp_mon_subs g
+from wrk_retailpricing.car.gipp_van_subs g
 inner join earnix_rn_base r
 on g.rn_submission = r.rn_submission
 left join earnix_nb_eci dti

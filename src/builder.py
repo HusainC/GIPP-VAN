@@ -8,27 +8,27 @@ from xml_population import *
 from netezza_setup import get_netezza_df_same_day, add_to_sf_sd
 
 
-def setup(cs, set_renewal_start_date, set_renewal_end_date):
-    sql = "USE ROLE DRS_QUOTEPAYLOAD;"
-    cs.execute(sql)
-    sql = "use warehouse PRD_QUOTES_MEDIUM;"
-    cs.execute(sql)
-    sql = "use database UTIL_DB;"
-    cs.execute(sql)
-    sql = "use schema PUBLIC;"
-    cs.execute(sql)
-    # sql = get_setup1_netezza(set_renewal_start_date, set_renewal_end_date)
-    # cs.execute(sql)
-    # sql = get_setup2_netezza()
-    # cs.execute(sql)
-    # sql = get_setup3_netezza()
-    # cs.execute(sql)
-    # if sub_list:
-    #     sql = get_setup3()
-    # else:
-    #     sql = get_setup3()
-    sql = get_setup3()
-    cs.execute(sql)
+# def setup(cs, set_renewal_start_date, set_renewal_end_date):
+#     sql = "USE ROLE DRS_QUOTEPAYLOAD;"
+#     cs.execute(sql)
+#     sql = "use warehouse PRD_QUOTES_MEDIUM;"
+#     cs.execute(sql)
+#     sql = "use database UTIL_DB;"
+#     cs.execute(sql)
+#     sql = "use schema PUBLIC;"
+#     cs.execute(sql)
+#     # sql = get_setup1_netezza(set_renewal_start_date, set_renewal_end_date)
+#     # cs.execute(sql)
+#     # sql = get_setup2_netezza()
+#     # cs.execute(sql)
+#     # sql = get_setup3_netezza()
+#     # cs.execute(sql)
+#     # if sub_list:
+#     #     sql = get_setup3()
+#     # else:
+#     #     sql = get_setup3()
+#     sql = get_setup3()
+#     cs.execute(sql)
 
 
 def changes_made(car_dict, policy_proposer_dict, additional_driver_list, last_transaction_ref, convictions_list,
@@ -71,9 +71,9 @@ def builder(cs, set_renewal_start_date, set_renewal_end_date, con):
     df = pd.read_csv('../results/upload.csv')
     add_to_sf_sd(df, con)
     """Code for using netezza ends"""
-    sql = "USE ROLE DRS_QUOTEPAYLOAD;"
+    sql = "USE ROLE FG_RETAILPRICING;"
     cs.execute(sql)
-    sql = "use warehouse PRD_QUOTES_MEDIUM;"
+    sql = "use warehouse WRK_RETAILPRICING_MEDIUM;"
     cs.execute(sql)
     # sql = "use database UTIL_DB;"
     # cs.execute(sql)

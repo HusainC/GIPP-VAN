@@ -50,7 +50,7 @@ def add_to_sf_sd(dataframe, conn):
         conn.cursor().execute(sql)
         sql = "use schema CAR;"
         conn.cursor().execute(sql)
-        table_name = 'GIPP_MON_SUBS'
+        table_name = 'GIPP_VAN_SUBS'
         schema = 'CAR'
         database = 'WRK_RETAILPRICING'
 

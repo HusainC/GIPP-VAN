@@ -119,9 +119,9 @@
                      <isHazardousGoods>?</isHazardousGoods>
                      <!--Optional:-->
                      <isVisitHazardousSites>?</isVisitHazardousSites>
-                     <isInternalRacking>false</isInternalRacking>
+                     <isInternalRacking>?</isInternalRacking>
                      <isSignWritten>?</isSignWritten>
-                     <isRefrigerated>false</isRefrigerated>
+                     <isRefrigerated>?</isRefrigerated>
                      <!--Optional:-->
                      <isTippingUnit>?</isTippingUnit>
                      <!--Optional:-->
