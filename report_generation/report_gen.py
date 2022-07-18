@@ -119,6 +119,5 @@ def final_report_gen(con):
     cur = con.cursor()
     dataframe = pd.read_csv("../results/nets.csv")
     add_to_sf(dataframe, con)
-    # get_results_file(cur)
-    # get_insurer_file(cur)
-    # get_dataissue_file(cur)
+    get_sql_results(cur, "../sql/case_breakdown.sql")
+    get_sql_results(cur, "../sql/data_issues.sql")

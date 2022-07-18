@@ -8,6 +8,16 @@ import requests
 import time
 from building_util import clean_xml
 from tag_strings import Tags as tags
+import win32com.client as win32
+
+
+def send_completion_email():
+    outlook = win32.Dispatch('outlook.application')
+    mail = outlook.CreateItem(0)
+    mail.To = "husainchopdawala@hastingsdirect.com;jameswatson@hastingsdirect.com;"
+    mail.Subject = 'APG - Van COMPLETE'
+    mail.Body = 'The van NB run has been successfully completed '
+    mail.Send()
 
 
 def manage_folders(path):
