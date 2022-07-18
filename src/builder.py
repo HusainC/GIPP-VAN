@@ -36,8 +36,8 @@ def changes_made(car_dict, policy_proposer_dict, additional_driver_list, last_tr
 
     tree = et.parse("../resource/sample.xml")
     change_aggs_timestamp(tree)
-    cars_per_house = get_tree_tags(tree, "noOfVehiclesHousehold")
-    cars_per_house.text = str(int(car_dict["noOfVehiclesHousehold"]))
+    cars_per_house = get_tree_tags(tree, tags.NOOFVEHICLESHOUSEHOLD.value)
+    cars_per_house.text = str(int(car_dict[tags.NOOFVEHICLESHOUSEHOLD.value]))
     inception_date_tree_item = get_tree_tags(tree, "inceptionDate")
     inception_date_tree_item.text = str(pd.to_datetime(str(inception_date)).date())
 
@@ -95,8 +95,8 @@ def builder(cs, set_renewal_start_date, set_renewal_end_date, con):
     stt2 = time.time()
     print(len(vehicles))
     for quotes in vehicles:
-        if math.isnan(quotes["grossVehicleWeight"]):
-            quotes["grossVehicleWeight"] = 10.0
+        if math.isnan(quotes[tags.GROSSWEIGHTVEHICLE.value]):
+            quotes[tags.GROSSWEIGHTVEHICLE.value] = 10.0
         lastTransaction_reference = str(quotes[tags.QUOTEREFERENCE.value])
         rn_quote.append(quotes[tags.QUOTEREFERENCE.value])
         policy_number = str(quotes[tags.POLICYNUMBER.value])

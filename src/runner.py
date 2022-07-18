@@ -16,10 +16,10 @@ def part2(set_renewal_start_date, set_renewal_end_date, set_invite_start_date, s
 
 
 def main():
-    set_renewal_start_date = "2022-07-12"
-    set_renewal_end_date = "2022-07-12"
-    set_invite_start_date = "2022-06-13"
-    set_invite_end_date = "2022-06-13"
+    set_renewal_start_date = "2022-08-08"
+    set_renewal_end_date = "2022-08-08"
+    set_invite_start_date = "2022-07-10"
+    set_invite_end_date = "2022-07-10"
 
     con = snowflake.connector.connect(
         user='husainchopdawala@hastingsdirect.com',
@@ -27,7 +27,7 @@ def main():
         account='hstsf01.eu-west-1')
     cur = con.cursor()
 
-    #part1(cur, set_renewal_start_date, set_renewal_end_date, con)
+    part1(cur, set_renewal_start_date, set_renewal_end_date, con)
     # print("Waiting for database to update, checking in 30 minute intervals")
     # t1 = datetime.now()
     # wait = True
@@ -39,7 +39,7 @@ def main():
     #
     # # Run the second part
     # print("Part 2 - report generation")
-    part2(set_renewal_start_date, set_renewal_end_date, set_invite_start_date, set_invite_end_date, con)
+    #part2(set_renewal_start_date, set_renewal_end_date, set_invite_start_date, set_invite_end_date, con)
 
     return 0
 

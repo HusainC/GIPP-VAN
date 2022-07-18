@@ -258,7 +258,7 @@ def get_vehicle_info1():
         end as "registeredKeeper",
         v.VEHICLE_ANNUALMILEAGE as "totalMileage",
         v.PROCESSINGINDICATORS_PROCESSTYPE,
-         case when r.ProposerPolicyholder_InstalmentsRequestedInd = 'Y' then '3' else '1' end as "insurancePaymentType",
+         case when r.ProposerPolicyholder_InstalmentsRequestedInd = 'Y' then '1' else '1' end as "insurancePaymentType",
          r.ProposerPolicyholder_NoOfVehiclesAvailableToFamily as "noOfVehiclesHousehold",
          v.VEHICLE_GROSSWEIGHT as "grossVehicleWeight",
          case when r.POLICY_HAZARDOUSGOODSCARRIEDIND = 'Y' then 'true' else 'false' end as "isHazardousGoods",

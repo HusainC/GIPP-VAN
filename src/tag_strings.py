@@ -74,3 +74,6 @@ class Tags(Enum):
     FULLNAME = "fullName"
     POLICYHOLDER = "policyholder"
     NCDPROTECT = "ncdProtect"
+    GROSSWEIGHTVEHICLE = "grossVehicleWeight"
+    NOOFVEHICLESHOUSEHOLD = "noOfVehiclesHousehold"
+
