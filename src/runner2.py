@@ -65,16 +65,16 @@ def main_updated() -> int:
     Configure dates, eventually this might run on today's invites with renewals starting +29 days, but for now
     it is lagging by a day due to availability of data
     """
-    # renewal_start = renewal_end = (date.today() + timedelta(days=28)).strftime("%Y-%m-%d")
-    # invite_start = invite_end = (date.today() - timedelta(days=1)).strftime("%Y-%m-%d")
-    renewal_start = renewal_end = '2022-07-13'
-    invite_start = invite_end = '2022-07-11'
+    renewal_start = renewal_end = (date.today() + timedelta(days=28)).strftime("%Y-%m-%d")
+    invite_start = invite_end = (date.today() - timedelta(days=1)).strftime("%Y-%m-%d")
+    # renewal_start = renewal_end = '2022-08-17'
+    # invite_start = invite_end = '2022-07-19'
     # Run the first part
     # print("Part 1 - ENB requests")
-    # part1(cur, renewal_start, renewal_end, con)
+    part1(cur, renewal_start, renewal_end, con)
     # print("Finished part one, waiting for db to update")
     #
-    # # Wait until db has been updated for part two
+    # Wait until db has been updated for part two
     # print("Waiting for database to update, checking in 30 minute intervals")
     # t1 = datetime.now()
     # waiter = True
@@ -84,12 +84,12 @@ def main_updated() -> int:
     #     if datetime.strptime(t2, "%Y-%m-%d %H:%M:%S.%f") > t1:
     #         waiter = False
 
-    # Run the second partsea of
-    print("Part 2 - report generation")
-    part2(renewal_start, renewal_end, invite_start, invite_end, con)
-
-    # Send completion email
-    send_completion_email()
+    # Run the second part
+    # print("Part 2 - report generation")
+    # part2(renewal_start, renewal_end, invite_start, invite_end, con)
+    #
+    # # Send completion email
+    # send_completion_email()
 
     return 0
 

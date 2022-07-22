@@ -258,12 +258,12 @@ def get_vehicle_info1():
         end as "registeredKeeper",
         v.VEHICLE_ANNUALMILEAGE as "totalMileage",
         v.PROCESSINGINDICATORS_PROCESSTYPE,
-         case when r.ProposerPolicyholder_InstalmentsRequestedInd = 'Y' then '1' else '1' end as "insurancePaymentType",
-         r.ProposerPolicyholder_NoOfVehiclesAvailableToFamily as "noOfVehiclesHousehold",
-         v.VEHICLE_GROSSWEIGHT as "grossVehicleWeight",
-         case when r.POLICY_HAZARDOUSGOODSCARRIEDIND = 'Y' then 'true' else 'false' end as "isHazardousGoods",
-         case when r.POLICY_SIGNEDPROPOSALIND = 'Y' then 'true' else 'false' end as "s",
-         case when v.VEHICLE_USEWITHTRAILERIND = 'Y' then 'true' else 'false' end as "towTrailer",
+        case when r.ProposerPolicyholder_InstalmentsRequestedInd = 'Y' then '3' else '1' end as "insurancePaymentType",
+        r.ProposerPolicyholder_NoOfVehiclesAvailableToFamily as "noOfVehiclesHousehold",
+        v.VEHICLE_GROSSWEIGHT as "grossVehicleWeight",
+        case when r.POLICY_HAZARDOUSGOODSCARRIEDIND = 'Y' then 'true' else 'false' end as "isHazardousGoods",
+        case when r.POLICY_SIGNEDPROPOSALIND = 'Y' then 'true' else 'false' end as "s",
+        case when v.VEHICLE_USEWITHTRAILERIND = 'Y' then 'true' else 'false' end as "towTrailer",
         fin.*
          from UTIL_DB.PUBLIC.hc_final fin
         inner join PRD_RAW_DB.QUOTES_PUBLIC.VW_POLARIS_VEH_REQ_VEHICLE v on fin.AGGHUB_ID = v.AGGHUB_ID
@@ -320,7 +320,10 @@ def get_vehicle_info_add():
       case when v.INTERNALRACKINGSHELVING = 'Y' then 'true' else 'false' end  as "isInternalRacking",
       case when v.REFRIGERATED = 'Y' then 'true' else 'false' end as "isRefrigerated",
       case when v.SIGNWRITTEN = 'Y' then 'true' else 'false' end as "isSignWritten",
-      e.NOOFDRIVERSINFAMILY as "noOfDriversinHouse",
+      CASE
+        WHEN e.NOOFDRIVERSINFAMILY IS NULL THEN '?'
+        ELSE e.NOOFDRIVERSINFAMILY
+        END AS "noOfDriversinHouse",
         row_number() over(partition by e.quote_reference order by 
             case when DATEDIFF(SECOND,  o.INSERTTIMESTAMP, e.inserttimestamp) <0 then 9999999 else DATEDIFF(SECOND,  o.INSERTTIMESTAMP, e.inserttimestamp) end asc,
             case when o.TRANNAME = 'Renewal' THEN 0 WHEN o.TRANNAME = 'QuoteDetail' THEN 1 WHEN o.TRANNAME = 'MTA' THEN 2 END) as invite,

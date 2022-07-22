@@ -1,15 +1,15 @@
 USE ROLE FG_RETAILPRICING;
 USE WAREHOUSE WRK_RETAILPRICING_SMALL;
 USE DATABASE WRK_RETAILPRICING;
-USE SCHEMA CAR;
+USE SCHEMA GROWTH;
 
-create or replace transient table WRK_RETAILPRICING.CAR.GIPP_VAN_SUBS_JW as
+create or replace transient table WRK_RETAILPRICING.GROWTH.GIPP_VAN_SUBS_JW as
         with rnl as (
         select g.rn_submission
               ,b.date_created as rn_date_created
               ,row_number() over(partition by g.rn_submission
                                 order by b.date_created asc) as date_no
-        from WRK_RETAILPRICING.CAR.GIPP_VAN_SUBS g
+        from WRK_RETAILPRICING.GROWTH.GIPP_VAN_SUBS g
         left join prd_raw_db.quotes_public.vw_earnix_van_req_base b
         on g.rn_submission = b.quote_reference and b.date_created >= '2021-12-01'
         ),
@@ -18,7 +18,7 @@ create or replace transient table WRK_RETAILPRICING.CAR.GIPP_VAN_SUBS_JW as
               ,b.date_created as nb_date_created
               ,row_number() over(partition by g.nb_submission
                                 order by b.date_created asc) as date_no
-        from WRK_RETAILPRICING.CAR.GIPP_VAN_SUBS g
+        from WRK_RETAILPRICING.GROWTH.GIPP_VAN_SUBS g
         left join prd_raw_db.quotes_public.vw_earnix_van_req_base b
         on g.nb_submission = b.quote_reference and b.date_created >= '2021-12-01'
         )
@@ -26,12 +26,10 @@ create or replace transient table WRK_RETAILPRICING.CAR.GIPP_VAN_SUBS_JW as
               ,g.nb_submission
               ,rnl.rn_date_created
               ,nb.nb_date_created
-        from WRK_RETAILPRICING.CAR.GIPP_VAN_SUBS g
+        from WRK_RETAILPRICING.GROWTH.GIPP_VAN_SUBS g
         left join rnl on g.rn_submission = rnl.rn_submission and rnl.date_no = 1
         left join nb on g.nb_submission = nb.nb_submission and nb.date_no = 1
         ;
-
-USE SCHEMA GROWTH;
 
 SET DBNAME = '"WRK_RETAILPRICING"';
 SET SCHEMANAME = '"GROWTH"';
@@ -67,7 +65,7 @@ SELECT V.NB_SUBMISSION AS SUBMISSIONNUMBER
       ,MIN(B.AGGHUB_ID) AS AGGHUB_ID_REQ_E
       ,MIN(P.AGGHUB_ID) AS AGGHUB_ID_REQ_P
       ,MIN(R.AGGHUB_ID) AS AGGHUB_ID_RES_R
-FROM WRK_RETAILPRICING.CAR.GIPP_VAN_SUBS_JW V
+FROM WRK_RETAILPRICING.GROWTH.GIPP_VAN_SUBS_JW V
 LEFT JOIN "PRD_RAW_DB"."QUOTES_PUBLIC"."VW_EARNIX_VAN_REQ_BASE" B
 ON  B.QUOTE_REFERENCE=V.NB_SUBMISSION
 AND B.DATE_CREATED=V.NB_DATE_CREATED
@@ -91,7 +89,7 @@ SELECT V.RN_SUBMISSION AS SUBMISSIONNUMBER
       ,MIN(B.AGGHUB_ID) AS AGGHUB_ID_REQ_E
       ,MIN(P.AGGHUB_ID) AS AGGHUB_ID_REQ_P
       ,MIN(R.AGGHUB_ID) AS AGGHUB_ID_RES_R
-FROM WRK_RETAILPRICING.CAR.GIPP_VAN_SUBS_JW V
+FROM WRK_RETAILPRICING.GROWTH.GIPP_VAN_SUBS_JW V
 LEFT JOIN "PRD_RAW_DB"."QUOTES_PUBLIC"."VW_EARNIX_VAN_REQ_BASE" B
 ON  B.QUOTE_REFERENCE=V.RN_SUBMISSION
 AND B.DATE_CREATED=V.RN_DATE_CREATED
@@ -111,8 +109,6 @@ GROUP BY RN_SUBMISSION
 )SELECT * FROM NB
 UNION ALL
 SELECT * FROM RN;
-
---SELECT * FROM IDENTIFIER($BASE);
 
 SET POL = $PLACENAME||'_Policy"';
 
@@ -175,8 +171,6 @@ AND B.DATE_CREATED=D.DATE_CREATED
 AND B.AGGHUB_ID_REQ_P=D.AGGHUB_ID
 AND nvl(D.DRIVER_PRN,1)=1
 ;
-
---SELECT * FROM IDENTIFIER($POL);
 
 SET SCH = $PLACENAME||'_Scheme"';
 
@@ -1172,7 +1166,7 @@ a.NB_Submission
 ,b.Scheme
 ,b.NetPremium
 ,b.NetPremiumPNCD
-FROM WRK_RETAILPRICING.CAR.GIPP_VAN_SUBS_JW a
+FROM WRK_RETAILPRICING.GROWTH.GIPP_VAN_SUBS_JW a
 LEFT JOIN PRD_RAW_DB.QUOTES_PUBLIC.VW_EARNIX_VAN_REQ_SCHEME b
   ON a.RN_Submission = b.Quote_Reference
 WHERE b.NetPremium < 9000
@@ -1234,7 +1228,7 @@ a.rn_submission
   END AS "INVITED_NETPNCD"
 ,b.Selected_Commission AS "INVITED_COMMISSION"
 ,b.Selected_Commission_PNCD AS "INVITED_COMMISSIONPNCD"
-FROM WRK_RETAILPRICING.CAR.GIPP_VAN_SUBS_JW a
+FROM WRK_RETAILPRICING.GROWTH.GIPP_VAN_SUBS_JW a
 LEFT JOIN IDENTIFIER($AUTO) b
   ON a.RN_Submission = b.SubmissionNumber
 )
@@ -1370,7 +1364,7 @@ a.RN_Submission
   WHEN (CHEAPEST_NETPNCD = b.CO_HP_NET_PNCD AND b.Incumbent_Brand = 'HP') THEN 'COCV2'
   ELSE b.Incumbent_Scheme
   END AS "CHEAPEST_SCHEME"
-FROM WRK_RETAILPRICING.CAR.GIPP_VAN_SUBS_JW a
+FROM WRK_RETAILPRICING.GROWTH.GIPP_VAN_SUBS_JW a
 LEFT JOIN IDENTIFIER($AUTO) b
   ON a.RN_Submission = b.SubmissionNumber
 )
@@ -1383,7 +1377,7 @@ LEFT JOIN IDENTIFIER($AUTO) b
   ,b.NetPremiumPNCD
   ,b.Commission
   ,b.CommissionPNCD
-  FROM WRK_RETAILPRICING.CAR.GIPP_VAN_SUBS_JW a
+  FROM WRK_RETAILPRICING.GROWTH.GIPP_VAN_SUBS_JW a
   LEFT JOIN IDENTIFIER($NBWE) b ON a.NB_Submission = b.NB_Submission
   LEFT JOIN IDENTIFIER($AUTO) c ON a.RN_Submission = c.SubmissionNumber
   WHERE c.Incumbent_Brand = b.Brand
@@ -1434,6 +1428,13 @@ a.RN_Submission
 //,(n.Commission / (n.NetPremium + n.Commission)) as "NB_%"
 //,(n.CommissionPNCD / (n.NetPremiumPNCD + n.CommissionPNCD)) as "NBPNCD_%"
 ,CASE
+    WHEN (PNCD = 'N' AND INVITED_NET < NB_NET) THEN 'Y'
+    WHEN (PNCD = 'Y' AND INVITED_NETPNCD < NB_NETPNCD) THEN 'Y'
+    WHEN (PNCD = 'N' AND INVITED_NET >= NB_NET) THEN 'N'
+    WHEN (PNCD = 'Y' AND INVITED_NETPNCD >= NB_NETPNCD) THEN 'N'
+    ELSE 'N'
+    END AS "INV_NET_LT_NB_NET"
+,CASE
     WHEN (PNCD = 'N' AND INVITED_NET <= NB_NET) THEN 'Y'
     WHEN (PNCD = 'Y' AND INVITED_NETPNCD <= NB_NETPNCD) THEN 'Y'
     WHEN (PNCD = 'N' AND INVITED_NET > NB_NET) THEN 'N'
@@ -1456,17 +1457,24 @@ a.RN_Submission
     ELSE 'N'
     END AS "INV_COMM_GT_NB_COMM"
 ,CASE
+    WHEN PNCD = 'N' AND INVITED_GROSS <= NB_GROSS THEN 'Y'
+    WHEN PNCD = 'Y' AND INVITED_GROSSPNCD <= NB_GROSSPNCD THEN 'Y'
+    ELSE 'N'
+    END AS "INV_GROSS_LE_NB_GROSS"
+,CASE
     WHEN PNCD = 'N' AND (INVITED_NET IS NULL OR INVITED_COMMISSION > 9500 OR INVITED_COMMISSION IS NULL) THEN 'Renewal Declined'
     WHEN PNCD = 'Y' AND (INVITED_NETPNCD IS NULL OR INVITED_COMMISSIONPNCD > 9500 OR INVITED_COMMISSIONPNCD IS NULL) THEN 'Renewal Declined'
     WHEN NB_SCHEME IS NULL THEN 'New Business Declined'
     WHEN INV_COMM_EQ_NB_COMM = 'Y' AND INV_NET_LE_NB_NET = 'Y' THEN 'No Errors'
     WHEN INV_COMM_EQ_NB_COMM = 'Y' AND INV_NET_LE_NB_NET = 'N' THEN 'Net Rate Issue'
     WHEN INV_COMM_LT_NB_COMM = 'Y' AND INV_NET_LE_NB_NET = 'Y' THEN 'Commission Lower (Compliant)'
-    WHEN INV_COMM_GT_NB_COMM = 'Y' AND INV_NET_LE_NB_NET = 'Y' THEN 'Commission Issue'
+    WHEN INV_NET_LT_NB_NET = 'Y' THEN 'Net Rate Lower (Compliant)'
+    WHEN INV_COMM_GT_NB_COMM = 'Y' AND INV_NET_LE_NB_NET = 'Y' AND INV_GROSS_LE_NB_GROSS = 'N' THEN 'Commission Issue'
+    WHEN INV_COMM_GT_NB_COMM = 'Y' AND INV_NET_LE_NB_NET = 'Y' AND INV_GROSS_LE_NB_GROSS = 'Y' THEN 'Commission Issue (Compliant)'
     WHEN INV_COMM_GT_NB_COMM = 'Y' AND INV_NET_LE_NB_NET = 'N' THEN 'Commission and Net Rate Issue'
     ELSE 'Unknown'
     END AS "RESULT"
-FROM WRK_RETAILPRICING.CAR.GIPP_VAN_SUBS_JW a
+FROM WRK_RETAILPRICING.GROWTH.GIPP_VAN_SUBS_JW a
 LEFT JOIN rn i ON a.RN_Submission = i.RN_Submission
 LEFT JOIN nb n ON a.NB_Submission = n.NB_Submission
 LEFT JOIN cheapest e on a.RN_Submission = e.RN_Submission

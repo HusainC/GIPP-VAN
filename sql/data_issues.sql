@@ -4,36 +4,6 @@ USE WAREHOUSE WRK_RETAILPRICING_SMALL;
 USE DATABASE WRK_RETAILPRICING;
 USE SCHEMA GROWTH;
 
- create or replace temporary table WRK_RETAILPRICING.CAR.GIPP_VAN_SUBS as
-        with rnl as (
-        select g.rn_submission
-              ,b.date_created as rn_date_created
-              ,row_number() over(partition by g.rn_submission
-                                order by b.date_created asc) as date_no
-        from WRK_RETAILPRICING.CAR.GIPP_VAN_SUBS g
-        left join prd_raw_db.quotes_public.vw_earnix_van_req_base b
-        on g.rn_submission = b.quote_reference and b.date_created >= '2021-12-01'
-        ),
-        nb as (
-        select g.nb_submission
-              ,b.date_created as nb_date_created
-              ,row_number() over(partition by g.nb_submission
-                                order by b.date_created asc) as date_no
-        from WRK_RETAILPRICING.CAR.GIPP_VAN_SUBS g
-        left join prd_raw_db.quotes_public.vw_earnix_van_req_base b
-        on g.nb_submission = b.quote_reference and b.date_created >= '2021-12-01'
-        )
-        select g.rn_submission
-              ,g.nb_submission
-              ,rnl.rn_date_created
-              ,nb.nb_date_created
-        from WRK_RETAILPRICING.CAR.GIPP_VAN_SUBS g
-        left join rnl on g.rn_submission = rnl.rn_submission and rnl.date_no = 1
-        left join nb on g.nb_submission = nb.nb_submission and nb.date_no = 1
-        ;
-
-        Select * from WRK_RETAILPRICING.CAR.GIPP_VAN_SUBS;
-
 create or replace temporary table earnix_id_hus_nb as
 WITH NB AS(
 SELECT V.NB_SUBMISSION
@@ -42,7 +12,7 @@ SELECT V.NB_SUBMISSION
       ,MIN(B.AGGHUB_ID) AS AGGHUB_ID_REQ_E
      ,MIN(P.AGGHUB_ID) AS AGGHUB_ID_REQ_P
      ,MIN(R.AGGHUB_ID) AS AGGHUB_ID_RES_R
-FROM WRK_RETAILPRICING.CAR.GIPP_VAN_SUBS V
+FROM WRK_RETAILPRICING.GROWTH.GIPP_VAN_SUBS_JW V
 LEFT JOIN "PRD_RAW_DB"."QUOTES_PUBLIC"."VW_EARNIX_VAN_REQ_BASE" B
 ON  B.QUOTE_REFERENCE=V.NB_SUBMISSION
 AND B.DATE_CREATED=V.NB_DATE_CREATED
@@ -311,7 +281,7 @@ SELECT V.RN_SUBMISSION
       ,MIN(B.AGGHUB_ID) AS AGGHUB_ID_REQ_E
       ,MIN(P.AGGHUB_ID) AS AGGHUB_ID_REQ_P
       ,MIN(R.AGGHUB_ID) AS AGGHUB_ID_RES_R
-FROM WRK_RETAILPRICING.CAR.GIPP_VAN_SUBS V
+FROM WRK_RETAILPRICING.GROWTH.GIPP_VAN_SUBS_JW V
 LEFT JOIN "PRD_RAW_DB"."QUOTES_PUBLIC"."VW_EARNIX_VAN_REQ_BASE" B
 ON  B.QUOTE_REFERENCE=V.RN_SUBMISSION
 AND B.DATE_CREATED=V.RN_DATE_CREATED
@@ -573,7 +543,7 @@ AND B.AGGHUB_ID_REQ_E=P.AGGHUB_ID
 
 --RN END
 
-select * from WRK_RETAILPRICING.CAR.GIPP_VAN_SUBS g;
+select * from WRK_RETAILPRICING.GROWTH.GIPP_VAN_SUBS_JW g;
 
 create or replace temporary table check_base_van as
 Select g.rn_submission
@@ -670,7 +640,7 @@ Select g.rn_submission
       --,case when P.DATE_CREATED = v.DATE_CREATED then 0 else 1 end as DATE_CREATED
       ,case when P.NONSTANDARDVAN = v.NONSTANDARDVAN then 0 else 1 end as NONSTANDARDVAN
       --,case when P.MOTORTRADE = v.MOTORTRADE then 0 else 1 end as MOTORTRADE
-from WRK_RETAILPRICING.CAR.GIPP_VAN_SUBS g
+from WRK_RETAILPRICING.GROWTH.GIPP_VAN_SUBS_JW g
 inner join earnix_nb_base_huss_fin p
 on g.nb_submission = p.nb_submission
 inner join earnix_rn_base_huss_fin v
@@ -717,7 +687,7 @@ select
       --,case when P.AGGHUB_QUOTE_VERSION = v.AGGHUB_QUOTE_VERSION then 0 else 1 end as AGGHUB_QUOTE_VERSION
       ,g.nb_submission
       ,g.rn_submission
-from WRK_RETAILPRICING.CAR.GIPP_VAN_SUBS g
+from WRK_RETAILPRICING.GROWTH.GIPP_VAN_SUBS_JW g
 inner join earnix_nb_driver_huss p
 on g.nb_submission = p.nb_submission
 inner join earnix_rn_driver_huss v
@@ -732,7 +702,7 @@ select g.*
 ,r.driverprn
 ,case when r.CONVICTIONCODE = n.CONVICTIONCODE then 0 else 1 end as code
 ,case when r.CONVICTIONDATE = n.CONVICTIONDATE then 0 else 1 end as date
-from WRK_RETAILPRICING.CAR.GIPP_VAN_SUBS g
+from WRK_RETAILPRICING.GROWTH.GIPP_VAN_SUBS_JW g
 inner join earnix_rn_convic_huss r
 on g.rn_submission = r.rn_submission
 left join earnix_nb_convic_huss n

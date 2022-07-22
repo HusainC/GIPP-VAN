@@ -38,6 +38,8 @@ def changes_made(car_dict, policy_proposer_dict, additional_driver_list, last_tr
     change_aggs_timestamp(tree)
     cars_per_house = get_tree_tags(tree, tags.NOOFVEHICLESHOUSEHOLD.value)
     cars_per_house.text = str(int(car_dict[tags.NOOFVEHICLESHOUSEHOLD.value]))
+    drivers_per_house = get_tree_tags(tree, tags.NOOFDRIVERSHOUSEHOLD.value)
+    drivers_per_house.text = str(car_dict[tags.NOOFDRIVERSHOUSEHOLD.value])
     inception_date_tree_item = get_tree_tags(tree, "inceptionDate")
     inception_date_tree_item.text = str(pd.to_datetime(str(inception_date)).date())
 

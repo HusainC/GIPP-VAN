@@ -76,4 +76,5 @@ class Tags(Enum):
     NCDPROTECT = "ncdProtect"
     GROSSWEIGHTVEHICLE = "grossVehicleWeight"
     NOOFVEHICLESHOUSEHOLD = "noOfVehiclesHousehold"
+    NOOFDRIVERSHOUSEHOLD = "noOfDriversinHouse"
 
