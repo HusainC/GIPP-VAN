@@ -1,3 +1,163 @@
+from typing import List
+
+
+def netezza_queries(set_renewal_start_date: str, set_renewal_end_date: str) -> List[str]:
+    """
+    Renewal start & end dates should be strings in format YYYY-MM-DD.
+    Returns a list of queries to be executed in order.
+    """
+    drop_invites = "drop table analysis_db.op.gipp_van_base if exists;"
+    invites = f"""
+    create table analysis_db.op.gipp_invites_van as
+    with cte as (
+    select dpo.skey__ as policy_key
+          ,dpo.policy_number
+          ,dpr.lineofbusiness_id as lob
+          ,dpr.brandcode as brand
+          ,dpr.nk_scheme as scheme
+          ,dpo.broker_tenure
+          ,sdt.date as renewal_date
+          ,fsq.submissionnumber as invite_reference
+          ,fsq.quote_datekey as invite_datekey
+          ,fsq.quote_timekey as invite_timekey
+          ,qdt.date as invite_date
+          ,fsq.nk_quote_timestamp as invite_timestamp
+          ,row_number() over(partition by dpo.policy_number order by fsq.nk_quote_timestamp asc) as invite_number
+    from edw_dm.dbo.dimpolicy dpo
+    inner join edw_dm.dbo.fctsorquote fsq
+    on dpo.skey__ = fsq.policy_key
+    inner join edw_dm.dbo.dimcalendardate qdt
+    on fsq.quote_datekey = qdt.skey__
+    inner join edw_dm.dbo.dimcalendardate sdt
+    on dpo.cover_start_date_key = sdt.skey__
+    inner join edw_dm.dbo.dimtransactioncontext dtc
+    on fsq.transactioncontext_key = dtc.skey__
+    inner join edw_dm.dbo.dimproduct dpr
+    on fsq.product_key = dpr.skey__
+    where
+    -- Set renewal date range
+    sdt.date >= '{set_renewal_start_date}' and sdt.date <= '{set_renewal_start_date}'
+    -- Set invite run window
+    --and fsq.nk_quote_timestamp >= '{set_renewal_start_date}' and fsq.nk_quote_timestamp <= '{set_renewal_end_date}'
+    -- Set LoB 'PC','CV','MC','HH'
+    and dpr.lineofbusiness_id in ('CV')
+    -- Limit to renewal invites
+    and dtc.nk_sourcesystem = 'PC'
+    and dtc.business_subtype in ('Renewal Invite (Rebroke)','Renewal Invite (Non Rebroke)')
+    and dtc.transactioncontexttype = 'Renewal'
+    )
+    select * from cte where invite_number = 1
+    ;
+    """
+    drop_address = "drop table analysis_db.op.gipp_address_van if exists;"
+    address = f"""
+    create table analysis_db.op.gipp_address_van as
+    with cte as (
+    select i.policy_key
+          ,i.policy_number
+          ,i.lob
+          ,i.brand
+          ,i.scheme
+          ,i.broker_tenure
+          ,i.renewal_date
+          ,i.invite_reference
+          ,i.invite_datekey
+          ,i.invite_timekey
+          ,i.invite_date
+          ,i.invite_timestamp
+          ,a.addressline1
+          ,a.addressline2
+          ,a.addressline3
+          ,a.city
+          ,a.county
+          ,a.postalcode
+          ,row_number() over(partition by i.policy_number order by a.createtime asc) as dedup
+    from analysis_db.op.gipp_invites_van i
+    inner join adl.sor.vw_cdc_pc_policyperiod p
+    on i.policy_number = p.policynumber
+    inner join adl.sor.vw_cdc_pc_contact c
+    on p.pnicontactdenorm = c.id
+    inner join adl.sor.vw_cdc_pc_address_hd a
+    on c.primaryaddressid = a.id
+    and a.createtime <= i.invite_timestamp
+    )
+    select * from cte where dedup = 1
+    ;
+    """
+    drop_base = "drop table analysis_db.op.gipp_invites_van if exists;"
+    gipp_base = f"""
+    create table analysis_db.op.gipp_van_base as
+    select i.policy_key
+          ,i.policy_number
+          ,i.lob
+          ,i.brand
+          ,i.scheme
+          ,i.broker_tenure
+          ,i.renewal_date
+          ,i.invite_reference
+          ,i.invite_datekey
+          ,i.invite_timekey
+          ,i.invite_date
+          ,i.invite_timestamp
+          ,i.addressline1
+          ,i.addressline2
+          ,i.addressline3
+          ,i.city
+          ,i.county
+          ,i.postalcode as postcode
+          ,sum(case when dct.coveragegroup in ('Core','Line Item') and dct.costgroup = 'Premium' then fsq.amount else 0 end) as netpremium
+          ,sum(case when dct.coveragegroup in ('Core','Line Item') and dct.costgroup = 'Commission' then fsq.amount else 0 end) as commission
+          ,sum(case when dct.coveragegroup in ('Core','Line Item') and dct.costgroup = 'Tax' then fsq.amount else 0 end) as ipt
+          ,sum(case when dct.costgroup = 'Fee' and dct.isincome = 1 then fsq.amount else 0 end) as fee
+          ,sum(case when dct.coveragegroup = 'Ancillary' then fsq.amount else 0 end) as ancillary
+          ,sum(case when dct.costgroup = 'DirectDebit' and dct.isincome = 1 then fsq.amount else 0 end) as interest
+          ,sum(case when dct.coveragegroup in ('Core','Line Item') and dct.costgroup in ('Premium','Commission') then fsq.amount else 0 end) as grosspremium
+          ,sum(case when dct.coveragegroup in ('Core','Line Item') and dct.costgroup in ('Premium','Commission','Tax') then fsq.amount else 0 end
+              + case when dct.costgroup = 'Fee' and dct.isincome = 1 then fsq.amount else 0 end) as streetprice
+          ,sum(case when dct.coveragegroup in ('Core','Line Item') and dct.costgroup in ('Premium','Commission','Tax') then fsq.amount else 0 end
+              + case when dct.costgroup = 'Fee' and dct.isincome = 1 then fsq.amount else 0 end
+              + case when dct.coveragegroup = 'Ancillary' then fsq.amount else 0 end) as streetprice_ancillary
+          ,sum(case when dct.coveragegroup in ('Core','Line Item') and dct.costgroup in ('Premium','Commission','Tax') then fsq.amount else 0 end
+              + case when dct.costgroup = 'Fee' and dct.isincome = 1 then fsq.amount else 0 end
+              + case when dct.costgroup = 'DirectDebit' and dct.isincome = 1 then fsq.amount else 0 end) as streetprice_dd
+          ,sum(case when dct.coveragegroup in ('Core','Line Item') and dct.costgroup in ('Premium','Commission','Tax') then fsq.amount else 0 end
+              + case when dct.costgroup = 'Fee' and dct.isincome = 1 then fsq.amount else 0 end
+              + case when dct.coveragegroup = 'Ancillary' then fsq.amount else 0 end
+              + case when dct.costgroup = 'DirectDebit' and dct.isincome = 1 then fsq.amount else 0 end) as streetprice_ancillary_dd
+    from analysis_db.op.gipp_address_van i
+    inner join edw_dm.dbo.fctsorquote fsq
+    on i.policy_key = fsq.policy_key
+    and i.invite_datekey = fsq.quote_datekey
+    and i.invite_timekey = fsq.quote_timekey
+    inner join edw_dm.dbo.dimtransactioncontext dtc
+    on fsq.transactioncontext_key = dtc.skey__
+    inner join edw_dm.dbo.dimcosttype dct
+    on fsq.costtype_key = dct.skey__
+    where dtc.business_subtype in ('Renewal Invite (Rebroke)','Renewal Invite (Non Rebroke)')
+    and dtc.transactioncontexttype = 'Renewal'
+    group by i.policy_key
+          ,i.policy_number
+          ,i.lob
+          ,i.brand
+          ,i.scheme
+          ,i.broker_tenure
+          ,i.renewal_date
+          ,i.invite_reference
+          ,i.invite_datekey
+          ,i.invite_timekey
+          ,i.invite_date
+          ,i.invite_timestamp
+          ,i.addressline1
+          ,i.addressline2
+          ,i.addressline3
+          ,i.city
+          ,i.county
+          ,i.postalcode
+    ;
+    """
+    return [drop_invites, invites, drop_address, address, drop_base, gipp_base]
+
+
 def get_setup1_netezza(set_renewal_start_date, set_renewal_end_date):
     refs_sql = f"""
 create table analysis_db.op.gipp_invites_van as
@@ -61,13 +221,13 @@ select i.policy_key
       ,i.invite_timekey
       ,i.invite_date
       ,i.invite_timestamp
-	  ,a.addressline1
-	  ,a.addressline2
-	  ,a.addressline3
-	  ,a.city
-	  ,a.county
-	  ,a.postalcode
-	  ,row_number() over(partition by i.policy_number order by a.createtime asc) as dedup
+      ,a.addressline1
+      ,a.addressline2
+      ,a.addressline3
+      ,a.city
+      ,a.county
+      ,a.postalcode
+      ,row_number() over(partition by i.policy_number order by a.createtime asc) as dedup
 from analysis_db.op.gipp_invites_van i
 inner join adl.sor.vw_cdc_pc_policyperiod p
 on i.policy_number = p.policynumber
@@ -101,7 +261,7 @@ select i.policy_key
       ,i.addressline1
       ,i.addressline2
       ,i.addressline3
-	  ,i.city
+      ,i.city
       ,i.county
       ,i.postalcode as postcode
       ,sum(case when dct.coveragegroup in ('Core','Line Item') and dct.costgroup = 'Premium' then fsq.amount else 0 end) as netpremium
@@ -149,7 +309,7 @@ group by i.policy_key
       ,i.addressline1
       ,i.addressline2
       ,i.addressline3
-	  ,i.city
+      ,i.city
       ,i.county
       ,i.postalcode
 ;
@@ -391,7 +551,7 @@ def get_vehicle_info5():
 
 def get_vehicle_info6(cs):
     refs_sql = f"""
-                select c.COVER_VOLXSALLOWED, b.AGGHUB_ID from UTIL_DB.PUBLIC.hc_veh_res_base b 
+                select CASE WHEN c.COVER_VOLXSALLOWED IS NULL THEN '0' ELSE c.COVER_VOLXSALLOWED END AS "COVER_VOLXSALLOWED", b.AGGHUB_ID from UTIL_DB.PUBLIC.hc_veh_res_base b 
         inner join PRD_RAW_DB.QUOTES_PUBLIC.VW_POLARIS_VEH_RES_COVER c on c.AGGHUB_ID = b.res_id and b.inserttimestamp = c.inserttimestamp
         where c.COVER_VEHPRN = 1;
         """
@@ -445,7 +605,6 @@ def get_driv2():
            d.DRIVER_LICENCETYPE,
            d.DRIVER_LICENCENUMBER as "number",
            case when d.DRIVER_MEDICALCONDITIONIND = 'N' then '99_NO' else '99_D0' end as "medicalConditions",
-           --case when d.DRIVER_NOOFOTHERVEHICLESOWNED = 'N' then 'no' else 'own_another_car' end as "useOtherVehicle",
            date(to_date(d.driver_dateofbirth, 'DD/MM/YYYY'), 'YYYY-MM-DD') as "dateOfBirth",
            d.driver_maritalstatus as "maritalStatus",  
            date(to_date(d.driver_licencedate, 'DD/MM/YYYY'), 'YYYY-MM-DD') as "lengthHeld",
@@ -488,14 +647,21 @@ def get_driv4(cs):
        case when e.LICENCETYPE is NULL then e.LICENCETYPE else e.LICENCETYPE end as "type",
        --case when l.DRIVINGLICENCENUMBER is NULL then '?' else  l.DRIVINGLICENCENUMBER end as "number",
        -- e.MEDICALCONDITION as "medicalConditions", -- Y/N whereas a code is needed
-        e.ACCESSOTHERVEHICLES as "useOtherVehicle",
-        row_number() over(partition by e.quote_reference,e.driverprn order by 
+        CASE
+            WHEN e.ACCESSOTHERVEHICLES IS NULL THEN 'no'
+            ELSE e.ACCESSOTHERVEHICLES
+            END AS "useOtherVehicle"
+        ,CASE
+            WHEN e.ACCESSOTHERVEHICLES = 'own_another_car' OR e.ACCESSOTHERVEHICLES = 'own_van' THEN n.NCD_CLAIMEDYEARS
+            ELSE NULL
+            END AS "levelOfNcdOtherVeh"
+        ,row_number() over(partition by e.quote_reference,e.driverprn order by 
             case when DATEDIFF(SECOND,  o.INSERTTIMESTAMP, e.inserttimestamp) <0 then 9999999 else DATEDIFF(SECOND,  o.INSERTTIMESTAMP, e.inserttimestamp) end desc,
             case when o.TRANNAME = 'Renewal' THEN 0 WHEN o.TRANNAME = 'QuoteDetail' THEN 1 WHEN o.TRANNAME = 'MTA' THEN 2 END) as invite_number,
         o.*
        from UTIL_DB.PUBLIC.hc_driv_two o
        inner join PRD_RAW_DB.QUOTES_PUBLIC.VW_EARNIX_VAN_REQ_DRIVER e on o.quote_reference	= e.quote_reference and e.driverprn = o.driver_prn
-       -- left join PRD_RAW_DB.QUOTES_PUBLIC.  l on CAST(l.quote_reference AS varchar(255)) = CAST(o.quote_reference AS varchar(255)) and driverno = e.driverprn
+       INNER JOIN PRD_RAW_DB.QUOTES_PUBLIC.VW_POLARIS_VEH_REQ_NCD n ON o.AggHub_Id = n.AggHub_Id
        )Select * from cte 
        where invite_number=1
        order by cte.agghub_id, cte.driver_prn; 
@@ -544,17 +710,29 @@ def get_convictions(cs):
 
 def get_claims(cs):
     refs_sql = f"""
-        select
-        c.driver_prn,
-        date(to_date(c.claim_date, 'DD/MM/YYYY'), 'YYYY-MM-DD') as "date",
-        c.claim_claimtype as "type",
-        case when c.claim_ncdlostind = 'Y' then 'true' else 'false' end as "ncdAffected",
-        case when c.claim_driveratfaultind = 'Y' then 'true' else 'false' end as "fault",
-        case when c.claim_coststotal is NULL then 0 else c.claim_coststotal end as "cost",
-        c.quote_reference
-        from  UTIL_DB.PUBLIC.hc_final fin
-        inner join PRD_RAW_DB.QUOTES_PUBLIC.VW_POLARIS_VEH_REQ_CLAIM c on fin.agghub_id = c.agghub_id and c.inserttimestamp = fin.inserttimestamp;
-                    """
+SELECT
+c.Quote_Reference
+,c.Driver_PRN
+,DATE(TO_DATE(c.Claim_Date, 'DD/MM/YYYY'), 'YYYY-MM-DD') AS "date"
+,c.Claim_ClaimType AS "type"
+,CASE
+    WHEN c.Claim_NCDLostInd = 'Y' THEN 'true'
+    ELSE 'false'
+    END AS "ncdAffected"
+,CASE
+    WHEN c.Claim_DriverAtFaultInd = 'Y' THEN 'true'
+    ELSE 'false'
+    END AS "fault"
+,CASE
+    WHEN c.Claim_CostsTotal IS NULL THEN 0
+    ELSE c.claim_coststotal
+    END AS "cost"
+,DATEDIFF(DAY, TO_DATE(c.Claim_Date, 'DD/MM/YYYY') ::DATE, CURRENT_DATE) AS DIFF_DAYS
+FROM  UTIL_DB.PUBLIC.hc_final fin
+INNER JOIN PRD_RAW_DB.QUOTES_PUBLIC.VW_POLARIS_VEH_REQ_CLAIM c
+    ON fin.agghub_id = c.agghub_id
+    AND c.inserttimestamp = fin.inserttimestamp
+WHERE DIFF_DAYS < 1826;"""
 
     sql = refs_sql
     cs.execute(sql)

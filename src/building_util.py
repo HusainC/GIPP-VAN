@@ -98,6 +98,8 @@ def recursively_empty(xml_element):
     if xml_element.text:
         if xml_element.text == "?":
             return all((recursively_empty(xe) for xe in xml_element.iterchildren()))
+        elif xml_element.text == "nan":
+            return all((recursively_empty(xe) for xe in xml_element.iterchildren()))
         else:
             return False
     return all((recursively_empty(xe) for xe in xml_element.iterchildren()))

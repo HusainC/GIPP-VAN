@@ -1,10 +1,15 @@
-from typing import List
+import pyodbc
+import pandas as pd
 
 
-def netezza_queries(
-    set_renewal_start_date: str, set_renewal_end_date: str, set_invite_start_date: str, set_invite_end_date: str
-) -> List:
-    """Takes dates in string format YYYY-MM-DD, returns a list of Netezza queries to be executed in order"""
+def netezza_test(set_renewal_start_date, set_renewal_end_date, set_invite_start_date, set_invite_end_date):
+    # Connect to Netezza
+    conn = pyodbc.connect(
+        "Driver={NetezzaSQL};server=bx1-prd-ibmpd; PORT=5480;Database=ANALYSIS_DB;UID=chopdah;PWD=orange2021;"
+    )
+
+    cs = conn.cursor()
+
     pol_sold = f"""
     create temporary table van_pol_sold as
     select dpo.skey__ as policy_key
@@ -180,4 +185,12 @@ def netezza_queries(
           ,i.invite_timestamp
     ;
     """
-    return [pol_sold, pol_live, invites, gipp_base]
+
+    cs.execute(pol_sold)
+    cs.execute(pol_live)
+    cs.execute(invites)
+    cs.execute(gipp_base)
+
+    df = pd.read_sql("select * from van_gipp_base;", conn)
+
+    print(df.head())

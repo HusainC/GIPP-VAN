@@ -67,7 +67,7 @@ def main_additional(tree, dict_list, convic, claim, renew_date, quote_occupation
         add_desc_and_write(additional_driver_sample_list[i], desc, fin_dict)
 
         driver_items = get_tree_tags(policy_holder_items, tags.FULLNAME.value)
-        desc = [tags.TITLEDESC.value]
+        desc = [tags.TITLEDESC.value, tags.USEOTHERVEHICLEDESC.value]
         add_desc_and_write(driver_items, desc, fin_dict)
 
         # driver_items = get_tree_tags(policy_holder_items, "employment")

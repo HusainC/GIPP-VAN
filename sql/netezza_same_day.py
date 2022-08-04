@@ -1,33 +1,43 @@
 import pyodbc
 import pandas as pd
-from sql.netezza_sql import *
+from sql.netezza_sql import netezza_queries
 
 
 def get_netezza_df(set_renewal_start_date, set_renewal_end_date, set_invite_start_date, set_invite_end_date):
+    """Docstring goes brrr"""
+    print("Connecting to Netezza...")
     conn = pyodbc.connect(
         "Driver={NetezzaSQL};server=bx1-prd-ibmpd; PORT=5480;Database=ANALYSIS_DB;UID=chopdah;PWD=orange2021;")
-    # "DRIVER={NetezzaSQL};SERVER=192.168.0.10; PORT=5480;DATABASE=TESTDB; UID=admin;PWD=password;")
-    try:
-        cus = conn.cursor()
-        # Execute SQL statement and store result in cursor
-        print("Started querying netezza.... please wait")
-        run_sql = get_setup1(set_renewal_start_date, set_renewal_end_date)
-        cus.execute(run_sql)
-        run_sql = get_setup2()
-        cus.execute(run_sql)
-        run_sql = get_setup3()
-        cus.execute(run_sql)
-        run_sql = get_setup4(set_invite_start_date, set_invite_end_date)
-        cus.execute(run_sql)
-        run_sql = "select * from gipp_base;"
-        try:
-            data = pd.read_sql(run_sql, conn)
-            print(data)
-            # data.LASTTXN_QUOTE_REFERENCE = data.LASTTXN_QUOTE_REFERENCE.apply('="{}"'.format)
-            # data.INVITE_QUOTE_REFERENCE = data.INVITE_QUOTE_REFERENCE.apply('="{}"'.format)
-            data.to_csv("../results/RenewalBreakdown.csv")
-        finally:
-            print("done")
+    cs = conn.cursor()
+    # Execute SQL statement and store result in cursor
+    print("Started querying netezza... please wait")
+    queries = netezza_queries(set_renewal_start_date, set_renewal_end_date, set_invite_start_date, set_invite_end_date)
+    for query in queries:
+        cs.execute(query)
+    df = pd.read_sql("select * from van_gipp_base;", conn)
+    print(df.head())
+    df.to_csv("../results/RenewalBreakdown.csv")
 
-    finally:
-        print("done")
+
+"""def netezza_test(set_renewal_start_date, set_renewal_end_date, set_invite_start_date, set_invite_end_date):
+    print("Connecting to Netezza...")
+    conn = pyodbc.connect(
+        "Driver={NetezzaSQL};server=bx1-prd-ibmpd; PORT=5480;Database=ANALYSIS_DB;UID=chopdah;PWD=orange2021;")
+    cs = conn.cursor()
+    print("Testing pol sold")
+    cs.execute(pol_sold(set_renewal_start_date, set_renewal_end_date))
+    df = pd.read_sql("select * from pol_sold;", conn)
+    print(df.head)
+    print("Testing pol live")
+    cs.execute(pol_live())
+    df2 = pd.read_sql("select * from pol_live;", conn)
+    print(df2.head)
+    print("Testing invites")
+    cs.execute(invites())
+    df3 = pd.read_sql("select * from invites;", conn)
+    print(df3.head)
+    print("Testing gipp base")
+    cs.execute(gipp_base(set_invite_start_date, set_invite_end_date))
+    df4 = pd.read_sql("select * from gipp_base;", conn)
+    print(df4.head)
+"""

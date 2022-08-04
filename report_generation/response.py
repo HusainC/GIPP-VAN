@@ -36,14 +36,14 @@ def get_dict():
 
 
 def get_dict_s4():
-    dict = {}
+    d = {}
     with open(Path("../results/RenewalBreakdown.csv"), "r", encoding="utf-8", newline="") as csvfile:
         reader = csv.reader(csvfile, delimiter=",")
         for row in reader:
             brand = row[18]
             qr = row[19]
-            dict[qr] = brand
-    return dict
+            d[qr] = brand
+    return d
 
 
 def extract_values_s4(my_dict):

@@ -336,7 +336,7 @@ SELECT DISTINCT
       ,P.HOMEOWNERIND
       ,P.TIMEATADDRESS
       ,P.NOOFCHILDREN
-      ,P.NOOFDRIVERSINFAMILY
+      ,NVL(P.NOOFDRIVERSINFAMILY,0) AS NOOFDRIVERSINFAMILY
       ,P.NOOFVEHICLESAVAILABLETOFAMILY
       ,P.BROKERTENURE
       ,P.INSURERTENURE
@@ -509,6 +509,7 @@ INNER JOIN "PRD_RAW_DB"."QUOTES_PUBLIC"."VW_EARNIX_VAN_REQ_CLAIM" P
 ON  B.RN_SUBMISSION=P.QUOTE_REFERENCE
 AND B.DATE_CREATED=P.DATE_CREATED
 AND B.AGGHUB_ID_REQ_E=P.AGGHUB_ID
+AND CLAIMDATE >= DATEADD(YEAR, -5, CURRENT_DATE())
 ;
 
 
@@ -720,7 +721,7 @@ select g.*
 ,n.CLAIMCOST as cost_nb
 ,case when n.CLAIMTYPE is not null then 0 else 1 end as claim_match
 ,case when n.CLAIMTYPE is not null and floor(cast(nvl(r.CLAIMCOST,'0') as numeric(10,2))) = floor(cast(nvl(n.CLAIMCOST,'0') as numeric(10,2))) then 0 else 1 end as cost_match
-from wrk_retailpricing.car.gipp_mon_subs_MH_testing g
+from WRK_RETAILPRICING.GROWTH.GIPP_VAN_SUBS_JW g
 inner join earnix_rn_claim_huss r
 on g.rn_submission = r.rn_submission
 left join earnix_nb_claim_huss n

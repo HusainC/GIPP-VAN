@@ -1,10 +1,11 @@
 import snowflake.connector
-from sql.netezza_same_day import *
+from sql.netezza_same_day import get_netezza_df
 from report_generation.response import *
 from report_generation.report_gen import final_report_gen
 from builder import *
-from datetime import datetime
+from datetime import datetime, date, timedelta
 from util import send_completion_email
+from datetime import datetime
 
 
 def part1(cur, set_renewal_start_date, set_renewal_end_date, con):
@@ -17,33 +18,6 @@ def part2(set_renewal_start_date, set_renewal_end_date, set_invite_start_date, s
     final_report_gen(con)
 
 
-def main():
-    set_renewal_start_date = "2022-07-16"
-    set_renewal_end_date = "2022-07-16"
-    set_invite_start_date = "2022-06-17"
-    set_invite_end_date = "2022-06-17"
-
-    con = snowflake.connector.connect(
-        user='jameswatson@hastingsdirect.com',
-        password='Database!123',
-        account='hstsf01.eu-west-1')
-    cur = con.cursor()
-
-    part1(cur, set_renewal_start_date, set_renewal_end_date, con)
-    print("Waiting for database to update, checking in 30 minute intervals")
-    t1 = datetime.now()
-    waiter = True
-    while waiter:
-        time.sleep(1800)  # 30 mins
-        t2 = cur.execute("SELECT MAX(InsertTimeStamp) FROM PRD_RAW_DB.QUOTES_PUBLIC.VW_EARNIX_VAN_REQ_BASE;").fetchone()[0]
-        if datetime.strptime(t2, "%Y-%m-%d %H:%M:%S.%f") > t1:
-            waiter = False
-
-    # Run the second part
-    print("Part 2 - report generation")
-    part2(set_renewal_start_date, set_renewal_end_date, set_invite_start_date, set_invite_end_date, con)
-
-    return 0
 
 
 def main_updated() -> int:
@@ -67,32 +41,38 @@ def main_updated() -> int:
     """
     renewal_start = renewal_end = (date.today() + timedelta(days=28)).strftime("%Y-%m-%d")
     invite_start = invite_end = (date.today() - timedelta(days=1)).strftime("%Y-%m-%d")
-    # renewal_start = renewal_end = '2022-08-17'
-    # invite_start = invite_end = '2022-07-19'
+    # renewal_start = renewal_end = '2022-08-28'
+    # invite_start = invite_end = '2022-07-30'
     # Run the first part
     # print("Part 1 - ENB requests")
-    part1(cur, renewal_start, renewal_end, con)
-    # print("Finished part one, waiting for db to update")
-    #
-    # Wait until db has been updated for part two
-    # print("Waiting for database to update, checking in 30 minute intervals")
-    # t1 = datetime.now()
-    # waiter = True
-    # while waiter:
-    #     time.sleep(1800)  # 30 mins
-    #     t2 = cur.execute("SELECT MAX(InsertTimeStamp) FROM PRD_RAW_DB.QUOTES_PUBLIC.VW_EARNIX_REQ_BASE;").fetchone()[0]
-    #     if datetime.strptime(t2, "%Y-%m-%d %H:%M:%S.%f") > t1:
-    #         waiter = False
+    # part1(cur, renewal_start, renewal_end, con)
+    """
+    print("Finished part one, waiting for db to update")
 
-    # Run the second part
+    Wait until db has been updated for part two
+    print("Waiting for database to update, checking in 30 minute intervals")
+    t1 = datetime.now()
+    waiter = True
+    while waiter:
+        time.sleep(1800)  # 30 mins
+        t2 = cur.execute("SELECT MAX(InsertTimeStamp) FROM PRD_RAW_DB.QUOTES_PUBLIC.VW_EARNIX_REQ_BASE;").fetchone()[0]
+        if datetime.strptime(t2, "%Y-%m-%d %H:%M:%S.%f") > t1:
+            waiter = False
+    """
+    # un the second part
     # print("Part 2 - report generation")
-    # part2(renewal_start, renewal_end, invite_start, invite_end, con)
+    part2(renewal_start, renewal_end, invite_start, invite_end, con)
     #
-    # # Send completion email
+    # Send completion email
     # send_completion_email()
 
     return 0
 
 
 if __name__ == '__main__':
+    start = datetime.now()
     main_updated()
+    end = datetime.now()
+    print("Start time: ", start.strftime("%H:%M:%S"))
+    print("End time: ", end.strftime("%H:%M:%S"))
+    print("Time taken: ", (end - start))

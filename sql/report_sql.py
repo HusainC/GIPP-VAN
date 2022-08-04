@@ -31,4 +31,4 @@ def get_sql_results(cs, path: str) -> None:
     Probably need to add a if cs.fetch_pandas_all(): df =, else print("no results")
     Just need to work out logic first
     """
-    df.to_csv(f"../results/{name}_{date.today().strftime('%Y-%m-%d')}")
+    df.to_csv(f"../results/{name}_{date.today().strftime('%Y-%m-%d')}.csv")

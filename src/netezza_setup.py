@@ -6,6 +6,33 @@ import pandas as pd
 import snowflake.connector
 
 
+def get_netezza_df_updated(rn_start: str, rn_end: str) -> None:
+    # Connect to Netezza
+    print("Connecting to Netezza")
+    conn = pyodbc.connect(
+        "Driver={NetezzaSQL};server=bx1-prd-ibmpd; PORT=5480;Database=ANALYSIS_DB;UID=chopdah;PWD=orange2021;")
+    cs = conn.cursor()
+
+    # Run Netezza queries for gipp_base table creation
+    print("Running queries")
+    queries = netezza_queries(rn_start, rn_end)
+    for query in queries:
+        cs.execute(query)
+
+    # Table -> pandas df
+    print("Reading gipp_base table")
+    gipp_df = pd.read_sql("select * from analysis_db.op.gipp_van_base;", conn)
+    # Print results (for debugging at a glance)
+    print(gipp_df.head())
+    # Update invite_reference type
+    gipp_df.INVITE_REFERENCE = gipp_df.INVITE_REFERENCE.astype("str")
+    # Save as csv so data can be uploaded to snowflake
+    print("Writing upload.csv")
+    gipp_df.to_csv("../results/upload.csv", index=False)
+
+    print("Netezza queries completed")
+
+
 def get_netezza_df_same_day(set_renewal_start_date, set_renewal_end_date):
     conn = pyodbc.connect(
         "Driver={NetezzaSQL};server=bx1-prd-ibmpd; PORT=5480;Database=ANALYSIS_DB;UID=chopdah;PWD=orange2021;")
@@ -15,12 +42,9 @@ def get_netezza_df_same_day(set_renewal_start_date, set_renewal_end_date):
         cus = conn.cursor()
         # Execute SQL statement and store result in cursor
         print("Started querying netezza.... please wait")
-        run_sql = "drop table analysis_db.op.gipp_van_base if exists;"
-        cus.execute(run_sql)
-        run_sql = "drop table analysis_db.op.gipp_address_van if exists;"
-        cus.execute(run_sql)
-        run_sql = "drop table analysis_db.op.gipp_invites_van if exists;"
-        cus.execute(run_sql)
+        cus.execute("drop table analysis_db.op.gipp_van_base if exists;")
+        cus.execute("drop table analysis_db.op.gipp_address_van if exists;")
+        cus.execute("drop table analysis_db.op.gipp_invites_van if exists;")
         run_sql = get_setup1_netezza(set_renewal_start_date, set_renewal_end_date)
         cus.execute(run_sql)
         run_sql = get_setup2_netezza()
