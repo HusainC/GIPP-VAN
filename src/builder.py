@@ -1,35 +1,9 @@
-import math
-
 from sql.sql_van import *
 from util import *
-from building_util import *
 from concurrent.futures import wait, ALL_COMPLETED
 from xml_population import *
 from netezza_setup import get_netezza_df_updated, add_to_sf_sd
 from src.building_util import add_to_xml
-
-
-# def setup(cs, set_renewal_start_date, set_renewal_end_date):
-#     sql = "USE ROLE DRS_QUOTEPAYLOAD;"
-#     cs.execute(sql)
-#     sql = "use warehouse PRD_QUOTES_MEDIUM;"
-#     cs.execute(sql)
-#     sql = "use database UTIL_DB;"
-#     cs.execute(sql)
-#     sql = "use schema PUBLIC;"
-#     cs.execute(sql)
-#     # sql = get_setup1_netezza(set_renewal_start_date, set_renewal_end_date)
-#     # cs.execute(sql)
-#     # sql = get_setup2_netezza()
-#     # cs.execute(sql)
-#     # sql = get_setup3_netezza()
-#     # cs.execute(sql)
-#     # if sub_list:
-#     #     sql = get_setup3()
-#     # else:
-#     #     sql = get_setup3()
-#     sql = get_setup3()
-#     cs.execute(sql)
 
 
 def changes_made(car_dict, policy_proposer_dict, additional_driver_list, last_transaction_ref, convictions_list,
@@ -78,10 +52,6 @@ def builder(cs, set_renewal_start_date, set_renewal_end_date, con):
     cs.execute(sql)
     sql = "use warehouse WRK_RETAILPRICING_MEDIUM;"
     cs.execute(sql)
-    # sql = "use database UTIL_DB;"
-    # cs.execute(sql)
-    # sql = "use schema PUBLIC;"
-    # cs.execute(sql)
     vehicles = get_vehicle_info4(cs)
     drivers = get_driv4(cs)
     convictions = get_convictions(cs)
