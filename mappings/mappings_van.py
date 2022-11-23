@@ -327,7 +327,6 @@ code_desc = {
         'voluntaryExcess': voluntary_excess,
         "howNcdEarn": how_ncd,
         "employmentStatusCode": employment_status,
-        "employmentStatusCode": employment_status,
         "employmentOccupationCode": occupation_dict,
         "employmentBusinessCode": business_dict,
         "convictionCode": conviction_dict,

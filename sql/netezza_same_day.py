@@ -7,7 +7,7 @@ def get_netezza_df(set_renewal_start_date, set_renewal_end_date, set_invite_star
     """Docstring goes brrr"""
     print("Connecting to Netezza...")
     conn = pyodbc.connect(
-        "Driver={NetezzaSQL};server=bx1-prd-ibmpd; PORT=5480;Database=ANALYSIS_DB;UID=chopdah;PWD=orange2021;")
+        "Driver={NetezzaSQL};server=bx1-prd-ibmpd; PORT=5480;Database=ANALYSIS_DB;UID=watsonj;PWD=mango2022;")
     cs = conn.cursor()
     # Execute SQL statement and store result in cursor
     print("Started querying netezza... please wait")
@@ -15,7 +15,7 @@ def get_netezza_df(set_renewal_start_date, set_renewal_end_date, set_invite_star
     for query in queries:
         cs.execute(query)
     df = pd.read_sql("select * from van_gipp_base;", conn)
-    print(df.head())
+    print(df)
     df.to_csv("../results/RenewalBreakdown.csv")
 
 

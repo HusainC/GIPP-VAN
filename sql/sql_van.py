@@ -1,4 +1,22 @@
 from typing import List
+import pandas as pd
+from sql.report_sql import read_sql
+import snowflake.connector
+
+
+def get_xml_element_dictionary(cs: snowflake.connector.cursor, sql_file: str) -> dict:
+    """
+    Reads a SQL file and executes queries in order.
+    Final query must be a SELECT statement to be transformed into a dictionary.
+    This is used for getting the "major" elements within the tree
+    :param cs:
+    :param sql_file:
+    :return:
+    """
+    queries = read_sql(f"../sql/{sql_file}")
+    for query in queries:
+        cs.execute(query)
+    return cs.fetch_pandas_all().to_dict(orient='records')
 
 
 def netezza_queries(set_renewal_start_date: str, set_renewal_end_date: str) -> List[str]:
@@ -6,7 +24,7 @@ def netezza_queries(set_renewal_start_date: str, set_renewal_end_date: str) -> L
     Renewal start & end dates should be strings in format YYYY-MM-DD.
     Returns a list of queries to be executed in order.
     """
-    drop_invites = "drop table analysis_db.op.gipp_van_base if exists;"
+    drop_invites = "drop table analysis_db.op.gipp_invites_van if exists;"
     invites = f"""
     create table analysis_db.op.gipp_invites_van as
     with cte as (
@@ -36,9 +54,9 @@ def netezza_queries(set_renewal_start_date: str, set_renewal_end_date: str) -> L
     on fsq.product_key = dpr.skey__
     where
     -- Set renewal date range
-    sdt.date >= '{set_renewal_start_date}' and sdt.date <= '{set_renewal_start_date}'
+    sdt.date >= '{set_renewal_start_date}' and sdt.date <= '{set_renewal_end_date}'
     -- Set invite run window
-    --and fsq.nk_quote_timestamp >= '{set_renewal_start_date}' and fsq.nk_quote_timestamp <= '{set_renewal_end_date}'
+    --and fsq.nk_quote_timestamp >= '' and fsq.nk_quote_timestamp <= ''
     -- Set LoB 'PC','CV','MC','HH'
     and dpr.lineofbusiness_id in ('CV')
     -- Limit to renewal invites
@@ -84,7 +102,7 @@ def netezza_queries(set_renewal_start_date: str, set_renewal_end_date: str) -> L
     select * from cte where dedup = 1
     ;
     """
-    drop_base = "drop table analysis_db.op.gipp_invites_van if exists;"
+    drop_base = "drop table analysis_db.op.gipp_van_base if exists;"
     gipp_base = f"""
     create table analysis_db.op.gipp_van_base as
     select i.policy_key
@@ -326,19 +344,6 @@ def get_setup3():
     return refs_sql
 
 
-def get_setup3_list(submission_nums="../res/submission_numbers.txt"):
-    with open(submission_nums) as f:
-        submission_list = f.read()
-
-    refs_sql = f"""
-            CREATE or replace TEMPORARY TABLE UTIL_DB.PUBLIC.hc_testing as 
-            select  BRAND, renewal_date, policy_number, 
-            addressline1,addressline2,addressline3, city, county, INVITE_TIMESTAMP, INVITE_REFERENCE from WRK_RETAILPRICING.CAR.GIPP_MON_SUBS
-            WHERE policy_number IN ({submission_list});
-            """
-    return refs_sql
-
-
 def get_aggids():
     refs_sql = f"""
         CREATE or replace TEMPORARY TABLE UTIL_DB.PUBLIC.hc_final as 
@@ -527,7 +532,7 @@ def get_vehicle_info4(cs):
         chk = df.to_dict(orient='records')
         return chk
     finally:
-        print("done")
+        print("Vehicle info done")
 
 
 def get_vehicle_info5():
@@ -566,7 +571,7 @@ def get_vehicle_info6(cs):
         chk = df.to_dict(orient='records')
         return chk
     finally:
-        print("done")
+        print("Veh Excess done")
 
 
 def get_driv1():
@@ -612,6 +617,7 @@ def get_driv2():
            case when d.Driver_EverHadPolicyCancelledInd = 'Y' then 'true' else 'false' end as "isPolicyDeclinedForDrivers",
            case when d.driver_nonmotoringconvictionind = 'Y' then 'true' else 'false' end as "nonMotoringConvictions",
            date(to_date(d.driver_ukresidencydate, 'DD/MM/YYYY'), 'YYYY-MM-DD') as "ukResident",
+           --e.CompanyEstablished AS "companyEstablished",
            case when o.OCCUPATION_FULLTIMEEMPLOYMENTIND = 'Y' then 'true' else 'false' end as "isPrimary",
            o.OCCUPATION_EMPLOYMENTTYPE as "employmentStatusCode",
            o.OCCUPATION_CODE as "employmentOccupationCode",
@@ -622,7 +628,8 @@ def get_driv2():
            d.date_created
         from UTIL_DB.PUBLIC.hc_driv_one fin
         inner join PRD_RAW_DB.QUOTES_PUBLIC.VW_POLARIS_VEH_REQ_DRIVER d on fin.agghub_id = d.agghub_id
-        inner join PRD_RAW_DB.QUOTES_PUBLIC.VW_POLARIS_VEH_REQ_OCCUPATION o on fin.agghub_id = o.agghub_id and d.driver_prn = o.driver_prn;
+        inner join PRD_RAW_DB.QUOTES_PUBLIC.VW_POLARIS_VEH_REQ_OCCUPATION o on fin.agghub_id = o.agghub_id and d.driver_prn = o.driver_prn
+        INNER JOIN PRD_RAW_DB.QUOTES_PUBLIC.VW_EARNIX_VAN_REQ_DRIVER e ON e.agghub_id = fin.agghub_id;
             """
 
     return refs_sql
@@ -678,7 +685,7 @@ def get_driv4(cs):
         chk = df.to_dict(orient='records')
         return chk
     finally:
-        print("done")
+        print("Driver info done")
 
 
 def get_convictions(cs):
@@ -705,7 +712,7 @@ def get_convictions(cs):
         chk = df.to_dict(orient='records')
         return chk
     finally:
-        print("done")
+        print("Convictions")
 
 
 def get_claims(cs):
@@ -742,7 +749,7 @@ WHERE DIFF_DAYS < 1826;"""
         chk = df.to_dict(orient='records')
         return chk
     finally:
-        print("done")
+        print("Claims done")
 
 
 def get_modifications(cs):
@@ -762,7 +769,7 @@ def get_modifications(cs):
         chk = df.to_dict(orient='records')
         return chk
     finally:
-        print("done")
+        print("Modifications done")
 
 
 def get_occupations(cs):
@@ -789,4 +796,4 @@ def get_occupations(cs):
         chk = df.to_dict(orient='records')
         return chk
     finally:
-        print("done")
+        print("Occupations done")

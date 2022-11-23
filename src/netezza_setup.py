@@ -6,11 +6,21 @@ import pandas as pd
 import snowflake.connector
 
 
-def get_netezza_df_updated(rn_start: str, rn_end: str) -> None:
+class EmptyDF(Exception):
+    """Stops the code when the Netezza DF is empty"""
+
+
+def get_netezza_df_updated(rn_start: str, rn_end: str) -> pd.DataFrame:
+    """
+    Connects to Netezza, runs queries to create "GIPP base" table for renewals in given date range
+    :param rn_start:
+    :param rn_end:
+    :return:
+    """
     # Connect to Netezza
     print("Connecting to Netezza")
     conn = pyodbc.connect(
-        "Driver={NetezzaSQL};server=bx1-prd-ibmpd; PORT=5480;Database=ANALYSIS_DB;UID=chopdah;PWD=orange2021;")
+        "Driver={NetezzaSQL};server=bx1-prd-ibmpd; PORT=5480;Database=ANALYSIS_DB;UID=watsonj;PWD=mango2022;")
     cs = conn.cursor()
 
     # Run Netezza queries for gipp_base table creation
@@ -23,7 +33,9 @@ def get_netezza_df_updated(rn_start: str, rn_end: str) -> None:
     print("Reading gipp_base table")
     gipp_df = pd.read_sql("select * from analysis_db.op.gipp_van_base;", conn)
     # Print results (for debugging at a glance)
-    print(gipp_df.head())
+    print(gipp_df)
+    if gipp_df.empty:
+        raise EmptyDF
     # Update invite_reference type
     gipp_df.INVITE_REFERENCE = gipp_df.INVITE_REFERENCE.astype("str")
     # Save as csv so data can be uploaded to snowflake
@@ -32,10 +44,12 @@ def get_netezza_df_updated(rn_start: str, rn_end: str) -> None:
 
     print("Netezza queries completed")
 
+    return gipp_df
+
 
 def get_netezza_df_same_day(set_renewal_start_date, set_renewal_end_date):
     conn = pyodbc.connect(
-        "Driver={NetezzaSQL};server=bx1-prd-ibmpd; PORT=5480;Database=ANALYSIS_DB;UID=chopdah;PWD=orange2021;")
+        "Driver={NetezzaSQL};server=bx1-prd-ibmpd; PORT=5480;Database=ANALYSIS_DB;UID=watsonj;PWD=mango2022;")
     # "DRIVER={NetezzaSQL};SERVER=192.168.0.10; PORT=5480;DATABASE=TESTDB; UID=admin;PWD=password;")
     try:
         # Run the new Ed sql and store file and upload to snowflake
@@ -111,14 +125,14 @@ def add_to_sf_sd(dataframe, conn):
                 create_tbl_statement = create_tbl_statement + ",\n"
             else:
                 create_tbl_statement = create_tbl_statement + ")"
-        #
-        # # Execute the SQL statement to create the table
-        #
+        # Execute the SQL statement to create the table
         conn.cursor().execute(create_tbl_statement)
-        # f = conn.cursor().execute("select * from  demo_db.public.GIPP_VAN_SUBS")
         success, nchunks, nrows, _ = write_pandas(conn, dataframe, database=database, schema=schema,
                                                   table_name=table_name)
-        print(success)
+        if success:
+            print(f"Upload to snowflake complete: {nrows} rows")
+        else:
+            print("Upload to snowflake failed")
 
 
 if __name__ == '__main__':
